@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    spritedatasheet.cpp
+    spritedatasheet.cpp \
+    tool.cpp
 
 HEADERS  += mainwindow.h \
-    spritedatasheet.h
+    spritedatasheet.h \
+    tool.h
 
 FORMS    += mainwindow.ui
