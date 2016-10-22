@@ -1,6 +1,8 @@
 #ifndef SPRITEDATASHEET_H
 #define SPRITEDATASHEET_H
 
+#include <vector>
+#include <tuple>
 
 class SpriteDataSheet
 {
