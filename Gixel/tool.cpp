@@ -1,6 +1,3 @@
 #include "tool.h"
 
-Tool::Tool()
-{
-
-}
+Tool::Tool():QPainter(){;}
