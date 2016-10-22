@@ -17,8 +17,8 @@
    <widget class="QGraphicsView" name="Workspace">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>10</y>
+      <x>130</x>
+      <y>30</y>
       <width>400</width>
       <height>400</height>
      </rect>
@@ -27,85 +27,85 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>20</y>
-      <width>151</width>
-      <height>171</height>
+      <x>10</x>
+      <y>30</y>
+      <width>101</width>
+      <height>151</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="TransformButtonLayout_2">
+    <layout class="QVBoxLayout" name="ToolsLayout">
      <item>
-      <widget class="QPushButton" name="RotateButton_2">
+      <widget class="QPushButton" name="PenToolButton">
        <property name="text">
-        <string>Rotate</string>
+        <string>Pen</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="HorzMirrorButton_2">
+      <widget class="QPushButton" name="EraserToolButton">
        <property name="text">
-        <string>Horizontal Mirror</string>
+        <string>Eraser</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="VertMirrorButton_2">
+      <widget class="QPushButton" name="EyedropperToolButton">
        <property name="text">
-        <string>Vertical Mirror</string>
+        <string>Eyedropper</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>30</y>
+      <width>160</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="TransformLayout">
+     <item>
+      <widget class="QPushButton" name="VerticalMirrorButton">
+       <property name="text">
+        <string>Vert. Mirror</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="CutButton_2">
+      <widget class="QPushButton" name="HorizontalMirrorButton">
+       <property name="text">
+        <string>Horz. Mirror</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Rotate90Button">
+       <property name="text">
+        <string>Rotate 90 </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="CutImageButton">
        <property name="text">
         <string>Cut</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="CopyButton_2">
+      <widget class="QPushButton" name="CopyImageButton">
        <property name="text">
         <string>Copy</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="PasteButton_2">
+      <widget class="QPushButton" name="PasteImageButton">
        <property name="text">
         <string>Paste</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="formLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>83</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="ToolButtonLayout_2">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="PenButton_2">
-       <property name="text">
-        <string>Pen</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="EraserButton_2">
-       <property name="text">
-        <string>Eraser</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="EyeDropperButton_2">
-       <property name="text">
-        <string>Eyedropper</string>
        </property>
       </widget>
      </item>
@@ -115,7 +115,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>220</y>
+      <y>230</y>
       <width>150</width>
       <height>150</height>
      </rect>
@@ -125,13 +125,13 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>380</y>
+      <y>390</y>
       <width>151</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Playback Settings</string>
+     <string>Preview Settings</string>
     </property>
    </widget>
   </widget>

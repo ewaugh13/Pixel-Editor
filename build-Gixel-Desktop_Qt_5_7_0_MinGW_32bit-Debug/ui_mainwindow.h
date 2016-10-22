@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
@@ -36,19 +35,20 @@ public:
     QWidget *centralWidget;
     QGraphicsView *Workspace;
     QWidget *verticalLayoutWidget;
-    QVBoxLayout *TransformButtonLayout_2;
-    QPushButton *RotateButton_2;
-    QPushButton *HorzMirrorButton_2;
-    QPushButton *VertMirrorButton_2;
-    QPushButton *CutButton_2;
-    QPushButton *CopyButton_2;
-    QPushButton *PasteButton_2;
-    QWidget *formLayoutWidget;
-    QFormLayout *ToolButtonLayout_2;
-    QPushButton *PenButton_2;
-    QPushButton *EraserButton_2;
-    QPushButton *EyeDropperButton_2;
+    QVBoxLayout *ToolsLayout;
+    QPushButton *PenToolButton;
+    QPushButton *EraserToolButton;
+    QPushButton *EyedropperToolButton;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *TransformLayout;
+    QPushButton *VerticalMirrorButton;
+    QPushButton *HorizontalMirrorButton;
+    QPushButton *Rotate90Button;
+    QPushButton *CutImageButton;
+    QPushButton *CopyImageButton;
+    QPushButton *PasteImageButton;
     QGraphicsView *graphicsView;
+    QPushButton *PreviewSettingsButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -69,71 +69,74 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         Workspace = new QGraphicsView(centralWidget);
         Workspace->setObjectName(QStringLiteral("Workspace"));
-        Workspace->setGeometry(QRect(120, 10, 400, 400));
+        Workspace->setGeometry(QRect(130, 30, 400, 400));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(550, 20, 151, 171));
-        TransformButtonLayout_2 = new QVBoxLayout(verticalLayoutWidget);
-        TransformButtonLayout_2->setSpacing(6);
-        TransformButtonLayout_2->setContentsMargins(11, 11, 11, 11);
-        TransformButtonLayout_2->setObjectName(QStringLiteral("TransformButtonLayout_2"));
-        TransformButtonLayout_2->setContentsMargins(0, 0, 0, 0);
-        RotateButton_2 = new QPushButton(verticalLayoutWidget);
-        RotateButton_2->setObjectName(QStringLiteral("RotateButton_2"));
+        verticalLayoutWidget->setGeometry(QRect(10, 30, 101, 151));
+        ToolsLayout = new QVBoxLayout(verticalLayoutWidget);
+        ToolsLayout->setSpacing(6);
+        ToolsLayout->setContentsMargins(11, 11, 11, 11);
+        ToolsLayout->setObjectName(QStringLiteral("ToolsLayout"));
+        ToolsLayout->setContentsMargins(0, 0, 0, 0);
+        PenToolButton = new QPushButton(verticalLayoutWidget);
+        PenToolButton->setObjectName(QStringLiteral("PenToolButton"));
 
-        TransformButtonLayout_2->addWidget(RotateButton_2);
+        ToolsLayout->addWidget(PenToolButton);
 
-        HorzMirrorButton_2 = new QPushButton(verticalLayoutWidget);
-        HorzMirrorButton_2->setObjectName(QStringLiteral("HorzMirrorButton_2"));
+        EraserToolButton = new QPushButton(verticalLayoutWidget);
+        EraserToolButton->setObjectName(QStringLiteral("EraserToolButton"));
 
-        TransformButtonLayout_2->addWidget(HorzMirrorButton_2);
+        ToolsLayout->addWidget(EraserToolButton);
 
-        VertMirrorButton_2 = new QPushButton(verticalLayoutWidget);
-        VertMirrorButton_2->setObjectName(QStringLiteral("VertMirrorButton_2"));
+        EyedropperToolButton = new QPushButton(verticalLayoutWidget);
+        EyedropperToolButton->setObjectName(QStringLiteral("EyedropperToolButton"));
 
-        TransformButtonLayout_2->addWidget(VertMirrorButton_2);
+        ToolsLayout->addWidget(EyedropperToolButton);
 
-        CutButton_2 = new QPushButton(verticalLayoutWidget);
-        CutButton_2->setObjectName(QStringLiteral("CutButton_2"));
+        verticalLayoutWidget_2 = new QWidget(centralWidget);
+        verticalLayoutWidget_2->setObjectName(QStringLiteral("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(540, 30, 160, 181));
+        TransformLayout = new QVBoxLayout(verticalLayoutWidget_2);
+        TransformLayout->setSpacing(6);
+        TransformLayout->setContentsMargins(11, 11, 11, 11);
+        TransformLayout->setObjectName(QStringLiteral("TransformLayout"));
+        TransformLayout->setContentsMargins(0, 0, 0, 0);
+        VerticalMirrorButton = new QPushButton(verticalLayoutWidget_2);
+        VerticalMirrorButton->setObjectName(QStringLiteral("VerticalMirrorButton"));
 
-        TransformButtonLayout_2->addWidget(CutButton_2);
+        TransformLayout->addWidget(VerticalMirrorButton);
 
-        CopyButton_2 = new QPushButton(verticalLayoutWidget);
-        CopyButton_2->setObjectName(QStringLiteral("CopyButton_2"));
+        HorizontalMirrorButton = new QPushButton(verticalLayoutWidget_2);
+        HorizontalMirrorButton->setObjectName(QStringLiteral("HorizontalMirrorButton"));
 
-        TransformButtonLayout_2->addWidget(CopyButton_2);
+        TransformLayout->addWidget(HorizontalMirrorButton);
 
-        PasteButton_2 = new QPushButton(verticalLayoutWidget);
-        PasteButton_2->setObjectName(QStringLiteral("PasteButton_2"));
+        Rotate90Button = new QPushButton(verticalLayoutWidget_2);
+        Rotate90Button->setObjectName(QStringLiteral("Rotate90Button"));
 
-        TransformButtonLayout_2->addWidget(PasteButton_2);
+        TransformLayout->addWidget(Rotate90Button);
 
-        formLayoutWidget = new QWidget(centralWidget);
-        formLayoutWidget->setObjectName(QStringLiteral("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(30, 10, 81, 331));
-        ToolButtonLayout_2 = new QFormLayout(formLayoutWidget);
-        ToolButtonLayout_2->setSpacing(6);
-        ToolButtonLayout_2->setContentsMargins(11, 11, 11, 11);
-        ToolButtonLayout_2->setObjectName(QStringLiteral("ToolButtonLayout_2"));
-        ToolButtonLayout_2->setContentsMargins(0, 0, 0, 0);
-        PenButton_2 = new QPushButton(formLayoutWidget);
-        PenButton_2->setObjectName(QStringLiteral("PenButton_2"));
+        CutImageButton = new QPushButton(verticalLayoutWidget_2);
+        CutImageButton->setObjectName(QStringLiteral("CutImageButton"));
 
-        ToolButtonLayout_2->setWidget(0, QFormLayout::LabelRole, PenButton_2);
+        TransformLayout->addWidget(CutImageButton);
 
-        EraserButton_2 = new QPushButton(formLayoutWidget);
-        EraserButton_2->setObjectName(QStringLiteral("EraserButton_2"));
+        CopyImageButton = new QPushButton(verticalLayoutWidget_2);
+        CopyImageButton->setObjectName(QStringLiteral("CopyImageButton"));
 
-        ToolButtonLayout_2->setWidget(1, QFormLayout::LabelRole, EraserButton_2);
+        TransformLayout->addWidget(CopyImageButton);
 
-        EyeDropperButton_2 = new QPushButton(formLayoutWidget);
-        EyeDropperButton_2->setObjectName(QStringLiteral("EyeDropperButton_2"));
+        PasteImageButton = new QPushButton(verticalLayoutWidget_2);
+        PasteImageButton->setObjectName(QStringLiteral("PasteImageButton"));
 
-        ToolButtonLayout_2->setWidget(2, QFormLayout::LabelRole, EyeDropperButton_2);
+        TransformLayout->addWidget(PasteImageButton);
 
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(550, 220, 150, 150));
+        graphicsView->setGeometry(QRect(550, 230, 150, 150));
+        PreviewSettingsButton = new QPushButton(centralWidget);
+        PreviewSettingsButton->setObjectName(QStringLiteral("PreviewSettingsButton"));
+        PreviewSettingsButton->setGeometry(QRect(550, 390, 151, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -164,15 +167,16 @@ public:
         NewProjectButton->setText(QApplication::translate("MainWindow", "New Project", 0));
         OpenProjectButton->setText(QApplication::translate("MainWindow", "Open Project", 0));
         SaveProjectButton->setText(QApplication::translate("MainWindow", "Save Project", 0));
-        RotateButton_2->setText(QApplication::translate("MainWindow", "Rotate", 0));
-        HorzMirrorButton_2->setText(QApplication::translate("MainWindow", "Horizontal Mirror", 0));
-        VertMirrorButton_2->setText(QApplication::translate("MainWindow", "Vertical Mirror", 0));
-        CutButton_2->setText(QApplication::translate("MainWindow", "Cut", 0));
-        CopyButton_2->setText(QApplication::translate("MainWindow", "Copy", 0));
-        PasteButton_2->setText(QApplication::translate("MainWindow", "Paste", 0));
-        PenButton_2->setText(QApplication::translate("MainWindow", "Pen", 0));
-        EraserButton_2->setText(QApplication::translate("MainWindow", "Eraser", 0));
-        EyeDropperButton_2->setText(QApplication::translate("MainWindow", "Eyedropper", 0));
+        PenToolButton->setText(QApplication::translate("MainWindow", "Pen", 0));
+        EraserToolButton->setText(QApplication::translate("MainWindow", "Eraser", 0));
+        EyedropperToolButton->setText(QApplication::translate("MainWindow", "Eyedropper", 0));
+        VerticalMirrorButton->setText(QApplication::translate("MainWindow", "Vert. Mirror", 0));
+        HorizontalMirrorButton->setText(QApplication::translate("MainWindow", "Horz. Mirror", 0));
+        Rotate90Button->setText(QApplication::translate("MainWindow", "Rotate 90 ", 0));
+        CutImageButton->setText(QApplication::translate("MainWindow", "Cut", 0));
+        CopyImageButton->setText(QApplication::translate("MainWindow", "Copy", 0));
+        PasteImageButton->setText(QApplication::translate("MainWindow", "Paste", 0));
+        PreviewSettingsButton->setText(QApplication::translate("MainWindow", "Preview Settings", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

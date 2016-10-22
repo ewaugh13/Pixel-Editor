@@ -445,13 +445,6 @@ release/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qinputmethod.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QButtonGroup \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QFormLayout \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qformlayout.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QLayout \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgridlayout.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsView \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpainter.h \
@@ -480,14 +473,10 @@ release/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qmenu.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QMenuBar \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qmenubar.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QStatusBar \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qstatusbar.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QToolBar \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qtoolbar.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QVBoxLayout \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\Gixel\mainwindow.cpp
 
