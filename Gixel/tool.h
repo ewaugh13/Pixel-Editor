@@ -4,16 +4,17 @@
 
 #include <QPainter>
 
-class Tool : public QPainter
+class Tool
 {
 public:
 
     Tool();
+    QPainter* painter;
     QPen line;
     QBrush fill;
     QColor color;
 
-    Tool(); //Inherits publically from QPainter, empty implementation
+    Tool(QPen, QBrush, QColor); //Inherits publically from QPainter, empty implementation
 };
 
 #endif // TOOL_H

@@ -17,7 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    Tool currentTool;
+    Tool currentTool(QPen, QBrush, QColor); //Current working tool in the editor
 
 private slots:
     void on_PenToolButton_clicked();
