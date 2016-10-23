@@ -17,7 +17,6 @@ class Pen : public Tool
 {
     public:
         Pen();
-        ~Pen();
         //basic parameters
 
 };

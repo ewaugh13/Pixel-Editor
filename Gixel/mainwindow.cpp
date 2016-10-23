@@ -8,6 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QGraphicsScene* scene = new QGraphicsScene(this);
+    QPixmap *pix = new QPixmap(398,398);
+    scene->addPixmap(*pix);
+    ui->Workspace->setScene(scene);
 }
 
 MainWindow::~MainWindow()
@@ -20,6 +25,5 @@ void MainWindow::on_PenToolButton_clicked()
     currentTool = new Pen();
 
     std::cout <<"Pen set" <<std::endl;
-
-
 }
+
