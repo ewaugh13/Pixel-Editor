@@ -15,7 +15,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     spritedatasheet.cpp \
-    tool.cpp
+    tool.cpp \
+    pen.cpp
 
 HEADERS  += mainwindow.h \
     spritedatasheet.h \

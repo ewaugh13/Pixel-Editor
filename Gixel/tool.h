@@ -2,19 +2,24 @@
 #define TOOL_H
 #include "QPainter"
 
-#include <QPainter>
-
 class Tool
 {
 public:
 
     Tool();
+    Tool(QPen, QBrush, QColor); //Inherits publically from QPainter, empty implementation
+
     QPainter* painter;
     QPen line;
-    QBrush fill;
     QColor color;
+};
+class Pen : public Tool
+{
+    public:
+        Pen();
+        ~Pen();
+        //basic parameters
 
-    Tool(QPen, QBrush, QColor); //Inherits publically from QPainter, empty implementation
 };
 
 #endif // TOOL_H
