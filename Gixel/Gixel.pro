@@ -15,21 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     spritedatasheet.cpp \
-<<<<<<< HEAD \
-    setspritesize.cpp
-    setspritesize.cpp
-
-HEADERS  += mainwindow.h \
-    spritedatasheet.h \
-    setspritesize.h
-=======
+    setspritesize.cpp \
     tool.cpp \
     pen.cpp
 
 HEADERS  += mainwindow.h \
     spritedatasheet.h \
+    setspritesize.h \
     tool.h
->>>>>>> 6c96863fe0a47c1ab28e89ad0afca869a553255b
 
 FORMS    += mainwindow.ui \
     setspritesize.ui

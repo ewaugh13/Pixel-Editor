@@ -19,13 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-<<<<<<< HEAD
-    QByteArrayData data[4];
-    char stringdata0[50];
-=======
-    QByteArrayData data[1];
-    char stringdata0[11];
->>>>>>> 6c96863fe0a47c1ab28e89ad0afca869a553255b
+    QByteArrayData data[5];
+    char stringdata0[75];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,21 +29,16 @@ struct qt_meta_stringdata_MainWindow_t {
     )
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
-<<<<<<< HEAD
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 13), // "cancelSetSize"
 QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 23) // "setSpriteHeightAndWidth"
+QT_MOC_LITERAL(3, 26, 23), // "setSpriteHeightAndWidth"
+QT_MOC_LITERAL(4, 50, 24) // "on_PenToolButton_clicked"
 
     },
     "MainWindow\0cancelSetSize\0\0"
-    "setSpriteHeightAndWidth"
-=======
-QT_MOC_LITERAL(0, 0, 10) // "MainWindow"
-
-    },
-    "MainWindow"
->>>>>>> 6c96863fe0a47c1ab28e89ad0afca869a553255b
+    "setSpriteHeightAndWidth\0"
+    "on_PenToolButton_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,49 +48,38 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-<<<<<<< HEAD
-       2,   14, // methods
-=======
-       0,    0, // methods
->>>>>>> 6c96863fe0a47c1ab28e89ad0afca869a553255b
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
-<<<<<<< HEAD
  // slots: name, argc, parameters, tag, flags
-       1,    0,   24,    2, 0x0a /* Public */,
-       3,    2,   25,    2, 0x0a /* Public */,
+       1,    0,   29,    2, 0x0a /* Public */,
+       3,    2,   30,    2, 0x0a /* Public */,
+       4,    0,   35,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
+    QMetaType::Void,
 
-=======
->>>>>>> 6c96863fe0a47c1ab28e89ad0afca869a553255b
        0        // eod
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-<<<<<<< HEAD
     if (_c == QMetaObject::InvokeMetaMethod) {
         MainWindow *_t = static_cast<MainWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->cancelSetSize(); break;
         case 1: _t->setSpriteHeightAndWidth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 2: _t->on_PenToolButton_clicked(); break;
         default: ;
         }
     }
-=======
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
->>>>>>> 6c96863fe0a47c1ab28e89ad0afca869a553255b
 }
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -127,18 +106,15 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
-<<<<<<< HEAD
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 2;
+        _id -= 3;
     }
-=======
->>>>>>> 6c96863fe0a47c1ab28e89ad0afca869a553255b
     return _id;
 }
 QT_END_MOC_NAMESPACE
