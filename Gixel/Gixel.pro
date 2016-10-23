@@ -16,8 +16,8 @@ SOURCES += main.cpp \
         mainwindow.cpp \
     spritedatasheet.cpp \
     setspritesize.cpp \
-    pen.cpp \
-    tool.cpp
+    tool.cpp \
+    pen.cpp
 
 HEADERS  += mainwindow.h \
     spritedatasheet.h \
