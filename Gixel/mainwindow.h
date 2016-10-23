@@ -22,14 +22,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-public slots:
-    void cancelSetSize();
-    void setSpriteHeightAndWidth(int,int);
-
-
     Tool* currentTool; //Current working tool in the editor
     Pen pen;//Child of tool
 
+public slots:
+    void cancelSetSize();
+    void setSpriteHeightAndWidth(int,int);
 
 private slots:
     void on_PenToolButton_clicked();
