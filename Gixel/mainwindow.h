@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "setspritesize.h"
 #include "spritedatasheet.h"
+#include <QPainter>
+#include "tool.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -16,9 +19,18 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
 public slots:
     void cancelSetSize();
     void setSpriteHeightAndWidth(int,int);
+
+
+    Tool* currentTool; //Current working tool in the editor
+    Pen pen;//Child of tool
+
+private slots:
+    void on_PenToolButton_clicked();
+
 private:
     SetSpriteSize popupSize;
     SpriteDataSheet spriteData;

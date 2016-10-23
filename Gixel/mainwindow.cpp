@@ -18,6 +18,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
 void MainWindow::cancelSetSize()
 {
     this->close();
@@ -41,4 +42,11 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width)
             //          << "," << std::get<1>(spriteData.totalData[i][j])<< "," << std::get<2>(spriteData.totalData[i][j]) << "," << std::get<3>(spriteData.totalData[i][j]) << std::endl;
         }
     }
+void MainWindow::on_PenToolButton_clicked()
+{
+    currentTool = new Pen();
+
+    std::cout <<"Pen set" <<std::endl;
+
+
 }
