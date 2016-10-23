@@ -6,6 +6,8 @@
 #include "spritedatasheet.h"
 #include <QPainter>
 #include "tool.h"
+#include <QPixmap>
+#include <QGraphicsSceneMouseEvent>
 
 
 namespace Ui {
@@ -33,6 +35,7 @@ private:
     SetSpriteSize popupSize;
     SpriteDataSheet spriteData;
     Ui::MainWindow *ui;
+
 
 };
 

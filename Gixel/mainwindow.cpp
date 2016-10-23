@@ -7,10 +7,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QGraphicsScene* scene = new QGraphicsScene(this);
+    QPixmap *pix = new QPixmap(398,398);
+    scene->addPixmap(*pix);
+    ui->Workspace->setScene(scene);
+
     popupSize.show();
 
     QObject::connect(&popupSize, &SetSpriteSize::setHeightAndWidth, this, &MainWindow::setSpriteHeightAndWidth);
     QObject::connect(&popupSize, &SetSpriteSize::closeApp, this, &MainWindow::cancelSetSize);
+
 }
 
 MainWindow::~MainWindow()
@@ -51,3 +58,4 @@ void MainWindow::on_PenToolButton_clicked()
 
     std::cout <<"Pen set" <<std::endl;
 }
+

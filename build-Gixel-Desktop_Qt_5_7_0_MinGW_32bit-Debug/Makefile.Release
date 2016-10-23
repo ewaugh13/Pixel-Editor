@@ -211,6 +211,9 @@ release/moc_mainwindow.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/Q
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
 		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
 		../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/bin/moc.exe
 	"C:\Program Files (x86)\Qt\5.7\mingw53_32\bin\moc.exe" $(DEFINES) -D__GNUC__ -DWIN32 -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/mkspecs/win32-g++" -IC:/Users/Johnny/Documents/GitHub/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/Gixel -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtWidgets" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtGui" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtANGLE" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtCore" -I. -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward" ..\Gixel\mainwindow.h -o release\moc_mainwindow.cpp
@@ -342,6 +345,9 @@ release/main.o: ../Gixel/main.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
 		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QApplication \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qapplication.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -457,6 +463,9 @@ release/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
 		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
 		ui_mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QVariant \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QAction \
