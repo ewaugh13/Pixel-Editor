@@ -17,12 +17,14 @@ SOURCES += main.cpp \
     spritedatasheet.cpp \
     setspritesize.cpp \
     tool.cpp \
-    pen.cpp
+    pen.cpp \
+    graphicscene.cpp
 
 HEADERS  += mainwindow.h \
     spritedatasheet.h \
     setspritesize.h \
-    tool.h
+    tool.h \
+    graphicscene.h
 
 FORMS    += mainwindow.ui \
     setspritesize.ui

@@ -13,11 +13,14 @@ class GraphicsScene : public QGraphicsScene
 public:
 
     GraphicsScene();
+    GraphicsScene(QObject* parent);
     //virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
     //virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
 
 signals:
+    void graphicsSceneClicked(QPointF);
+
 
 public slots:
 

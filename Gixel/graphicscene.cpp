@@ -1,10 +1,15 @@
 #include "graphicscene.h"
 #include <QGraphicsScene>
+#include <iostream>
 
 GraphicsScene::GraphicsScene() :
     QGraphicsScene()
 {
     this->setBackgroundBrush(Qt::gray);
+}
+GraphicsScene::GraphicsScene(QObject* mainWindow) : QGraphicsScene()
+{
+
 }
 
 /*
@@ -16,8 +21,10 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent)
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+    std::cout <<"Clicking in scene" <<std::endl;
     //QGraphicsScene::mousePressEvent(mouseEvent);
-    mouseEvent->scenePos();
+    QPointF point = mouseEvent->scenePos();
+    emit graphicsSceneClicked(point);
 }
 
 /*

@@ -8,15 +8,21 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QGraphicsScene* scene = new QGraphicsScene(this);
-    QPixmap *pix = new QPixmap(398,398);
+    updateTimer.start(10);  //10ms interval
+
+    scene = new GraphicsScene(this);
+    pix = new QPixmap(398,398);
     scene->addPixmap(*pix);
     ui->Workspace->setScene(scene);
+    currentTool = new Pen();
+    currentTool->painter->begin(scene);
 
     popupSize.show();
 
+    QObject::connect(&updateTimer, &QTimer::timeout, this, &MainWindow::workspaceClickCheck);//Checks for workspaceClickCheck every 10ms
     QObject::connect(&popupSize, &SetSpriteSize::setHeightAndWidth, this, &MainWindow::setSpriteHeightAndWidth);
     QObject::connect(&popupSize, &SetSpriteSize::closeApp, this, &MainWindow::cancelSetSize);
+    QObject::connect(scene, &GraphicsScene::graphicsSceneClicked, this, &MainWindow::placePoint);
 
 }
 
@@ -53,7 +59,15 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width)
 void MainWindow::on_PenToolButton_clicked()
 {
     currentTool = new Pen();
-
+     currentTool->painter->begin(pix);
     std::cout <<"Pen set" <<std::endl;
 }
+void MainWindow::workspaceClickCheck()
+{
 
+}
+
+void MainWindow::placePoint(QPointF incomingPt)
+{
+    currentTool->painter->drawPoint(incomingPt);
+}
