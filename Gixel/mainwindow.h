@@ -2,14 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "graphicscene.h"
 #include "setspritesize.h"
 #include "spritedatasheet.h"
 #include <QPainter>
 #include "tool.h"
-#include <QPixmap>
-#include <QGraphicsSceneMouseEvent>
 #include <QTimer>
+#include "rendercanvas.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,16 +21,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    QTimer updateTimer;
+    //QTimer updateTimer;
     Tool* currentTool; //Current working tool in the editor
     Pen pen;//Child of tool
-    GraphicsScene* scene;//current scene of frame
-    QPixmap *pix; //pix mapped linked to scene
+    RenderCanvas *canvas;
 
 public slots:
     void cancelSetSize();
     void setSpriteHeightAndWidth(int,int);
-    void placePoint(QPointF);
+    //void placePoint(QPointF);
 
 private slots:
     void on_PenToolButton_clicked();

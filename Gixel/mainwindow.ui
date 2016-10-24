@@ -14,16 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGraphicsView" name="Workspace">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>30</y>
-      <width>400</width>
-      <height>400</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
@@ -134,6 +124,16 @@
      <string>Preview Settings</string>
     </property>
    </widget>
+   <widget class="RenderCanvas" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>129</x>
+      <y>9</y>
+      <width>401</width>
+      <height>511</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -180,6 +180,14 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>RenderCanvas</class>
+   <extends>QWidget</extends>
+   <header>rendercanvas.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

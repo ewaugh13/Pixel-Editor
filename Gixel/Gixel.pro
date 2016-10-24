@@ -18,13 +18,13 @@ SOURCES += main.cpp \
     setspritesize.cpp \
     tool.cpp \
     pen.cpp \
-    graphicscene.cpp
+    rendercanvas.cpp
 
 HEADERS  += mainwindow.h \
     spritedatasheet.h \
     setspritesize.h \
     tool.h \
-    graphicscene.h
+    rendercanvas.h
 
 FORMS    += mainwindow.ui \
     setspritesize.ui
