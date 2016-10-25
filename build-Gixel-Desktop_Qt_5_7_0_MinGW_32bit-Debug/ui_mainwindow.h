@@ -23,6 +23,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "rendercanvas.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -33,7 +34,6 @@ public:
     QAction *OpenProjectButton;
     QAction *SaveProjectButton;
     QWidget *centralWidget;
-    QGraphicsView *Workspace;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *ToolsLayout;
     QPushButton *PenToolButton;
@@ -49,6 +49,7 @@ public:
     QPushButton *PasteImageButton;
     QGraphicsView *graphicsView;
     QPushButton *PreviewSettingsButton;
+    RenderCanvas *widget;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -67,9 +68,6 @@ public:
         SaveProjectButton->setObjectName(QStringLiteral("SaveProjectButton"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        Workspace = new QGraphicsView(centralWidget);
-        Workspace->setObjectName(QStringLiteral("Workspace"));
-        Workspace->setGeometry(QRect(130, 30, 400, 400));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(10, 30, 101, 151));
@@ -137,6 +135,9 @@ public:
         PreviewSettingsButton = new QPushButton(centralWidget);
         PreviewSettingsButton->setObjectName(QStringLiteral("PreviewSettingsButton"));
         PreviewSettingsButton->setGeometry(QRect(550, 390, 151, 23));
+        widget = new RenderCanvas(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(129, 9, 401, 511));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

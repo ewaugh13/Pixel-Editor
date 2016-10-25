@@ -7,7 +7,7 @@ RenderCanvas::RenderCanvas(QWidget *parent) : QWidget(parent)
     modified = false;
     drawing = false;
     penWidth = 1;
-    penColor = Qt::blue;
+    penColor = Qt::white;
 
 
 }

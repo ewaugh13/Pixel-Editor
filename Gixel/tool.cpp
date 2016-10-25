@@ -3,7 +3,7 @@ Tool::Tool()//Abstract default tool. Black line, 1 pixel wide.
 {
     painter = new QPainter();
     line.setWidth(1);
-    line.setColor(Qt::black);
+    line.setColor(Qt::white);
 }
 
 Tool::Tool(QPen line, QBrush fill, QColor color)//Specific Tool constructor for different tools
