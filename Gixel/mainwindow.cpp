@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     updateTimer.start(10);  //10ms interval
 
-    scene = new GraphicsScene(this);
+    //scene = new GraphicsScene(this);
+    scene = ui->Workspace;
     pix = new QPixmap(398,398);
     scene->addPixmap(*pix);
     ui->Workspace->setScene(scene);
