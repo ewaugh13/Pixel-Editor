@@ -69,7 +69,7 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width) //Gets the user 
             //          << "," << std::get<1>(spriteData.totalData[i][j])<< "," << std::get<2>(spriteData.totalData[i][j]) << "," << std::get<3>(spriteData.totalData[i][j]) << std::endl;
         }
     }*/
-    //this->show();
+    this->show();
 
     scene->InitializeWorkspace(pix,scaleFactorX,scaleFactorY);  //Reinitialize the workspace based on the new resolution
     scene->addPixmap(*pix); //Add the new pixmap to the scene so the Workspace updates

@@ -77,7 +77,8 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
             painter->setBrush(Qt::gray);
         }
     }
-    /*Comment this back in if you wish to print out the vector data of the frame
+    //Comment this back in if you wish to print out the vector data of the frame
+    /*
     for(int i = 0; i < workspace2DVector.size(); i++)
     {
         for(int j = 0; j < workspace2DVector[i].size(); j++)
