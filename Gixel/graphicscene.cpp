@@ -58,12 +58,10 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
             if(painter->brush() == Qt::gray)
             {
                 painter->setBrush(Qt::black);
-                workspace2DVector[i][j]=(Qt::black);
             }
             else
             {
                 painter->setBrush(Qt::gray);
-                workspace2DVector[i][j]=(Qt::gray);
             }
             painter->fillRect(QRectF(static_cast<qreal>(i * scaleFactorX),static_cast<qreal>(scaleFactorY * j), static_cast<qreal>(scaleFactorX), static_cast<qreal>(scaleFactorY)), painter->brush());//factor was originally 33.33
 
@@ -88,4 +86,27 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
         }
     }*/
     delete painter;
+}
+void GraphicsScene::InitializeColorspace(QPixmap* pix, double scaleFactorX, double scaleFactorY)
+{
+    //Scale factor was original 33.166
+    QPainter* painter = new QPainter(pix);
+    pix->size();
+
+    double columns = pix->size().width() / scaleFactorX;
+    double rows = pix->size().height() / scaleFactorY;
+
+    std::cout << pix->size().width() << std::endl;
+
+    workspace2DVector.resize(columns);
+    for(int i = 0; i < (columns); i++) // i = x, number of columns
+    {
+        workspace2DVector[i].resize(rows);
+        for(int j = 0; j < (rows); j++) // j = y, number of rows
+        {
+            painter->setBrush(Qt::transparent);
+            painter->fillRect(QRectF(static_cast<qreal>(i * scaleFactorX),static_cast<qreal>(scaleFactorY * j), static_cast<qreal>(scaleFactorX), static_cast<qreal>(scaleFactorY)), painter->brush());
+            workspace2DVector[i][j] = Qt::transparent;
+        }
+    }
 }

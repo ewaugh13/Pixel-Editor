@@ -22,6 +22,7 @@ public:
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
     void UpdateWorkspace(Ui::MainWindow* mainWindow);
     void InitializeWorkspace(QPixmap*,double scaleFactorX,double scaleFactorY);//Pixmap,scaleFactorX,scaleFactorY
+    void InitializeColorspace(QPixmap*,double scaleFactorX,double scaleFactorY);
 
 signals:
     void graphicsSceneClicked(QPointF);

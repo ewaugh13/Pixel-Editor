@@ -29,8 +29,8 @@ public:
     Tool* currentTool; //Current working tool in the editor
     Pen pen;//Child of tool
     GraphicsScene* scene;//current scene of frame
-    QPixmap *pix; //pix mapped linked to scene
-
+    QPixmap *pixBackground; //pix mapped linked to scene
+    QPixmap *pixForeground;
 public slots:
     void cancelSetSize();
     void setSpriteHeightAndWidth(int,int);
