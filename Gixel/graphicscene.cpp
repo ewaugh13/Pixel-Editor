@@ -1,15 +1,17 @@
 #include "graphicscene.h"
 #include <QGraphicsScene>
 #include <iostream>
+#include <QPainter>
 
 GraphicsScene::GraphicsScene() :
     QGraphicsScene()
 {
     this->setBackgroundBrush(Qt::gray);
 }
-GraphicsScene::GraphicsScene(QObject* mainWindow) : QGraphicsScene()
+GraphicsScene::GraphicsScene(Ui::MainWindow* mainWindow) : QGraphicsScene()
 {
-
+    mainWindow->Workspace->setMouseTracking(true);
+    //mainWindow->Workspace->qApp->installEventFilter(this);
 }
 
 /*
@@ -22,9 +24,43 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent)
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     std::cout <<"Clicking in scene" <<std::endl;
+
+    std::cout<<"mouse detected at " <<mouseEvent->pos().x() <<"," <<mouseEvent->pos().y() <<std::endl;
     //QGraphicsScene::mousePressEvent(mouseEvent);
     QPointF point = mouseEvent->scenePos();
     emit graphicsSceneClicked(point);
+}
+
+void GraphicsScene::drawExample(QPixmap* pix)
+{
+    QPainter* painter = new QPainter(pix);
+    painter->setBrush(Qt::black);
+    pix->size();
+
+    std::cout << pix->size().width() << std::endl;
+
+    for(int i = 0; i < static_cast<int>(pix->size().width() / 33.166); i++) // i = x
+    {
+        for(int j = 0; j < static_cast<int>(pix->size().width() / 33.166); j++) // j = y
+        {
+            if(painter->brush() == Qt::gray)
+            {
+                painter->setBrush(Qt::black);
+            }
+            else {
+                painter->setBrush(Qt::gray);
+            }
+            painter->fillRect(QRectF(i * 33.33, 33.33 * j, 33.33, 33.33), painter->brush());
+
+        }
+        if(painter->brush() == Qt::gray)
+        {
+            painter->setBrush(Qt::black);
+        }
+        else {
+            painter->setBrush(Qt::gray);
+        }
+    }
 }
 
 /*
