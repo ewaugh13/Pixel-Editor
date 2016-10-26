@@ -71,7 +71,7 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 void GraphicsScene::drawRectOnCanvas(qreal x, qreal y)
 {
     QPainter* painter = new QPainter(picture);//pix was picture
-    painter->setBrush(Qt::blue);
+    painter->setBrush(QColor(255, 255, 0, 255));
     painter->fillRect(QRectF(x,y, static_cast<qreal>(width), static_cast<qreal>(height)), painter->brush());//factor was originally 33.33
     delete painter;
 }
@@ -101,7 +101,7 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
         {
             if((i+j)%2 == 0)
             {
-                painter->setBrush(Qt::black);
+                painter->setBrush(QColor(100, 100, 100, 100));
             }
             else
             {
@@ -110,15 +110,6 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
             painter->fillRect(QRectF(static_cast<qreal>(i * scaleFactorX),static_cast<qreal>(scaleFactorY * j), static_cast<qreal>(scaleFactorX), static_cast<qreal>(scaleFactorY)), painter->brush());//factor was originally 33.33
 
         }
-        /*
-        if(painter->brush() == Qt::gray)
-        {
-            painter->setBrush(Qt::black);
-        }
-        else
-        {
-            painter->setBrush(Qt::gray);
-        }*/
     }
     delete painter;
 }
@@ -153,5 +144,6 @@ void GraphicsScene::combineForeAndBack(QPixmap* pixResultant, QPixmap* pixBackgr
     painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
     painter.drawPixmap(0,0,*pixBackground);
     painter.drawPixmap(0,0,*pixForeground);
+
     picture = pixResultant;
 }

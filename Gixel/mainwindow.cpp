@@ -61,22 +61,6 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width) //Gets the user 
     scaleFactorX = 512.0/width;
     scaleFactorY = 512.0/height;
 
-    /*
-    spriteData.totalData.resize(width);
-    for(int i =0; i< width; i++)
-    {
-        spriteData.totalData[i].resize(height);
-    }
-    for(int i = 0; i < width; i++)
-    {
-        for(int j=0; j < height; j++)
-        {
-            std::tuple<int,int,int,int> newData(0,0,0,0);
-            spriteData.totalData[i][j] =  newData;
-            //std::cout << "RGBA value at " << i << "," << j << " is " << std::get<0>(spriteData.totalData[i][j])
-            //          << "," << std::get<1>(spriteData.totalData[i][j])<< "," << std::get<2>(spriteData.totalData[i][j]) << "," << std::get<3>(spriteData.totalData[i][j]) << std::endl;
-        }
-    }*/
     this->show();
 
     scene->InitializeWorkspace(pixBackground,scaleFactorX,scaleFactorY);  //Reinitialize the workspace based on the new resolution
@@ -101,5 +85,8 @@ void MainWindow::workspaceClickCheck()
 void MainWindow::drawChanges()
 {
     //currentTool->painter->drawPoint(incomingPt);
-    scene->addPixmap(*pixResultant); //Add the new pixmap to the scene so the Workspace updates
+    //scene->addPixmap(*pixResultant); //Add the new pixmap to the scene so the Workspace updates
+    QRegion region(QRect(0,0,512,512));
+    scene->addPixmap(*pixResultant);
+    //scene->combineForeAndBack(pixResultant, pixBackground, pixForeground);
 }
