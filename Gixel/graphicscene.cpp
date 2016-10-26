@@ -99,7 +99,7 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
         workspace2DVector[i].resize(rows);
         for(int j = 0; j < (rows); j++) // j = y, number of rows
         {
-            if(painter->brush() == Qt::gray)
+            if((i+j)%2 == 0)
             {
                 painter->setBrush(Qt::black);
             }
@@ -110,6 +110,7 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
             painter->fillRect(QRectF(static_cast<qreal>(i * scaleFactorX),static_cast<qreal>(scaleFactorY * j), static_cast<qreal>(scaleFactorX), static_cast<qreal>(scaleFactorY)), painter->brush());//factor was originally 33.33
 
         }
+        /*
         if(painter->brush() == Qt::gray)
         {
             painter->setBrush(Qt::black);
@@ -117,7 +118,7 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
         else
         {
             painter->setBrush(Qt::gray);
-        }
+        }*/
     }
     delete painter;
 }

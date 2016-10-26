@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     userDefinedX = 16;  //Defaults the screen to 16x16 sprite pixels
     userDefinedY = 16;
-    scaleFactorX = 512/userDefinedX;
-    scaleFactorY = 512/userDefinedY;
+    scaleFactorX = 512.0/userDefinedX;
+    scaleFactorY = 512.0/userDefinedY;
 
     popupSize.show();   //Calls the custom resolution window
     popupSize.raise();
@@ -58,8 +58,8 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width) //Gets the user 
 {
     userDefinedX = width;
     userDefinedY = height;
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+    scaleFactorX = 512.0/width;
+    scaleFactorY = 512.0/height;
 
     /*
     spriteData.totalData.resize(width);

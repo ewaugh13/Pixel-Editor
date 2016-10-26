@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_GraphicsScene_t {
     QByteArrayData data[3];
-    char stringdata0[36];
+    char stringdata0[34];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,11 +30,11 @@ struct qt_meta_stringdata_GraphicsScene_t {
 static const qt_meta_stringdata_GraphicsScene_t qt_meta_stringdata_GraphicsScene = {
     {
 QT_MOC_LITERAL(0, 0, 13), // "GraphicsScene"
-QT_MOC_LITERAL(1, 14, 20), // "graphicsSceneClicked"
-QT_MOC_LITERAL(2, 35, 0) // ""
+QT_MOC_LITERAL(1, 14, 18), // "graphicsSceneDrawn"
+QT_MOC_LITERAL(2, 33, 0) // ""
 
     },
-    "GraphicsScene\0graphicsSceneClicked\0"
+    "GraphicsScene\0graphicsSceneDrawn\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,10 +52,10 @@ static const uint qt_meta_data_GraphicsScene[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   19,    2, 0x06 /* Public */,
+       1,    0,   19,    2, 0x06 /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QPointF,    2,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -66,20 +66,21 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         GraphicsScene *_t = static_cast<GraphicsScene *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->graphicsSceneClicked((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 0: _t->graphicsSceneDrawn(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (GraphicsScene::*_t)(QPointF );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::graphicsSceneClicked)) {
+            typedef void (GraphicsScene::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::graphicsSceneDrawn)) {
                 *result = 0;
                 return;
             }
         }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObject GraphicsScene::staticMetaObject = {
@@ -119,9 +120,8 @@ int GraphicsScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void GraphicsScene::graphicsSceneClicked(QPointF _t1)
+void GraphicsScene::graphicsSceneDrawn()
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE

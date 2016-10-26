@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[7];
-    char stringdata0[106];
+    char stringdata0[107];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,13 +33,13 @@ QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 13), // "cancelSetSize"
 QT_MOC_LITERAL(2, 25, 0), // ""
 QT_MOC_LITERAL(3, 26, 23), // "setSpriteHeightAndWidth"
-QT_MOC_LITERAL(4, 50, 10), // "placePoint"
-QT_MOC_LITERAL(5, 61, 24), // "on_PenToolButton_clicked"
-QT_MOC_LITERAL(6, 86, 19) // "workspaceClickCheck"
+QT_MOC_LITERAL(4, 50, 11), // "drawChanges"
+QT_MOC_LITERAL(5, 62, 24), // "on_PenToolButton_clicked"
+QT_MOC_LITERAL(6, 87, 19) // "workspaceClickCheck"
 
     },
     "MainWindow\0cancelSetSize\0\0"
-    "setSpriteHeightAndWidth\0placePoint\0"
+    "setSpriteHeightAndWidth\0drawChanges\0"
     "on_PenToolButton_clicked\0workspaceClickCheck"
 };
 #undef QT_MOC_LITERAL
@@ -60,14 +60,14 @@ static const uint qt_meta_data_MainWindow[] = {
  // slots: name, argc, parameters, tag, flags
        1,    2,   39,    2, 0x0a /* Public */,
        3,    2,   44,    2, 0x0a /* Public */,
-       4,    1,   49,    2, 0x0a /* Public */,
-       5,    0,   52,    2, 0x08 /* Private */,
-       6,    0,   53,    2, 0x08 /* Private */,
+       4,    0,   49,    2, 0x0a /* Public */,
+       5,    0,   50,    2, 0x08 /* Private */,
+       6,    0,   51,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
-    QMetaType::Void, QMetaType::QPointF,    2,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -82,7 +82,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->cancelSetSize((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 1: _t->setSpriteHeightAndWidth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 2: _t->placePoint((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 2: _t->drawChanges(); break;
         case 3: _t->on_PenToolButton_clicked(); break;
         case 4: _t->workspaceClickCheck(); break;
         default: ;
