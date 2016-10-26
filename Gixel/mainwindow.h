@@ -35,7 +35,8 @@ public:
 public slots:
     void cancelSetSize();
     void setSpriteHeightAndWidth(int,int);
-    void placePoint(QPointF);
+
+    void drawChanges();
 
 private slots:
     void on_PenToolButton_clicked();

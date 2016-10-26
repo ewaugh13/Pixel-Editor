@@ -7,6 +7,9 @@ GraphicsScene::GraphicsScene() :
     QGraphicsScene()
 {
     this->setBackgroundBrush(Qt::gray);
+    drawing = false;
+    width = 0.0;
+    height = 0.0;
 }
 GraphicsScene::GraphicsScene(Ui::MainWindow* mainWindow) : QGraphicsScene()
 {
@@ -17,28 +20,66 @@ void GraphicsScene::UpdateWorkspace(Ui::MainWindow* mainWindow)
 {
     mainWindow->Workspace->update(0,0,512,512);
 }
-void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent)
-{
-    //qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
-    QGraphicsScene::mouseMoveEvent(mouseEvent);
-}
+
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
-{
-    std::cout <<"Clicking in scene" <<std::endl;
-
-    std::cout<<"mouse detected at " <<mouseEvent->scenePos().x() <<"," <<mouseEvent->scenePos().y() <<std::endl;
-    //QGraphicsScene::mousePressEvent(mouseEvent);
-    QPointF point = mouseEvent->scenePos();
-    emit graphicsSceneClicked(point);
+{   
+    if(mouseEvent->button() == Qt::LeftButton)
+    {
+        drawing = true;
+        lastPos = mouseEvent->scenePos().toPoint();
+        int x = lastPos.x()/width;
+        int y = lastPos.y()/height;
+        drawRectOnCanvas(x * width, y * height);
+        emit graphicsSceneDrawn();
+    }
 }
+
+void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+    if ((mouseEvent->buttons() & Qt::LeftButton) && drawing)
+    {
+
+        QPoint point = mouseEvent->scenePos().toPoint();
+        int x = lastPos.x()/width;
+        int y = lastPos.y()/height;
+        int curX = point.x()/width;
+        int curY = point.y()/height;
+        if((x != curX) || (y != curY))
+        {
+            lastPos = point;
+            drawRectOnCanvas(x * width,y * height);
+
+            emit graphicsSceneDrawn();
+        }
+    }
+}
+
+void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+
+    if(mouseEvent->button() == Qt::LeftButton)
+    {
+        drawing = false;
+        lastPos = mouseEvent->scenePos().toPoint();
+    }
+}
+
+void GraphicsScene::drawRectOnCanvas(qreal x, qreal y)
+{
+    QPainter* painter = new QPainter(picture);
+    painter->setBrush(Qt::blue);
+    painter->fillRect(QRectF(x,y, static_cast<qreal>(width), static_cast<qreal>(height)), painter->brush());//factor was originally 33.33
+    delete painter;
+}
+
 
 void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, double scaleFactorY)
 {
     //Scale factor was original 33.166
     QPainter* painter = new QPainter(pix);
     painter->setBrush(Qt::black);
-    pix->size();
+
     double columns = pix->size().width() / scaleFactorX;
     double rows = pix->size().height() / scaleFactorY;
 
@@ -68,12 +109,15 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
             painter->setBrush(Qt::gray);
         }
     }
+    width = scaleFactorX;
+    height = scaleFactorY;
+    picture = pix;
     delete painter;
 }
 
 
-void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * me)
-{
+//void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * me)
+//{
     /*
     qDebug() << Q_FUNC_INFO << me->scenePos();
     int radius = 20;
@@ -123,4 +167,4 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * me)
     }
 
     QGraphicsScene::mouseReleaseEvent(me);*/
-}
+//}

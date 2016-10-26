@@ -15,19 +15,27 @@ class GraphicsScene : public QGraphicsScene
 public:
     GraphicsScene();
     GraphicsScene(Ui::MainWindow* parent);
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
+
     void UpdateWorkspace(Ui::MainWindow* mainWindow);
     void InitializeWorkspace(QPixmap*,double scaleFactorX,double scaleFactorY);//Pixmap,scaleFactorX,scaleFactorY
 
 signals:
-    void graphicsSceneClicked(QPointF);
+    void graphicsSceneDrawn();
 
 public slots:
 
+protected:
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
 private:
     QList <QPointF> m_points;
+    bool drawing;
+    QPoint lastPos;
+    qreal width;
+    qreal height;
+    QPixmap* picture;
+    void drawRectOnCanvas(qreal x, qreal y);
     //bool eventFilter(QObject*, QEvent*);
 };
 
