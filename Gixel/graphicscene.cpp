@@ -7,6 +7,9 @@ GraphicsScene::GraphicsScene() :
     QGraphicsScene()
 {
     this->setBackgroundBrush(Qt::gray);
+    drawing = false;
+    width = 0.0;
+    height = 0.0;
 }
 GraphicsScene::GraphicsScene(Ui::MainWindow* mainWindow) : QGraphicsScene()
 {
@@ -18,32 +21,73 @@ void GraphicsScene::UpdateWorkspace(Ui::MainWindow* mainWindow)
 {
     mainWindow->Workspace->update(0,0,512,512);
 }
-void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent)
-{
-    //qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
-    QGraphicsScene::mouseMoveEvent(mouseEvent);
-}
+
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
-{
-    std::cout <<"Clicking in scene" <<std::endl;
+{   
+    if(mouseEvent->button() == Qt::LeftButton)
+    {
+        drawing = true;
+        lastPos = mouseEvent->scenePos().toPoint();
+        int x = lastPos.x()/width;
+        int y = lastPos.y()/height;
 
-    std::cout<<"mouse detected at " <<mouseEvent->scenePos().x() <<"," <<mouseEvent->scenePos().y() <<std::endl;
-    //QGraphicsScene::mousePressEvent(mouseEvent);
-    QPointF point = mouseEvent->scenePos();
-    emit graphicsSceneClicked(point);
+        std::cout<<x <<"," <<y <<std::endl;
+        drawRectOnCanvas(x * width, y * height);
+        emit graphicsSceneDrawn();
+    }
 }
+
+void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+    if ((mouseEvent->buttons() & Qt::LeftButton) && drawing)
+    {
+
+        QPoint point = mouseEvent->scenePos().toPoint();
+        int x = lastPos.x()/width;
+        int y = lastPos.y()/height;
+        int curX = point.x()/width;
+        int curY = point.y()/height;
+        if((x != curX) || (y != curY))
+        {
+            lastPos = point;
+            drawRectOnCanvas(x * width,y * height);
+
+            emit graphicsSceneDrawn();
+        }
+    }
+}
+
+void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+
+    if(mouseEvent->button() == Qt::LeftButton)
+    {
+        drawing = false;
+        lastPos = mouseEvent->scenePos().toPoint();
+    }
+}
+
+void GraphicsScene::drawRectOnCanvas(qreal x, qreal y)
+{
+    QPainter* painter = new QPainter(picture);//pix was picture
+    painter->setBrush(Qt::blue);
+    painter->fillRect(QRectF(x,y, static_cast<qreal>(width), static_cast<qreal>(height)), painter->brush());//factor was originally 33.33
+    delete painter;
+}
+/*
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * me)
 {
     QGraphicsScene::mouseReleaseEvent(me);
 }
+*/
 
 void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, double scaleFactorY)
 {
     //Scale factor was original 33.166
     QPainter* painter = new QPainter(pix);
     painter->setBrush(Qt::black);
-    pix->size();
+
     double columns = pix->size().width() / scaleFactorX;
     double rows = pix->size().height() / scaleFactorY;
 
@@ -76,23 +120,13 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
         }
     }
     delete painter;
-    //Comment this back in if you wish to print out the vector data of the frame
-    /*
-    for(int i = 0; i < workspace2DVector.size(); i++)
-    {
-        for(int j = 0; j < workspace2DVector[i].size(); j++)
-        {
-            std::cout<<"I:" <<i <<":" <<workspace2DVector[i][j].red()<<","<<workspace2DVector[i][j].green()<<","
-                    <<workspace2DVector[i][j].blue()<<"," <<workspace2DVector[i][j].alpha()<<std::endl;
-        }
-    }*/
-
 }
 void GraphicsScene::InitializeColorspace(QPixmap* pix, double scaleFactorX, double scaleFactorY)
 {
-    //Scale factor was original 33.166
     QPainter* painter = new QPainter(pix);
-    pix->size();
+    width = scaleFactorX;
+    height = scaleFactorY;
+    //picture = pix;
 
     double columns = pix->size().width() / scaleFactorX;
     double rows = pix->size().height() / scaleFactorY;
@@ -118,4 +152,5 @@ void GraphicsScene::combineForeAndBack(QPixmap* pixResultant, QPixmap* pixBackgr
     painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
     painter.drawPixmap(0,0,*pixBackground);
     painter.drawPixmap(0,0,*pixForeground);
+    picture = pixResultant;
 }

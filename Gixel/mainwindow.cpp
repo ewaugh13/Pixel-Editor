@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&updateTimer, &QTimer::timeout, this, &MainWindow::workspaceClickCheck);//Checks for workspaceClickCheck every 10ms
     QObject::connect(&popupSize, &SetSpriteSize::setHeightAndWidth, this, &MainWindow::setSpriteHeightAndWidth);
     QObject::connect(&popupSize, &SetSpriteSize::closePopup, this, &MainWindow::cancelSetSize);
-    QObject::connect(scene, &GraphicsScene::graphicsSceneClicked, this, &MainWindow::placePoint);
+    QObject::connect(scene, &GraphicsScene::graphicsSceneDrawn, this, &MainWindow::drawChanges);
 }
 
 MainWindow::~MainWindow()
@@ -98,7 +98,8 @@ void MainWindow::workspaceClickCheck()
 
 }
 
-void MainWindow::placePoint(QPointF incomingPt)
+void MainWindow::drawChanges()
 {
     //currentTool->painter->drawPoint(incomingPt);
+    scene->addPixmap(*pixResultant); //Add the new pixmap to the scene so the Workspace updates
 }
