@@ -45,7 +45,6 @@ OBJECTS_DIR   = release
 
 SOURCES       = ..\Gixel\main.cpp \
 		..\Gixel\mainwindow.cpp \
-		..\Gixel\spritedatasheet.cpp \
 		..\Gixel\setspritesize.cpp \
 		..\Gixel\tool.cpp \
 		..\Gixel\pen.cpp \
@@ -54,7 +53,6 @@ SOURCES       = ..\Gixel\main.cpp \
 		release\moc_graphicscene.cpp
 OBJECTS       = release/main.o \
 		release/mainwindow.o \
-		release/spritedatasheet.o \
 		release/setspritesize.o \
 		release/tool.o \
 		release/pen.o \
@@ -64,12 +62,10 @@ OBJECTS       = release/main.o \
 		release/moc_graphicscene.o
 
 DIST          =  ..\Gixel\mainwindow.h \
-		..\Gixel\spritedatasheet.h \
 		..\Gixel\setspritesize.h \
 		..\Gixel\tool.h \
 		..\Gixel\graphicscene.h ..\Gixel\main.cpp \
 		..\Gixel\mainwindow.cpp \
-		..\Gixel\spritedatasheet.cpp \
 		..\Gixel\setspritesize.cpp \
 		..\Gixel\tool.cpp \
 		..\Gixel\pen.cpp \
@@ -85,7 +81,7 @@ first: all
 all: Makefile.Release  $(DESTDIR_TARGET)
 
 $(DESTDIR_TARGET): ui_mainwindow.h ui_setspritesize.h $(OBJECTS) 
-	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.Gixel.Release  $(LIBS)
+	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
 
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug" -o Makefile.Release ..\Gixel\Gixel.pro
@@ -96,7 +92,7 @@ dist:
 	$(ZIP) Gixel.zip $(SOURCES) $(DIST) ..\Gixel\Gixel.pro "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\spec_pre.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\qdevice.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\device_config.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\common\angle.conf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\qconfig.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3drender.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axbase.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axserver.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_clucene_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_core.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_core_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_dbus.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_designer.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gui.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_help.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_help_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_location.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_location_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_network.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_network_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_nfc.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_opengl.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_platformsupport_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_positioning.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qml.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quick.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_script.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_script_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scripttools.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scripttools_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scxml.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sensors.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialport.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sql.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_svg.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_testlib.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_uitools.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_websockets.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_widgets.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_winextras.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xml.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\qt_functions.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\qt_config.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\win32\qt_config.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\win32-g++\qmake.conf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\spec_post.prf" .qmake.stash "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\exclusive_builds.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\default_pre.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\win32\default_pre.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\resolve_config.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\exclusive_builds_post.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\default_post.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\build_pass.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\qml_debug.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\win32\rtti.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\precompile_header.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\warn_on.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\qt.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\resources.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\moc.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\win32\opengl.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\uic.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\file_copies.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\win32\windows.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\testcase_targets.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\exceptions.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\yacc.prf" "C:\Program Files (x86)\Qt\5.7\mingw53_32\mkspecs\features\lex.prf" ..\Gixel\Gixel.pro "C:\Program Files (x86)\Qt\5.7\mingw53_32\lib\qtmain.prl" "C:\Program Files (x86)\Qt\5.7\mingw53_32\lib\Qt5Widgets.prl" "C:\Program Files (x86)\Qt\5.7\mingw53_32\lib\Qt5Gui.prl" "C:\Program Files (x86)\Qt\5.7\mingw53_32\lib\Qt5Core.prl"  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\mainwindow.o release\spritedatasheet.o release\setspritesize.o release\tool.o release\pen.o release\graphicscene.o release\moc_mainwindow.o release\moc_setspritesize.o release\moc_graphicscene.o
+	-$(DEL_FILE) release\main.o release\mainwindow.o release\setspritesize.o release\tool.o release\pen.o release\graphicscene.o release\moc_mainwindow.o release\moc_setspritesize.o release\moc_graphicscene.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -219,6 +215,7 @@ release/moc_mainwindow.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/Q
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qicon.h \
 		../Gixel/graphicscene.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
@@ -282,7 +279,6 @@ release/moc_mainwindow.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/Q
 		../Gixel/setspritesize.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
-		../Gixel/spritedatasheet.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
 		../Gixel/tool.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
@@ -395,11 +391,9 @@ release/moc_setspritesize.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/includ
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/bin/moc.exe
 	"C:\Program Files (x86)\Qt\5.7\mingw53_32\bin\moc.exe" $(DEFINES) -D__GNUC__ -DWIN32 -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/mkspecs/win32-g++" -IC:/Users/Johnny/Documents/GitHub/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/Gixel -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtWidgets" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtGui" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtANGLE" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtCore" -I. -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward" ..\Gixel\setspritesize.h -o release\moc_setspritesize.cpp
 
-release/moc_graphicscene.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobject.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qnamespace.h \
+release/moc_graphicscene.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qcolor.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgb.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qglobal.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qconfig.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qfeatures.h \
@@ -422,22 +416,28 @@ release/moc_graphicscene.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qmutex.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qnumeric.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qversiontagging.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs_impl.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstring.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qchar.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbytearray.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qrefcount.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qarraydata.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringbuilder.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringlist.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qlist.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qalgorithms.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qiterator.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qrefcount.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qarraydata.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qhashfunctions.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qchar.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qpair.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbytearraylist.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringlist.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbytearray.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstring.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringbuilder.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qregexp.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringmatcher.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgba64.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobject.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs_impl.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qcoreevent.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qscopedpointer.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qmetatype.h \
@@ -450,9 +450,6 @@ release/moc_graphicscene.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qsize.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qbrush.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qvector.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qcolor.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgb.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgba64.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qmatrix.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpolygon.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qregion.h \
@@ -686,6 +683,7 @@ release/main.o: ../Gixel/main.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qicon.h \
 		../Gixel/graphicscene.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
@@ -749,7 +747,6 @@ release/main.o: ../Gixel/main.cpp ../Gixel/mainwindow.h \
 		../Gixel/setspritesize.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
-		../Gixel/spritedatasheet.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
 		../Gixel/tool.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
@@ -860,6 +857,7 @@ release/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qicon.h \
 		../Gixel/graphicscene.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
@@ -923,7 +921,6 @@ release/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		../Gixel/setspritesize.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
-		../Gixel/spritedatasheet.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
 		../Gixel/tool.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
@@ -931,9 +928,6 @@ release/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\Gixel\mainwindow.cpp
-
-release/spritedatasheet.o: ../Gixel/spritedatasheet.cpp ../Gixel/spritedatasheet.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\spritedatasheet.o ..\Gixel\spritedatasheet.cpp
 
 release/setspritesize.o: ../Gixel/setspritesize.cpp ../Gixel/setspritesize.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
@@ -1245,11 +1239,9 @@ release/pen.o: ../Gixel/pen.cpp ../Gixel/tool.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\pen.o ..\Gixel\pen.cpp
 
 release/graphicscene.o: ../Gixel/graphicscene.cpp ../Gixel/graphicscene.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobject.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qcolor.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgb.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qglobal.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qconfig.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qfeatures.h \
@@ -1272,22 +1264,28 @@ release/graphicscene.o: ../Gixel/graphicscene.cpp ../Gixel/graphicscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qmutex.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qnumeric.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qversiontagging.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs_impl.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstring.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qchar.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbytearray.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qrefcount.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qarraydata.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringbuilder.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringlist.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qlist.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qalgorithms.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qiterator.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qrefcount.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qarraydata.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qhashfunctions.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qchar.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qpair.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbytearraylist.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringlist.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbytearray.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstring.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringbuilder.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qregexp.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qstringmatcher.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgba64.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobject.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qobjectdefs_impl.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qcoreevent.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qscopedpointer.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qmetatype.h \
@@ -1300,9 +1298,6 @@ release/graphicscene.o: ../Gixel/graphicscene.cpp ../Gixel/graphicscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qsize.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qbrush.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qvector.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qcolor.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgb.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qrgba64.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qmatrix.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpolygon.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qregion.h \

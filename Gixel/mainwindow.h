@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include "graphicscene.h"
 #include "setspritesize.h"
-#include "spritedatasheet.h"
 #include <QPainter>
 #include "tool.h"
 #include <QPixmap>
@@ -43,7 +42,6 @@ private slots:
 
 private:
     SetSpriteSize popupSize;
-    SpriteDataSheet spriteData;
     Ui::MainWindow *ui;
 
 

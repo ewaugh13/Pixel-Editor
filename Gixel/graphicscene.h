@@ -1,11 +1,13 @@
 #ifndef GRAPHICSSCENE_H
 #define GRAPHICSSCENE_H
 
+#include <QColor>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
 #include <QList>
 #include <QMainWindow>
+#include <vector>
 #include "ui_mainwindow.h"
 
 class GraphicsScene : public QGraphicsScene
@@ -27,7 +29,9 @@ signals:
 public slots:
 
 private:
+    std::vector<std::vector<QColor>> workspace2DVector; //2D vector representative of tuples of the Workspace image
     QList <QPointF> m_points;
+
     //bool eventFilter(QObject*, QEvent*);
 };
 
