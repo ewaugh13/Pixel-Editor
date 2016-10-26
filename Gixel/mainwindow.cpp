@@ -8,19 +8,24 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //popupSize.show();
+    userDefinedX = 16;  //Defaults the screen to 16x16 sprite pixels
+    userDefinedY = 16;
+    scaleFactorX = 512/userDefinedX;
+    scaleFactorY = 512/userDefinedY;
 
-    updateTimer.start(10);  //10ms interval
+    popupSize.show();   //Calls the custom resolution window
+    popupSize.raise();
+    popupSize.activateWindow();
 
     scene = new GraphicsScene(ui);
 
-    pix = new QPixmap(398,398);
+    pix = new QPixmap(512,512); //Initialize the original pixmap, 512x512
     pix->fill(Qt::gray);
 
-    scene->drawExample(pix);
+    scene->InitializeWorkspace(pix,scaleFactorX,scaleFactorY);  //Initialize the Workspace as a checkerboard
     scene->addPixmap(*pix);
-
     ui->Workspace->setScene(scene);
+
     //currentTool = new Pen();
     //currentTool->painter->begin(scene);
 
@@ -28,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&popupSize, &SetSpriteSize::setHeightAndWidth, this, &MainWindow::setSpriteHeightAndWidth);
     QObject::connect(&popupSize, &SetSpriteSize::closeApp, this, &MainWindow::cancelSetSize);
     QObject::connect(scene, &GraphicsScene::graphicsSceneClicked, this, &MainWindow::placePoint);
-
 }
 
 MainWindow::~MainWindow()
@@ -39,12 +43,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::cancelSetSize()
 {
-    this->close();
+    //this->close();
 }
 
-void MainWindow::setSpriteHeightAndWidth(int height, int width)
+void MainWindow::setSpriteHeightAndWidth(int height, int width) //Gets the user defined height and width from the PopUp Window, determines scale factor, and initializes the spriteDataSheet
 {
+    userDefinedX = width;
+    userDefinedY = height;
+    scaleFactorX = 512/width;
+    scaleFactorY = 512/height;
 
+    /*
     spriteData.totalData.resize(width);
     for(int i =0; i< width; i++)
     {
@@ -59,7 +68,11 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width)
             //std::cout << "RGBA value at " << i << "," << j << " is " << std::get<0>(spriteData.totalData[i][j])
             //          << "," << std::get<1>(spriteData.totalData[i][j])<< "," << std::get<2>(spriteData.totalData[i][j]) << "," << std::get<3>(spriteData.totalData[i][j]) << std::endl;
         }
-    }
+    }*/
+    //this->show();
+
+    scene->InitializeWorkspace(pix,scaleFactorX,scaleFactorY);  //Reinitialize the workspace based on the new resolution
+    scene->addPixmap(*pix); //Add the new pixmap to the scene so the Workspace updates
 }
 void MainWindow::on_PenToolButton_clicked()
 {

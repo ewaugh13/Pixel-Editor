@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>717</width>
-    <height>573</height>
+    <width>862</width>
+    <height>633</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>130</x>
       <y>30</y>
-      <width>400</width>
-      <height>400</height>
+      <width>514</width>
+      <height>514</height>
      </rect>
     </property>
    </widget>
@@ -60,7 +60,7 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>660</x>
       <y>30</y>
       <width>160</width>
       <height>181</height>
@@ -114,7 +114,7 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>670</x>
       <y>230</y>
       <width>150</width>
       <height>150</height>
@@ -124,7 +124,7 @@
    <widget class="QPushButton" name="PreviewSettingsButton">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>670</x>
       <y>390</y>
       <width>151</width>
       <height>23</height>
@@ -140,7 +140,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>717</width>
+     <width>862</width>
      <height>21</height>
     </rect>
    </property>

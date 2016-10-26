@@ -13,59 +13,68 @@ GraphicsScene::GraphicsScene(Ui::MainWindow* mainWindow) : QGraphicsScene()
     mainWindow->Workspace->setMouseTracking(true);
     //mainWindow->Workspace->qApp->installEventFilter(this);
 }
-
-/*
+void GraphicsScene::UpdateWorkspace(Ui::MainWindow* mainWindow)
+{
+    mainWindow->Workspace->update(0,0,512,512);
+}
 void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent)
 {
-    qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
+    //qDebug() << Q_FUNC_INFO << mouseEvent->scenePos();
     QGraphicsScene::mouseMoveEvent(mouseEvent);
-}*/
+}
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
     std::cout <<"Clicking in scene" <<std::endl;
 
-    std::cout<<"mouse detected at " <<mouseEvent->pos().x() <<"," <<mouseEvent->pos().y() <<std::endl;
+    std::cout<<"mouse detected at " <<mouseEvent->scenePos().x() <<"," <<mouseEvent->scenePos().y() <<std::endl;
     //QGraphicsScene::mousePressEvent(mouseEvent);
     QPointF point = mouseEvent->scenePos();
     emit graphicsSceneClicked(point);
 }
 
-void GraphicsScene::drawExample(QPixmap* pix)
+void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, double scaleFactorY)
 {
+    //Scale factor was original 33.166
     QPainter* painter = new QPainter(pix);
     painter->setBrush(Qt::black);
     pix->size();
+    double columns = pix->size().width() / scaleFactorX;
+    double rows = pix->size().height() / scaleFactorY;
 
     std::cout << pix->size().width() << std::endl;
 
-    for(int i = 0; i < static_cast<int>(pix->size().width() / 33.166); i++) // i = x
+    for(int i = 0; i < (columns); i++) // i = x, number of columns
     {
-        for(int j = 0; j < static_cast<int>(pix->size().width() / 33.166); j++) // j = y
+        for(int j = 0; j < (rows); j++) // j = y, number of rows
         {
             if(painter->brush() == Qt::gray)
             {
                 painter->setBrush(Qt::black);
             }
-            else {
+            else
+            {
                 painter->setBrush(Qt::gray);
             }
-            painter->fillRect(QRectF(i * 33.33, 33.33 * j, 33.33, 33.33), painter->brush());
+            painter->fillRect(QRectF(static_cast<qreal>(i * scaleFactorX),static_cast<qreal>(scaleFactorY * j), static_cast<qreal>(scaleFactorX), static_cast<qreal>(scaleFactorY)), painter->brush());//factor was originally 33.33
 
         }
         if(painter->brush() == Qt::gray)
         {
             painter->setBrush(Qt::black);
         }
-        else {
+        else
+        {
             painter->setBrush(Qt::gray);
         }
     }
+    delete painter;
 }
 
-/*
+
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * me)
 {
+    /*
     qDebug() << Q_FUNC_INFO << me->scenePos();
     int radius = 20;
     QGraphicsEllipseItem * ellipse = this->addEllipse(me->scenePos().x() - radius, me->scenePos().y() - radius, radius*2, radius*2);
@@ -113,5 +122,5 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * me)
         m_points.clear();
     }
 
-    QGraphicsScene::mouseReleaseEvent(me);
-}*/
+    QGraphicsScene::mouseReleaseEvent(me);*/
+}

@@ -23,6 +23,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    int userDefinedX, userDefinedY;
+    double scaleFactorX, scaleFactorY;
+
     QTimer updateTimer;
     Tool* currentTool; //Current working tool in the editor
     Pen pen;//Child of tool
