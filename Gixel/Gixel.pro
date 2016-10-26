@@ -14,14 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
         mainwindow.cpp \
-    spritedatasheet.cpp \
     setspritesize.cpp \
     tool.cpp \
     pen.cpp \
     graphicscene.cpp
 
 HEADERS  += mainwindow.h \
-    spritedatasheet.h \
     setspritesize.h \
     tool.h \
     graphicscene.h

@@ -72,7 +72,7 @@ public:
         Workspace->setGeometry(QRect(130, 30, 514, 514));
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 30, 101, 151));
+        verticalLayoutWidget->setGeometry(QRect(10, 50, 101, 151));
         ToolsLayout = new QVBoxLayout(verticalLayoutWidget);
         ToolsLayout->setSpacing(6);
         ToolsLayout->setContentsMargins(11, 11, 11, 11);

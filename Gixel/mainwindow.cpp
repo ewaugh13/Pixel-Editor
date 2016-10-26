@@ -19,11 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene = new GraphicsScene(ui);
 
-    pix = new QPixmap(512,512); //Initialize the original pixmap, 512x512
-    pix->fill(Qt::gray);
+    pixBackground = new QPixmap(512,512); //Initialize the original pixmap, 512x512
+    pixForeground = new QPixmap(512,512);
 
-    scene->InitializeWorkspace(pix,scaleFactorX,scaleFactorY);  //Initialize the Workspace as a checkerboard
-    scene->addPixmap(*pix);
+    //pix->fill(Qt::gray);
+
+    scene->InitializeWorkspace(pixBackground,scaleFactorX,scaleFactorY);  //Initialize the Workspace as a checkerboard
+    //scene->InitializeColorspace(pixForeground,scaleFactorX,scaleFactorY);
+    scene->addPixmap(*pixBackground);
+    //scene->addPixmap(*pixForeground);
     ui->Workspace->setScene(scene);
 
     //currentTool = new Pen();
@@ -71,10 +75,12 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width) //Gets the user 
             //          << "," << std::get<1>(spriteData.totalData[i][j])<< "," << std::get<2>(spriteData.totalData[i][j]) << "," << std::get<3>(spriteData.totalData[i][j]) << std::endl;
         }
     }*/
-    //this->show();
+    this->show();
 
-    scene->InitializeWorkspace(pix,scaleFactorX,scaleFactorY);  //Reinitialize the workspace based on the new resolution
-    scene->addPixmap(*pix); //Add the new pixmap to the scene so the Workspace updates
+    scene->InitializeWorkspace(pixBackground,scaleFactorX,scaleFactorY);  //Reinitialize the workspace based on the new resolution
+    //scene->InitializeColorspace(pixForeground,scaleFactorX,scaleFactorY);
+    scene->addPixmap(*pixBackground); //Add the new pixmap to the scene so the Workspace updates
+    //scene->addPixmap(*pixForeground);
 }
 void MainWindow::on_PenToolButton_clicked()
 {
