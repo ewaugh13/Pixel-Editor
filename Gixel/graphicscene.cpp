@@ -75,6 +75,7 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
             painter->setBrush(Qt::gray);
         }
     }
+    delete painter;
     //Comment this back in if you wish to print out the vector data of the frame
     /*
     for(int i = 0; i < workspace2DVector.size(); i++)
@@ -85,7 +86,7 @@ void GraphicsScene::InitializeWorkspace(QPixmap* pix, double scaleFactorX, doubl
                     <<workspace2DVector[i][j].blue()<<"," <<workspace2DVector[i][j].alpha()<<std::endl;
         }
     }*/
-    delete painter;
+
 }
 void GraphicsScene::InitializeColorspace(QPixmap* pix, double scaleFactorX, double scaleFactorY)
 {
@@ -109,4 +110,12 @@ void GraphicsScene::InitializeColorspace(QPixmap* pix, double scaleFactorX, doub
             workspace2DVector[i][j] = Qt::transparent;
         }
     }
+    delete painter;
+}
+void GraphicsScene::combineForeAndBack(QPixmap* pixResultant, QPixmap* pixBackground, QPixmap* pixForeground)
+{
+    QPainter painter(pixResultant);
+    painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+    painter.drawPixmap(0,0,*pixBackground);
+    painter.drawPixmap(0,0,*pixForeground);
 }

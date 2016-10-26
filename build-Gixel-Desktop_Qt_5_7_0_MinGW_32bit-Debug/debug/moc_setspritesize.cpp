@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_SetSpriteSize_t {
     QByteArrayData data[12];
-    char stringdata0[214];
+    char stringdata0[216];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,19 +32,19 @@ static const qt_meta_stringdata_SetSpriteSize_t qt_meta_stringdata_SetSpriteSize
 QT_MOC_LITERAL(0, 0, 13), // "SetSpriteSize"
 QT_MOC_LITERAL(1, 14, 17), // "setHeightAndWidth"
 QT_MOC_LITERAL(2, 32, 0), // ""
-QT_MOC_LITERAL(3, 33, 8), // "closeApp"
-QT_MOC_LITERAL(4, 42, 21), // "on_buttonBox_accepted"
-QT_MOC_LITERAL(5, 64, 21), // "on_buttonBox_rejected"
-QT_MOC_LITERAL(6, 86, 29), // "on_heightSpinbox_valueChanged"
-QT_MOC_LITERAL(7, 116, 4), // "arg1"
-QT_MOC_LITERAL(8, 121, 28), // "on_widthSpinBox_valueChanged"
-QT_MOC_LITERAL(9, 150, 27), // "on_heightSlider_sliderMoved"
-QT_MOC_LITERAL(10, 178, 8), // "position"
-QT_MOC_LITERAL(11, 187, 26) // "on_widthSlider_sliderMoved"
+QT_MOC_LITERAL(3, 33, 10), // "closePopup"
+QT_MOC_LITERAL(4, 44, 21), // "on_buttonBox_accepted"
+QT_MOC_LITERAL(5, 66, 21), // "on_buttonBox_rejected"
+QT_MOC_LITERAL(6, 88, 29), // "on_heightSpinbox_valueChanged"
+QT_MOC_LITERAL(7, 118, 4), // "arg1"
+QT_MOC_LITERAL(8, 123, 28), // "on_widthSpinBox_valueChanged"
+QT_MOC_LITERAL(9, 152, 27), // "on_heightSlider_sliderMoved"
+QT_MOC_LITERAL(10, 180, 8), // "position"
+QT_MOC_LITERAL(11, 189, 26) // "on_widthSlider_sliderMoved"
 
     },
     "SetSpriteSize\0setHeightAndWidth\0\0"
-    "closeApp\0on_buttonBox_accepted\0"
+    "closePopup\0on_buttonBox_accepted\0"
     "on_buttonBox_rejected\0"
     "on_heightSpinbox_valueChanged\0arg1\0"
     "on_widthSpinBox_valueChanged\0"
@@ -68,19 +68,19 @@ static const uint qt_meta_data_SetSpriteSize[] = {
 
  // signals: name, argc, parameters, tag, flags
        1,    2,   54,    2, 0x06 /* Public */,
-       3,    0,   59,    2, 0x06 /* Public */,
+       3,    2,   59,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   60,    2, 0x08 /* Private */,
-       5,    0,   61,    2, 0x08 /* Private */,
-       6,    1,   62,    2, 0x08 /* Private */,
-       8,    1,   65,    2, 0x08 /* Private */,
-       9,    1,   68,    2, 0x08 /* Private */,
-      11,    1,   71,    2, 0x08 /* Private */,
+       4,    0,   64,    2, 0x08 /* Private */,
+       5,    0,   65,    2, 0x08 /* Private */,
+       6,    1,   66,    2, 0x08 /* Private */,
+       8,    1,   69,    2, 0x08 /* Private */,
+       9,    1,   72,    2, 0x08 /* Private */,
+      11,    1,   75,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
 
  // slots: parameters
     QMetaType::Void,
@@ -100,7 +100,7 @@ void SetSpriteSize::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->setHeightAndWidth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 1: _t->closeApp(); break;
+        case 1: _t->closePopup((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 2: _t->on_buttonBox_accepted(); break;
         case 3: _t->on_buttonBox_rejected(); break;
         case 4: _t->on_heightSpinbox_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
@@ -120,8 +120,8 @@ void SetSpriteSize::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             }
         }
         {
-            typedef void (SetSpriteSize::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SetSpriteSize::closeApp)) {
+            typedef void (SetSpriteSize::*_t)(int , int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SetSpriteSize::closePopup)) {
                 *result = 1;
                 return;
             }
@@ -173,8 +173,9 @@ void SetSpriteSize::setHeightAndWidth(int _t1, int _t2)
 }
 
 // SIGNAL 1
-void SetSpriteSize::closeApp()
+void SetSpriteSize::closePopup(int _t1, int _t2)
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

@@ -17,7 +17,7 @@ public:
 
 signals:
     void setHeightAndWidth(int,int);
-    void closeApp();
+    void closePopup(int,int);
 
 private slots:
     void on_buttonBox_accepted();

@@ -58,14 +58,14 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x0a /* Public */,
-       3,    2,   40,    2, 0x0a /* Public */,
-       4,    1,   45,    2, 0x0a /* Public */,
-       5,    0,   48,    2, 0x08 /* Private */,
-       6,    0,   49,    2, 0x08 /* Private */,
+       1,    2,   39,    2, 0x0a /* Public */,
+       3,    2,   44,    2, 0x0a /* Public */,
+       4,    1,   49,    2, 0x0a /* Public */,
+       5,    0,   52,    2, 0x08 /* Private */,
+       6,    0,   53,    2, 0x08 /* Private */,
 
  // slots: parameters
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    2,    2,
     QMetaType::Void, QMetaType::QPointF,    2,
     QMetaType::Void,
@@ -80,7 +80,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->cancelSetSize(); break;
+        case 0: _t->cancelSetSize((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 1: _t->setSpriteHeightAndWidth((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 2: _t->placePoint((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         case 3: _t->on_PenToolButton_clicked(); break;

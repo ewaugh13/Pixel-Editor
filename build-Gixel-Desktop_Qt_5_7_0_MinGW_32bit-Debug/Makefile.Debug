@@ -214,13 +214,24 @@ debug/moc_mainwindow.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtW
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qicon.h \
+		../Gixel/setspritesize.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpainter.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
+		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h \
 		../Gixel/graphicscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QPointF \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QList \
 		ui_mainwindow.h \
@@ -239,8 +250,6 @@ debug/moc_mainwindow.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtW
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qbuttongroup.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsView \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsview.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpainter.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qscrollarea.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qframe.h \
@@ -276,15 +285,7 @@ debug/moc_mainwindow.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtW
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgridlayout.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget \
-		../Gixel/setspritesize.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
-		../Gixel/tool.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h \
+		../Gixel/mainwindow.h \
 		../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/bin/moc.exe
 	"C:\Program Files (x86)\Qt\5.7\mingw53_32\bin\moc.exe" $(DEFINES) -D__GNUC__ -DWIN32 -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/mkspecs/win32-g++" -IC:/Users/Johnny/Documents/GitHub/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/Gixel -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtWidgets" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtGui" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtANGLE" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtCore" -I. -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward" ..\Gixel\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -552,6 +553,17 @@ debug/moc_graphicscene.cpp: C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/Q
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgridlayout.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget \
+		../Gixel/mainwindow.h \
+		../Gixel/setspritesize.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
+		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h \
+		../Gixel/graphicscene.h \
 		../Gixel/graphicscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/bin/moc.exe
 	"C:\Program Files (x86)\Qt\5.7\mingw53_32\bin\moc.exe" $(DEFINES) -D__GNUC__ -DWIN32 -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/mkspecs/win32-g++" -IC:/Users/Johnny/Documents/GitHub/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/Gixel -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtWidgets" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtGui" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtANGLE" -I"C:/Program Files (x86)/Qt/5.7/mingw53_32/include/QtCore" -I. -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32" -I"C:/Program Files (x86)/Qt/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward" ..\Gixel\graphicscene.h -o debug\moc_graphicscene.cpp
@@ -682,13 +694,24 @@ debug/main.o: ../Gixel/main.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qicon.h \
+		../Gixel/setspritesize.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpainter.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
+		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h \
 		../Gixel/graphicscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QPointF \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QList \
 		ui_mainwindow.h \
@@ -707,8 +730,6 @@ debug/main.o: ../Gixel/main.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qbuttongroup.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsView \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsview.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpainter.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qscrollarea.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qframe.h \
@@ -743,16 +764,7 @@ debug/main.o: ../Gixel/main.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayout.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget \
-		../Gixel/setspritesize.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
-		../Gixel/tool.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\Gixel\main.cpp
 
 debug/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
@@ -856,13 +868,24 @@ debug/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qicon.h \
+		../Gixel/setspritesize.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpainter.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
+		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h \
 		../Gixel/graphicscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QColor \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsScene \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsscene.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpen.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QPointF \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QList \
 		ui_mainwindow.h \
@@ -881,8 +904,6 @@ debug/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qbuttongroup.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QGraphicsView \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgraphicsview.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qpainter.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qscrollarea.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qframe.h \
@@ -917,16 +938,7 @@ debug/mainwindow.o: ../Gixel/mainwindow.cpp ../Gixel/mainwindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayout.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget \
-		../Gixel/setspritesize.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
-		../Gixel/tool.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\Gixel\mainwindow.cpp
 
 debug/setspritesize.o: ../Gixel/setspritesize.cpp ../Gixel/setspritesize.h \
@@ -1400,7 +1412,16 @@ debug/graphicscene.o: ../Gixel/graphicscene.cpp ../Gixel/graphicscene.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qgridlayout.h \
 		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QWidget \
-		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter
+		../Gixel/mainwindow.h \
+		../Gixel/setspritesize.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/QDialog \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPainter \
+		../Gixel/tool.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtGui/QPixmap \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/QTimer \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qtimer.h \
+		C:/Program\ Files\ (x86)/Qt/5.7/mingw53_32/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\graphicscene.o ..\Gixel\graphicscene.cpp
 
 debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 

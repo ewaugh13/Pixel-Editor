@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <vector>
 #include "ui_mainwindow.h"
+#include "mainwindow.h"
 
 class GraphicsScene : public QGraphicsScene
 {
@@ -23,6 +24,7 @@ public:
     void UpdateWorkspace(Ui::MainWindow* mainWindow);
     void InitializeWorkspace(QPixmap*,double scaleFactorX,double scaleFactorY);//Pixmap,scaleFactorX,scaleFactorY
     void InitializeColorspace(QPixmap*,double scaleFactorX,double scaleFactorY);
+    void combineForeAndBack(QPixmap* pixResultant, QPixmap* pixBackground, QPixmap* pixForeground);
 
 signals:
     void graphicsSceneClicked(QPointF);

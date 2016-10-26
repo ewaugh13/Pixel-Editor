@@ -21,12 +21,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     pixBackground = new QPixmap(512,512); //Initialize the original pixmap, 512x512
     pixForeground = new QPixmap(512,512);
+    pixResultant = new QPixmap(512,512);
 
-    //pix->fill(Qt::gray);
+    pixResultant->fill(Qt::transparent);
 
     scene->InitializeWorkspace(pixBackground,scaleFactorX,scaleFactorY);  //Initialize the Workspace as a checkerboard
-    //scene->InitializeColorspace(pixForeground,scaleFactorX,scaleFactorY);
-    scene->addPixmap(*pixBackground);
+    scene->InitializeColorspace(pixForeground,scaleFactorX,scaleFactorY);
+    //scene->combineForeAndBack(pixResultant,pixBackground,pixForeground); //for some reason doesn't allow to resize if in
+    scene->addPixmap(*pixResultant);
+    //scene->addPixmap(*pixBackground);
     //scene->addPixmap(*pixForeground);
     ui->Workspace->setScene(scene);
 
@@ -35,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(&updateTimer, &QTimer::timeout, this, &MainWindow::workspaceClickCheck);//Checks for workspaceClickCheck every 10ms
     QObject::connect(&popupSize, &SetSpriteSize::setHeightAndWidth, this, &MainWindow::setSpriteHeightAndWidth);
-    QObject::connect(&popupSize, &SetSpriteSize::closeApp, this, &MainWindow::cancelSetSize);
+    QObject::connect(&popupSize, &SetSpriteSize::closePopup, this, &MainWindow::cancelSetSize);
     QObject::connect(scene, &GraphicsScene::graphicsSceneClicked, this, &MainWindow::placePoint);
 }
 
@@ -45,9 +48,10 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::cancelSetSize()
+void MainWindow::cancelSetSize(int height, int width)
 {
-    //this->close();
+    this->show();
+    setSpriteHeightAndWidth(height, width);
 }
 
 void MainWindow::setSpriteHeightAndWidth(int height, int width) //Gets the user defined height and width from the PopUp Window, determines scale factor, and initializes the spriteDataSheet
@@ -76,9 +80,12 @@ void MainWindow::setSpriteHeightAndWidth(int height, int width) //Gets the user 
     this->show();
 
     scene->InitializeWorkspace(pixBackground,scaleFactorX,scaleFactorY);  //Reinitialize the workspace based on the new resolution
-    //scene->InitializeColorspace(pixForeground,scaleFactorX,scaleFactorY);
-    scene->addPixmap(*pixBackground); //Add the new pixmap to the scene so the Workspace updates
+    scene->InitializeColorspace(pixForeground,scaleFactorX,scaleFactorY);
+    //scene->addPixmap(*pixBackground); //Add the new pixmap to the scene so the Workspace updates
     //scene->addPixmap(*pixForeground);
+    scene->combineForeAndBack(pixResultant,pixBackground,pixForeground);
+    scene->addPixmap(*pixResultant);
+
 }
 void MainWindow::on_PenToolButton_clicked()
 {

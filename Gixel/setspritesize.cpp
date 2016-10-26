@@ -21,7 +21,7 @@ void SetSpriteSize::on_buttonBox_accepted()
 
 void SetSpriteSize::on_buttonBox_rejected()
 {
-    emit closeApp();
+    emit closePopup(ui->heightSpinbox->value(), ui->widthSpinBox->value());
     this->close();
 }
 
