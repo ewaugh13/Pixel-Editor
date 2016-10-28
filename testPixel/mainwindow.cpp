@@ -26,7 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //connection between popup window and mainwindow
     QObject::connect(&size, &SizeSelector::setWidthAndHeight, this, &MainWindow::acceptWidthAndHeight);
     QObject::connect(this, &MainWindow::passWidthAndHeight, ui->workspace, &DrawModel::userGivenWidthAndHeight);
-
+    QObject::connect(this, &MainWindow::setToolType, ui->workspace, &DrawModel::changeTools);
+    QObject::connect(this, &MainWindow::setPenSize, ui->workspace, &DrawModel::changePenSize);
+    //QObject::connect(this, &MainWindow::setPenColor, artist, &DrawModel::changePenColor);
 }
 
 MainWindow::~MainWindow()
@@ -40,4 +42,40 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     spriteHeight = height;
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight);
+}
+
+void MainWindow::on_penSizeSlider_valueChanged(int value)
+{
+    ui->penSizeLabel->setText(QString::number(value));
+    emit setPenSize(value);
+}
+
+void MainWindow::on_penButton_clicked()
+{
+    emit setToolType("Pen");
+}
+
+void MainWindow::on_eraserButton_clicked()
+{
+    emit setToolType("Eraser");
+}
+
+void MainWindow::on_paintButton_clicked()
+{
+    emit setToolType("FillBucket");
+}
+
+void MainWindow::on_lineButton_clicked()
+{
+    emit setToolType("Line");
+}
+
+void MainWindow::on_ellipseButton_clicked()
+{
+    emit setToolType("Ellipse");
+}
+
+void MainWindow::on_rectangleButton_clicked()
+{
+    emit setToolType("Rectangle");
 }
