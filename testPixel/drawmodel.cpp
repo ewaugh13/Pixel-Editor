@@ -39,6 +39,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
+
     if(currentTool == "Pen")
     {
         drawALine(lastPoint, QPoint(x,y));
@@ -46,25 +47,22 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     else if(currentTool == "Eraser")
     {
         erasing = true;
-        drawAPoint( QPoint(x,y));
+        drawALine( lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Ellipse")
     {
-
+        renderShapes(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Rectangle")
     {
-
+        renderShapes(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Line")
     {
+        renderShapes(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "FillBucket")
     {
-    }
-    else if(currentTool == "Circle")
-    {
-
     }
 
 
@@ -75,6 +73,7 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
+    lastPoint = QPoint(x,y);
     if(currentTool == "Pen")
     {
         std::cout << currentTool << std::endl;
@@ -88,45 +87,45 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Ellipse")
     {
+        renderShapes(QPoint(x,y), QPoint(x,y));
     }
     else if(currentTool == "Rectangle")
     {
-        QPoint endPoint(160/scaleFactorX, 160/scaleFactorY);
-        drawARect(QPoint(x,y), endPoint);
+        renderShapes(QPoint(x,y), QPoint(x,y));
     }
     else if(currentTool == "Line")
     {
+        renderShapes(QPoint(x,y), QPoint(x,y));
     }
     else if(currentTool == "FillBucket")
     {
     }
-    else if(currentTool == "Circle")
+    else if(currentTool == "Eyedropper")
     {
-        QPoint endPoint(160/scaleFactorX, 160/scaleFactorY);
-        drawARect(QPoint(x,y), endPoint);
+        QColor pixelColor = getPixelColor(QPoint(x,y));
+        *currentColor = pixelColor;
+        emit sendEyedropperColor(pixelColor);
     }
-}
-
-void DrawModel::drawARect(QPoint startPoint, QPoint endPoint)
-{
-    QPoint horizontalToStart(endPoint.x(), startPoint.y());
-    QPoint horizontalToEnd(startPoint.x(), endPoint.y());
-    drawALine(startPoint, horizontalToStart);
-    drawALine(startPoint, horizontalToEnd);
-    drawALine(endPoint, horizontalToStart);
-    drawALine(endPoint, horizontalToEnd);
-
-}
-
-void DrawModel::drawACircle(QPoint startPoint, QPoint endPoint)
-{
-
 }
 
 void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
 {
     QPoint point(mouseEvent->pos());
-    lastPoint = point/32;
+    int x = point.x()/scaleFactorX;
+    int y = point.y()/scaleFactorY;
+    if(currentTool == "Line")
+    {
+        createShapes(lastPoint, QPoint(x,y));
+    }
+    else if(currentTool == "Rectangle")
+    {
+        createShapes(lastPoint, QPoint(x,y));
+    }
+
+    else if(currentTool == "Ellipse")
+    {
+        createShapes(lastPoint, QPoint(x,y));
+    }
 }
 
 void DrawModel::drawAPoint(QPoint pos)
@@ -178,7 +177,6 @@ void DrawModel::drawGrid()
             painter.setBrush(*currentBrush);
             painter.setPen(QPen(*color, 1));
             painter.drawPoint(i , j);
-
         }
     }
     picture = picBackGround;
@@ -190,7 +188,7 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor colo
     QPainter painter(&picForeGround);
 
     painter.setBrush(*currentBrush);
-    if(currentTool == "Pen" || currentTool == "Rectangle")
+    if(currentTool == "Pen")
     {
         pen.setColor(*currentColor);
     }
@@ -199,7 +197,6 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor colo
         painter.setCompositionMode(QPainter::CompositionMode_Clear);
         pen.setColor(eraseColor);
     }
-
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawLine(lastPos, currentPos);
@@ -213,6 +210,7 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor colo
         painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
         erasing = false;
     }
+
 }
 
 void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
@@ -236,7 +234,7 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
 
 void DrawModel::changeTools(std::string tool)
 {
-    std::cout << "Got to change tools" << std::endl;
+
     currentTool = tool;
     if(tool == "Pen")
     {
@@ -247,7 +245,6 @@ void DrawModel::changeTools(std::string tool)
     }
     else if(tool == "Ellipse")
     {
-
     }
     else if(tool == "Rectangle")
     {
@@ -258,7 +255,7 @@ void DrawModel::changeTools(std::string tool)
     else if(tool == "FillBucket")
     {
     }
-    else if(tool == "Circle")
+    else if(tool == "Eyedropper")
     {
 
     }
@@ -267,14 +264,90 @@ void DrawModel::changeTools(std::string tool)
 
 void DrawModel::changePenSize(int size)
 {
-    std::cout << "Got to change pen size" << std::endl;
+
     penWidth = size;
 }
 
 void DrawModel::changePenColor(QColor newColor)
 {
-    std::cout<< "here" << std::endl;
     *currentColor = newColor;
+}
+QColor DrawModel::getPixelColor(QPoint pos)
+{
+    QColor theColor;
+    theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
+    if(theColor == Qt::transparent){
+        theColor = *currentColor;
+    }
+
+    return theColor;
+}
+
+void DrawModel::renderShapes(QPoint start, QPoint finish)
+{
+    QImage realTimeImage = picForeGround;
+    QPainter painter(&realTimeImage);
+    painter.setBrush(Qt::transparent);
+    pen.setWidth(penWidth);
+    pen.setColor(*currentColor);
+    painter.setPen(pen);
+    if(currentTool == "Line")
+    {
+        painter.drawLine(start, finish);
+    }
+    else if(currentTool == "Rectangle")
+    {
+
+        QPoint horizontalToStart(finish.x(), start.y());
+        QPoint horizontalToEnd(start.x(), finish.y());
+        painter.drawLine(start, horizontalToStart);
+        painter.drawLine(start, horizontalToEnd);
+        painter.drawLine(finish, horizontalToStart);
+        painter.drawLine(finish, horizontalToEnd);
+    }
+    else if(currentTool == "Ellipse")
+    {
+        painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
+    }
+
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), realTimeImage);
+    picture = result;
+    update();
+}
+
+void DrawModel::createShapes(QPoint start, QPoint finish)
+{
+
+    QPainter painter(&picForeGround);
+    painter.setBrush(Qt::transparent);
+    pen.setWidth(penWidth);
+    pen.setColor(*currentColor);
+    painter.setPen(pen);
+
+    if(currentTool == "Line")
+    {
+        painter.drawLine(start, finish);
+    }
+    else if(currentTool == "Rectangle")
+    {
+        QPoint horizontalToStart(finish.x(), start.y());
+        QPoint horizontalToEnd(start.x(), finish.y());
+        painter.drawLine(start, horizontalToStart);
+        painter.drawLine(start, horizontalToEnd);
+        painter.drawLine(finish, horizontalToStart);
+        painter.drawLine(finish, horizontalToEnd);
+    }
+    else if(currentTool == "Ellipse")
+    {
+        painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
+    }
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), picForeGround);
+    picture = result;
+    update();
 }
 
 /*

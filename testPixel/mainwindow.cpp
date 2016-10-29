@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::setToolType, ui->workspace, &DrawModel::changeTools);
     QObject::connect(this, &MainWindow::setPenSize, ui->workspace, &DrawModel::changePenSize);
     QObject::connect(this, &MainWindow::setPenColor, ui->workspace, &DrawModel::changePenColor);
+    QObject::connect(ui->workspace, &DrawModel::sendEyedropperColor, this, &MainWindow::setColorPreviewWindow);
 }
 
 MainWindow::~MainWindow()
@@ -79,18 +80,21 @@ void MainWindow::on_rectangleButton_clicked()
 {
     emit setToolType("Rectangle");
 }
-
+void MainWindow::on_eyedropperButton_clicked()
+{
+    emit setToolType("Eyedropper");
+}
 void MainWindow::on_colorSelectionButton_clicked()
 {
-    QColorDialog* colorPicker = new QColorDialog();
-    colorPicker->show();
-    QColor  color = QColorDialog::getColor();
+    colorPicker = new QColorDialog();
+    QColor  color = colorPicker->getColor();
     colorPicker->close();
     QPalette palette;
     palette.setColor(QPalette::Window,color);
     ui->colorPreviewLabel->setAutoFillBackground(true);
     ui->colorPreviewLabel->setPalette(palette);
     emit setPenColor(color);
+    delete colorPicker;
 }
 
 
@@ -100,3 +104,11 @@ void MainWindow::on_penSizeSpinBox_valueChanged(int arg1)
     ui->penSizeSlider->setSliderPosition(arg1);
     emit setPenSize(arg1);
 }
+void MainWindow::setColorPreviewWindow(QColor newColor)
+{
+    QPalette palette;
+    palette.setColor(QPalette::Window,newColor);
+    ui->colorPreviewLabel->setAutoFillBackground(true);
+    ui->colorPreviewLabel->setPalette(palette);
+}
+
