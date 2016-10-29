@@ -111,4 +111,3 @@ void MainWindow::setColorPreviewWindow(QColor newColor)
     ui->colorPreviewLabel->setAutoFillBackground(true);
     ui->colorPreviewLabel->setPalette(palette);
 }
-

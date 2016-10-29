@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>879</width>
-    <height>603</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,32 +34,6 @@
     </property>
     <layout class="QGridLayout" name="gridLayout"/>
    </widget>
-<<<<<<< HEAD
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>400</y>
-      <width>61</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="colorSelector">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>370</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Color Selector</string>
-=======
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
@@ -336,7 +310,6 @@
     </property>
     <property name="maximum">
      <number>512</number>
->>>>>>> 871cd6a09564d0f1a42a4d151cb96026b1fef3c8
     </property>
    </widget>
   </widget>
