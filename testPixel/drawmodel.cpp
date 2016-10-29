@@ -39,6 +39,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
+
     if(currentTool == "Pen")
     {
         drawALine(lastPoint, QPoint(x,y));
@@ -46,7 +47,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     else if(currentTool == "Eraser")
     {
         erasing = true;
-        drawAPoint( QPoint(x,y));
+        drawALine( lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Ellipse")
     {
@@ -57,6 +58,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Line")
     {
+        renderShapes(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "FillBucket")
     {
@@ -73,6 +75,7 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
+    lastPoint = QPoint(x,y);
     if(currentTool == "Pen")
     {
         std::cout << currentTool << std::endl;
@@ -93,6 +96,7 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Line")
     {
+        renderShapes(QPoint(x,y), QPoint(x,y));
     }
     else if(currentTool == "FillBucket")
     {
@@ -112,7 +116,12 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
 void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
 {
     QPoint point(mouseEvent->pos());
-    lastPoint = point/32;
+    int x = point.x()/scaleFactorX;
+    int y = point.y()/scaleFactorY;
+    if(currentTool == "Line")
+    {
+        createShapes(lastPoint, QPoint(x,y));
+    }
 }
 
 void DrawModel::drawAPoint(QPoint pos)
@@ -221,7 +230,7 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
 
 void DrawModel::changeTools(std::string tool)
 {
-    std::cout << "Got to change tools" << std::endl;
+
     currentTool = tool;
     if(tool == "Pen")
     {
@@ -255,13 +264,12 @@ void DrawModel::changeTools(std::string tool)
 
 void DrawModel::changePenSize(int size)
 {
-    std::cout << "Got to change pen size" << std::endl;
+
     penWidth = size;
 }
 
 void DrawModel::changePenColor(QColor newColor)
 {
-    std::cout<< "here" << std::endl;
     *currentColor = newColor;
 }
 QColor DrawModel::getPixelColor(QPoint pos)
@@ -270,6 +278,46 @@ QColor DrawModel::getPixelColor(QPoint pos)
     theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
     std::cout<<theColor.red()<<","<<theColor.green()<<","<<theColor.blue()<<","<<theColor.alpha()<<std::endl;
     return theColor;
+}
+
+void DrawModel::renderShapes(QPoint start, QPoint finish)
+{
+    QImage realTimeImage = picForeGround;
+    QPainter painter(&realTimeImage);
+    painter.setBrush(*currentBrush);
+    pen.setWidth(penWidth);
+    pen.setColor(*currentColor);
+    painter.setPen(pen);
+
+    if(currentTool == "Line")
+    {
+        painter.drawLine(start, finish);
+    }
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), realTimeImage);
+    picture = result;
+    update();
+}
+
+void DrawModel::createShapes(QPoint start, QPoint finish)
+{
+
+    QPainter painter(&picForeGround);
+    painter.setBrush(*currentBrush);
+    pen.setWidth(penWidth);
+    pen.setColor(*currentColor);
+    painter.setPen(pen);
+
+    if(currentTool == "Line")
+    {
+        painter.drawLine(start, finish);
+    }
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), picForeGround);
+    picture = result;
+    update();
 }
 
 /*

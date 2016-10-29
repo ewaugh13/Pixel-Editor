@@ -62,6 +62,10 @@ private:
 
     bool erasing;
 
+    //used for line tool
+    void renderShapes(QPoint, QPoint); //shows line
+    void createShapes(QPoint, QPoint); //actually draws line
+
     //enum Tools{Pen, Eraser, Line, Circle, FillBucket, Ellipse, Rectangle};
 
     //Tools ourTool;
