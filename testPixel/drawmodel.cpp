@@ -4,6 +4,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
 {
     width = 8;
     height = 8;
+    erasing = false;
     scaleFactorX = 512/width;
     scaleFactorY = 512/height;
     currentColor = new QColor(255,255,255,255);
@@ -15,6 +16,10 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     painter.setBrush(*currentBrush);
     painter.drawImage(QPoint(0,0), newPicture);
     picture = newPicture;
+
+    picForeGround = QImage(width, height, QImage::Format_ARGB32);
+    picBackGround = QImage(width, height, QImage::Format_ARGB32);
+    picForeGround.fill(Qt::transparent);
     currentTool = "Pen";
 }
 
@@ -40,7 +45,9 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Eraser")
     {
-        ((x + y) % 2 == 0 )? *currentColor = QColor(100,100,100,255): *currentColor = QColor(150,150,150,255);
+        //((x + y) % 2 == 0 )? *currentColor = QColor(100,100,100,255): *currentColor = QColor(150,150,150,255);
+        erasing = true;
+        *currentColor = Qt::transparent;
         drawAPoint( QPoint(x,y));
     }
     else if(currentTool == "Ellipse")
@@ -77,7 +84,9 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Eraser")
     {
-        ((x + y) % 2 == 0 )? *currentColor = QColor(100,100,100,0): *currentColor = QColor(150,150,150,0);
+        //((x + y) % 2 == 0 )? *currentColor = QColor(100,100,100,0): *currentColor = QColor(150,150,150,0);
+        *currentColor = Qt::transparent;
+        erasing = true;
         drawAPoint(QPoint(x,y));
     }
     else if(currentTool == "Ellipse")
@@ -109,14 +118,26 @@ void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
 void DrawModel::drawAPoint(QPoint pos)
 {
 
-    QPainter painter(&picture);
+    QPainter painter(&picForeGround);
+
+    if(currentTool == "Eraser"){
+        painter.setCompositionMode(QPainter::CompositionMode_Clear);
+    }
     painter.setBrush(*currentBrush);
     pen.setColor(*currentColor);
     pen.setWidth(penWidth);
     painter.setPen(pen);
-    painter.drawPoint(pos.x(), pos.y());
-    lastPoint = pos;
+    painter.drawPoint(pos);
+    QImage result = picBackGround;
+    QPainter p(&result);
+    p.drawImage(QPoint(0,0),picForeGround);
+    picture = result;
     update();
+    lastPoint = pos;
+    if(currentTool == "Eraser"){
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        erasing = false;
+    }
 }
 
 void DrawModel::drawGrid()
@@ -134,26 +155,39 @@ void DrawModel::drawGrid()
             {
                 color = new QColor(150, 150, 150, 255);
             }
-            QPainter painter(&picture);
+            QPainter painter(&picBackGround);
             painter.setBrush(*currentBrush);
             painter.setPen(QPen(*color, 1));
             painter.drawPoint(i , j);
 
         }
     }
+    picture = picBackGround;
     update();
 }
 
 void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor color
 {
-    QPainter painter(&picture);
+    QPainter painter(&picForeGround);
+    if(currentTool == "Eraser"){
+        painter.setCompositionMode(QPainter::CompositionMode_Clear);
+    }
     painter.setBrush(*currentBrush);
     pen.setColor(*currentColor);
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawLine(lastPos, currentPos);
     lastPoint = currentPos;
+    QImage result = picBackGround;
+    QPainter p(&result);
+    p.drawImage(QPoint(0,0),picForeGround);
+    picture = result;
     update();
+    if(currentTool == "Eraser"){
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        erasing = false;
+    }
+
 }
 
 void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
@@ -163,6 +197,9 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
     scaleFactorX = 512/width;
     scaleFactorY = 512/height;
 
+    picForeGround = QImage(width, height, QImage::Format_ARGB32);
+    picBackGround = QImage(width, height, QImage::Format_ARGB32);
+    picForeGround.fill(Qt::transparent);
     QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
     newPicture.fill(qRgb(255,255,255));
     QPainter painter(&newPicture);
