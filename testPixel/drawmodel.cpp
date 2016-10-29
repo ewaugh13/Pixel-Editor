@@ -55,6 +55,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Rectangle")
     {
+        renderShapes(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Line")
     {
@@ -63,10 +64,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     else if(currentTool == "FillBucket")
     {
     }
-    else if(currentTool == "Circle")
-    {
 
-    }
 
 }
 
@@ -93,6 +91,7 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Rectangle")
     {
+        renderShapes(QPoint(x,y), QPoint(x,y));
     }
     else if(currentTool == "Line")
     {
@@ -100,10 +99,6 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "FillBucket")
     {
-    }
-    else if(currentTool == "Circle")
-    {
-
     }
     else if(currentTool == "Eyedropper")
     {
@@ -119,6 +114,10 @@ void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
     if(currentTool == "Line")
+    {
+        createShapes(lastPoint, QPoint(x,y));
+    }
+    else if(currentTool == "Rectangle")
     {
         createShapes(lastPoint, QPoint(x,y));
     }
@@ -251,10 +250,6 @@ void DrawModel::changeTools(std::string tool)
     else if(tool == "FillBucket")
     {
     }
-    else if(tool == "Circle")
-    {
-
-    }
     else if(tool == "Eyedropper")
     {
 
@@ -276,7 +271,10 @@ QColor DrawModel::getPixelColor(QPoint pos)
 {
     QColor theColor;
     theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
-    std::cout<<theColor.red()<<","<<theColor.green()<<","<<theColor.blue()<<","<<theColor.alpha()<<std::endl;
+    if(theColor == Qt::transparent){
+        theColor = *currentColor;
+    }
+
     return theColor;
 }
 
@@ -288,10 +286,19 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
     pen.setWidth(penWidth);
     pen.setColor(*currentColor);
     painter.setPen(pen);
-
     if(currentTool == "Line")
     {
         painter.drawLine(start, finish);
+    }
+    else if(currentTool == "Rectangle")
+    {
+
+        QPoint horizontalToStart(finish.x(), start.y());
+        QPoint horizontalToEnd(start.x(), finish.y());
+        painter.drawLine(start, horizontalToStart);
+        painter.drawLine(start, horizontalToEnd);
+        painter.drawLine(finish, horizontalToStart);
+        painter.drawLine(finish, horizontalToEnd);
     }
     QImage result = picBackGround;
     QPainter painter2(&result);
@@ -312,6 +319,15 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     if(currentTool == "Line")
     {
         painter.drawLine(start, finish);
+    }
+    else if(currentTool == "Rectangle")
+    {
+        QPoint horizontalToStart(finish.x(), start.y());
+        QPoint horizontalToEnd(start.x(), finish.y());
+        painter.drawLine(start, horizontalToStart);
+        painter.drawLine(start, horizontalToEnd);
+        painter.drawLine(finish, horizontalToStart);
+        painter.drawLine(finish, horizontalToEnd);
     }
     QImage result = picBackGround;
     QPainter painter2(&result);
