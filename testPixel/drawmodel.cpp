@@ -54,6 +54,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Rectangle")
     {
+
     }
     else if(currentTool == "Line")
     {
@@ -91,6 +92,7 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Rectangle")
     {
+        drawARect
     }
     else if(currentTool == "Line")
     {
