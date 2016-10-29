@@ -22,7 +22,7 @@ signals:
 public slots:
     void userGivenWidthAndHeight(int, int);
     void changePenSize(int);
-    //void changePenColor(QColor);
+    void changePenColor(QColor);
     void changeTools(std::string);
 
 protected:
@@ -44,6 +44,7 @@ private:
     QBrush* currentBrush;
     QColor* currentColor;
     std::string currentTool;
+    QColor eraseColor;
 
     int width;
     int height;

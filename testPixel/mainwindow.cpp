@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::passWidthAndHeight, ui->workspace, &DrawModel::userGivenWidthAndHeight);
     QObject::connect(this, &MainWindow::setToolType, ui->workspace, &DrawModel::changeTools);
     QObject::connect(this, &MainWindow::setPenSize, ui->workspace, &DrawModel::changePenSize);
-    //QObject::connect(this, &MainWindow::setPenColor, artist, &DrawModel::changePenColor);
+    QObject::connect(this, &MainWindow::setPenColor, ui->workspace, &DrawModel::changePenColor);
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +46,7 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
 
 void MainWindow::on_penSizeSlider_valueChanged(int value)
 {
-    ui->penSizeLabel->setText(QString::number(value));
+    ui->penSizeSpinBox->setValue(value);
     emit setPenSize(value);
 }
 
@@ -78,4 +78,25 @@ void MainWindow::on_ellipseButton_clicked()
 void MainWindow::on_rectangleButton_clicked()
 {
     emit setToolType("Rectangle");
+}
+
+void MainWindow::on_colorSelectionButton_clicked()
+{
+    QColorDialog* colorPicker = new QColorDialog();
+    colorPicker->show();
+    QColor  color = QColorDialog::getColor();
+    colorPicker->close();
+    QPalette palette;
+    palette.setColor(QPalette::Window,color);
+    ui->colorPreviewLabel->setAutoFillBackground(true);
+    ui->colorPreviewLabel->setPalette(palette);
+    emit setPenColor(color);
+}
+
+
+void MainWindow::on_penSizeSpinBox_valueChanged(int arg1)
+{
+    ui->penSizeSlider->setValue(arg1);
+    ui->penSizeSlider->setSliderPosition(arg1);
+    emit setPenSize(arg1);
 }

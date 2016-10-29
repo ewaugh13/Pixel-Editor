@@ -16,6 +16,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     painter.drawImage(QPoint(0,0), newPicture);
     picture = newPicture;
     currentTool = "Pen";
+    eraseColor = QColor(0,0,0,0);
 }
 
 
@@ -35,12 +36,12 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     int y = point.y()/scaleFactorY;
     if(currentTool == "Pen")
     {
-        *currentColor = Qt::white;
+
         drawALine(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Eraser")
     {
-        ((x + y) % 2 == 0 )? *currentColor = QColor(100,100,100,255): *currentColor = QColor(150,150,150,255);
+        ((x + y) % 2 == 0 )? eraseColor = QColor(100,100,100,255): eraseColor = QColor(150,150,150,255);
         drawAPoint( QPoint(x,y));
     }
     else if(currentTool == "Ellipse")
@@ -72,12 +73,12 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     if(currentTool == "Pen")
     {
         std::cout << currentTool << std::endl;
-        *currentColor = Qt::white;
+
         drawAPoint(QPoint(x,y));
     }
     else if(currentTool == "Eraser")
     {
-        ((x + y) % 2 == 0 )? *currentColor = QColor(100,100,100,0): *currentColor = QColor(150,150,150,0);
+        ((x + y) % 2 == 0 )? eraseColor = QColor(100,100,100,0): eraseColor = QColor(150,150,150,0);
         drawAPoint(QPoint(x,y));
     }
     else if(currentTool == "Ellipse")
@@ -111,7 +112,14 @@ void DrawModel::drawAPoint(QPoint pos)
 
     QPainter painter(&picture);
     painter.setBrush(*currentBrush);
-    pen.setColor(*currentColor);
+    if(currentTool == "Pen")
+    {
+        pen.setColor(*currentColor);
+    }
+    else if(currentTool == "Eraser")
+    {
+        pen.setColor(eraseColor);
+    }
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawPoint(pos.x(), pos.y());
@@ -148,7 +156,14 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor colo
 {
     QPainter painter(&picture);
     painter.setBrush(*currentBrush);
-    pen.setColor(*currentColor);
+    if(currentTool == "Pen")
+    {
+        pen.setColor(*currentColor);
+    }
+    else if(currentTool == "Eraser")
+    {
+        pen.setColor(eraseColor);
+    }
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawLine(lastPos, currentPos);
@@ -207,6 +222,12 @@ void DrawModel::changePenSize(int size)
 {
     std::cout << "Got to change pen size" << std::endl;
     penWidth = size;
+}
+
+void DrawModel::changePenColor(QColor newColor)
+{
+    std::cout<< "here" << std::endl;
+    *currentColor = newColor;
 }
 
 /*

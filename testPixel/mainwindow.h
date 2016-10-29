@@ -7,6 +7,7 @@
 #include "drawmodel.h"
 #include "sizeselector.h"
 #include <string>
+#include <QColorDialog>
 
 
 namespace Ui {
@@ -28,7 +29,7 @@ public slots:
 signals:
     void passWidthAndHeight(int,int);
     void setPenSize(int);
-    //void setPenColor(QColor);
+    void setPenColor(QColor);
     void setToolType(std::string);
 
 private slots:
@@ -45,6 +46,10 @@ private slots:
     void on_ellipseButton_clicked();
 
     void on_rectangleButton_clicked();
+
+    void on_colorSelectionButton_clicked();
+
+    void on_penSizeSpinBox_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
