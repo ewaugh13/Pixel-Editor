@@ -26,7 +26,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //connection between popup window and mainwindow
     QObject::connect(&size, &SizeSelector::setWidthAndHeight, this, &MainWindow::acceptWidthAndHeight);
     QObject::connect(this, &MainWindow::passWidthAndHeight, ui->workspace, &DrawModel::userGivenWidthAndHeight);
-
+    QObject::connect(this, &MainWindow::setToolType, ui->workspace, &DrawModel::changeTools);
+    QObject::connect(this, &MainWindow::setPenSize, ui->workspace, &DrawModel::changePenSize);
+    QObject::connect(this, &MainWindow::setPenColor, ui->workspace, &DrawModel::changePenColor);
+    QObject::connect(ui->workspace, &DrawModel::sendEyedropperColor, this, &MainWindow::setColorPreviewWindow);
 }
 
 MainWindow::~MainWindow()
@@ -41,3 +44,70 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight);
 }
+
+void MainWindow::on_penSizeSlider_valueChanged(int value)
+{
+    ui->penSizeSpinBox->setValue(value);
+    emit setPenSize(value);
+}
+
+void MainWindow::on_penButton_clicked()
+{
+    emit setToolType("Pen");
+}
+
+void MainWindow::on_eraserButton_clicked()
+{
+    emit setToolType("Eraser");
+}
+
+void MainWindow::on_paintButton_clicked()
+{
+    emit setToolType("FillBucket");
+}
+
+void MainWindow::on_lineButton_clicked()
+{
+    emit setToolType("Line");
+}
+
+void MainWindow::on_ellipseButton_clicked()
+{
+    emit setToolType("Ellipse");
+}
+
+void MainWindow::on_rectangleButton_clicked()
+{
+    emit setToolType("Rectangle");
+}
+void MainWindow::on_eyedropperButton_clicked()
+{
+    emit setToolType("Eyedropper");
+}
+void MainWindow::on_colorSelectionButton_clicked()
+{
+    QColorDialog* colorPicker = new QColorDialog();
+    QColor color = QColorDialog::getColor();
+    colorPicker->close();
+    QPalette palette;
+    palette.setColor(QPalette::Window,color);
+    ui->colorPreviewLabel->setAutoFillBackground(true);
+    ui->colorPreviewLabel->setPalette(palette);
+    emit setPenColor(color);
+}
+
+
+void MainWindow::on_penSizeSpinBox_valueChanged(int arg1)
+{
+    ui->penSizeSlider->setValue(arg1);
+    ui->penSizeSlider->setSliderPosition(arg1);
+    emit setPenSize(arg1);
+}
+void MainWindow::setColorPreviewWindow(QColor newColor)
+{
+    QPalette palette;
+    palette.setColor(QPalette::Window,newColor);
+    ui->colorPreviewLabel->setAutoFillBackground(true);
+    ui->colorPreviewLabel->setPalette(palette);
+}
+

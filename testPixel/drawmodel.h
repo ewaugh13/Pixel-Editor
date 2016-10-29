@@ -6,7 +6,11 @@
 #include <QPen>
 #include <QPainter>
 #include <QPaintEvent>
+#include <QBrush>
+#include <QColor>
 #include <iostream>
+#include <string>
+
 
 class DrawModel : public QWidget
 {
@@ -15,9 +19,14 @@ public:
     explicit DrawModel(QWidget *parent = 0);
 
 signals:
+    void sendEyedropperColor(QColor);
 
 public slots:
     void userGivenWidthAndHeight(int, int);
+    void changePenSize(int);
+    void changePenColor(QColor);
+    void changeTools(std::string);
+
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -27,19 +36,35 @@ protected:
     //void resizeEvent(QResizeEvent*)Q_DECL_OVERRIDE;
 
     //
-    void drawAPoint(QPoint, QColor);
-    void drawALine(QPoint, QPoint, QColor); //used for mouse move event to draw pixels
+    void drawAPoint(QPoint);
+    void drawALine(QPoint, QPoint); //used for mouse move event to draw pixels
     void drawGrid();
+    QColor getPixelColor(QPoint);
 
 private:
     QImage picture;
     QPen pen;
     QPoint lastPoint;
+    QBrush* currentBrush;
+    QColor* currentColor;
+    std::string currentTool;
+    QColor eraseColor;
+
+    QImage picForeGround;
+    QImage picBackGround;
     int width;
     int height;
 
     int scaleFactorX;
     int scaleFactorY;
+
+    int penWidth;
+
+    bool erasing;
+
+    //enum Tools{Pen, Eraser, Line, Circle, FillBucket, Ellipse, Rectangle};
+
+    //Tools ourTool;
 
 };
 
