@@ -18,6 +18,7 @@ signals:
 
 public slots:
     void userGivenWidthAndHeight(int, int);
+    void userGivenColor(QColor);
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -27,8 +28,8 @@ protected:
     //void resizeEvent(QResizeEvent*)Q_DECL_OVERRIDE;
 
     //
-    void drawAPoint(QPoint, QColor);
-    void drawALine(QPoint, QPoint, QColor); //used for mouse move event to draw pixels
+    void drawAPoint(QPoint);
+    void drawALine(QPoint, QPoint); //used for mouse move event to draw pixels
     void drawGrid();
 
 private:
@@ -40,6 +41,7 @@ private:
 
     int scaleFactorX;
     int scaleFactorY;
+    QColor currentColor;
 
 };
 

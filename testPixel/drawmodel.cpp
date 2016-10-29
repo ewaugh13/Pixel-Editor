@@ -12,6 +12,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     painter.drawImage(QPoint(0,0), newPicture);
     picture = newPicture;
     drawGrid();
+    currentColor = Qt::transparent;
 }
 
 
@@ -28,7 +29,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
-    drawALine(lastPoint, QPoint(x,y), Qt::red);
+    drawALine(lastPoint, QPoint(x,y));
 
 }
 
@@ -37,21 +38,21 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
-    drawAPoint(QPoint(x,y), Qt::red);
+    drawAPoint(QPoint(x,y));
 
 }
 
 void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
 {
     QPoint point(mouseEvent->pos());
-    lastPoint = point/32;
+    lastPoint = point;
 }
 
-void DrawModel::drawAPoint(QPoint pos, QColor color)
+void DrawModel::drawAPoint(QPoint pos)
 {
 
     QPainter painter(&picture);
-    painter.setPen(QPen(color, 1));
+    painter.setPen(QPen(currentColor, 1));
     painter.drawPoint(pos.x(), pos.y());
     lastPoint = pos;
     update();
@@ -66,21 +67,21 @@ void DrawModel::drawGrid()
         {
             if((i + j) % 2 == 0)
             {
-                color = new QColor(100, 100, 100, 255);
+                currentColor = *(new QColor(100, 100, 100, 255));
             }
             else
             {
-                color = new QColor(150, 150, 150, 255);
+                currentColor = *(new QColor(150, 150, 150, 255));
             }
-            drawAPoint(*(new QPoint(i, j)), *color);
+            drawAPoint(*(new QPoint(i, j)));
         }
     }
 }
 
-void DrawModel::drawALine(QPoint lastPos, QPoint currentPos, QColor color)
+void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)
 {
     QPainter painter(&picture);
-    painter.setPen(QPen(color, 1));
+    painter.setPen(QPen(currentColor, 1));
     painter.drawLine(lastPos, currentPos);
     lastPoint = currentPos;
     update();
@@ -88,7 +89,6 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos, QColor color)
 
 void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
 {
-    std::cout << "HELLO! ITS ME!! I WAS WONDERING AFTER ALL THESE YEARS YOUD LIKE TO MEET?!" << std::endl;
     width = passedWidth;
     height = passedHeight;
     scaleFactorX = 512/width;
@@ -101,6 +101,12 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
     picture = newPicture;
     drawGrid();
 }
+
+void DrawModel::userGivenColor(QColor selectedColor)
+{
+    currentColor = selectedColor;
+}
+
 /*
 void DrawModel::resizeEvent(QResizeEvent *event)
 {

@@ -3,9 +3,11 @@
 
 #include <QMainWindow>
 #include <QLayout>
-#include <QtCore>
+#include <QColorDialog>
 #include "drawmodel.h"
 #include "sizeselector.h"
+#include <QWidgetAction>
+#include <QToolButton>
 
 
 namespace Ui {
@@ -26,6 +28,10 @@ public slots:
 
 signals:
     void passWidthAndHeight(int,int);
+    void passColor(QColor);
+
+private slots:
+    void on_colorSelector_clicked();
 
 private:
     Ui::MainWindow *ui;

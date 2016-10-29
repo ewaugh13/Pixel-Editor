@@ -18,14 +18,25 @@ MainWindow::MainWindow(QWidget *parent) :
     spriteWidth = 16;
     spriteHeight = 16;
 
-    //mainSpace->setColumnStretch(0,1);
-    //mainSpace->setColumnStretch(3,1);
-    //mainSpace->addWidget(artist,0,0,1,4);
-    //setLayout(mainSpace);
+    QColorDialog* dialog = new QColorDialog();
+    dialog->setWindowFlags(Qt::Widget);
+    dialog->setOptions(QColorDialog::DontUseNativeDialog | QColorDialog::ShowAlphaChannel);
+
+    auto action = new QWidgetAction(0);
+    action->setDefaultWidget(dialog);
+
+    QMenu* menu = new QMenu();
+    menu->addAction(action);
+
+    QToolButton* button = new QToolButton();
+    button->setMenu( menu );
+    button->setPopupMode( QToolButton::InstantPopup );
+
 
     //connection between popup window and mainwindow
     QObject::connect(&size, &SizeSelector::setWidthAndHeight, this, &MainWindow::acceptWidthAndHeight);
     QObject::connect(this, &MainWindow::passWidthAndHeight, ui->workspace, &DrawModel::userGivenWidthAndHeight);
+    QObject::connect(this, &MainWindow::passColor, ui->workspace, &DrawModel::userGivenColor);
 
 }
 
@@ -40,4 +51,18 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     spriteHeight = height;
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight);
+}
+
+
+void MainWindow::on_colorSelector_clicked()
+{
+    QColorDialog* dialog = new QColorDialog();
+    dialog->show();
+    QColor color = QColorDialog::getColor();
+    dialog->close();
+    QPalette palette;
+    palette.setColor(QPalette::Window, color);
+    ui->label->setAutoFillBackground(true);
+    ui->label->setPalette(palette);
+    emit passColor(color);
 }
