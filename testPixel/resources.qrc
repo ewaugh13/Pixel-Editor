@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>pen-9.png</file>
+        <file>300px-Ellipse_black.svg.png</file>
+        <file>21906-200.png</file>
+        <file>184524-200.png</file>
+        <file>184528-200.png</file>
+        <file>1194994615287196054line.svg.hi.png</file>
+        <file>eraser-512.png</file>
+        <file>foundation_paint-bucket_simple-black_512x512.png</file>
+        <file>shape_square-512.png</file>
+    </qresource>
+</RCC>

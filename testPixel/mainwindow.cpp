@@ -18,26 +18,17 @@ MainWindow::MainWindow(QWidget *parent) :
     spriteWidth = 16;
     spriteHeight = 16;
 
-    QColorDialog* dialog = new QColorDialog();
-    dialog->setWindowFlags(Qt::Widget);
-    dialog->setOptions(QColorDialog::DontUseNativeDialog | QColorDialog::ShowAlphaChannel);
-
-    auto action = new QWidgetAction(0);
-    action->setDefaultWidget(dialog);
-
-    QMenu* menu = new QMenu();
-    menu->addAction(action);
-
-    QToolButton* button = new QToolButton();
-    button->setMenu( menu );
-    button->setPopupMode( QToolButton::InstantPopup );
-
+    //mainSpace->setColumnStretch(0,1);
+    //mainSpace->setColumnStretch(3,1);
+    //mainSpace->addWidget(artist,0,0,1,4);
+    //setLayout(mainSpace);
 
     //connection between popup window and mainwindow
     QObject::connect(&size, &SizeSelector::setWidthAndHeight, this, &MainWindow::acceptWidthAndHeight);
     QObject::connect(this, &MainWindow::passWidthAndHeight, ui->workspace, &DrawModel::userGivenWidthAndHeight);
-    QObject::connect(this, &MainWindow::passColor, ui->workspace, &DrawModel::userGivenColor);
-
+    QObject::connect(this, &MainWindow::setToolType, ui->workspace, &DrawModel::changeTools);
+    QObject::connect(this, &MainWindow::setPenSize, ui->workspace, &DrawModel::changePenSize);
+    QObject::connect(this, &MainWindow::setPenColor, ui->workspace, &DrawModel::changePenColor);
 }
 
 MainWindow::~MainWindow()
@@ -53,16 +44,59 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     emit passWidthAndHeight(spriteWidth, spriteHeight);
 }
 
-
-void MainWindow::on_colorSelector_clicked()
+void MainWindow::on_penSizeSlider_valueChanged(int value)
 {
-    QColorDialog* dialog = new QColorDialog();
-    dialog->show();
-    QColor color = QColorDialog::getColor();
-    dialog->close();
+    ui->penSizeSpinBox->setValue(value);
+    emit setPenSize(value);
+}
+
+void MainWindow::on_penButton_clicked()
+{
+    emit setToolType("Pen");
+}
+
+void MainWindow::on_eraserButton_clicked()
+{
+    emit setToolType("Eraser");
+}
+
+void MainWindow::on_paintButton_clicked()
+{
+    emit setToolType("FillBucket");
+}
+
+void MainWindow::on_lineButton_clicked()
+{
+    emit setToolType("Line");
+}
+
+void MainWindow::on_ellipseButton_clicked()
+{
+    emit setToolType("Ellipse");
+}
+
+void MainWindow::on_rectangleButton_clicked()
+{
+    emit setToolType("Rectangle");
+}
+
+void MainWindow::on_colorSelectionButton_clicked()
+{
+    QColorDialog* colorPicker = new QColorDialog();
+    colorPicker->show();
+    QColor  color = QColorDialog::getColor();
+    colorPicker->close();
     QPalette palette;
-    palette.setColor(QPalette::Window, color);
-    ui->label->setAutoFillBackground(true);
-    ui->label->setPalette(palette);
-    emit passColor(color);
+    palette.setColor(QPalette::Window,color);
+    ui->colorPreviewLabel->setAutoFillBackground(true);
+    ui->colorPreviewLabel->setPalette(palette);
+    emit setPenColor(color);
+}
+
+
+void MainWindow::on_penSizeSpinBox_valueChanged(int arg1)
+{
+    ui->penSizeSlider->setValue(arg1);
+    ui->penSizeSlider->setSliderPosition(arg1);
+    emit setPenSize(arg1);
 }

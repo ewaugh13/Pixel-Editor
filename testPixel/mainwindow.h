@@ -3,11 +3,11 @@
 
 #include <QMainWindow>
 #include <QLayout>
-#include <QColorDialog>
+#include <QtCore>
 #include "drawmodel.h"
 #include "sizeselector.h"
-#include <QWidgetAction>
-#include <QToolButton>
+#include <string>
+#include <QColorDialog>
 
 
 namespace Ui {
@@ -28,10 +28,28 @@ public slots:
 
 signals:
     void passWidthAndHeight(int,int);
-    void passColor(QColor);
+    void setPenSize(int);
+    void setPenColor(QColor);
+    void setToolType(std::string);
 
 private slots:
-    void on_colorSelector_clicked();
+    void on_penSizeSlider_valueChanged(int value);
+
+    void on_penButton_clicked();
+
+    void on_eraserButton_clicked();
+
+    void on_paintButton_clicked();
+
+    void on_lineButton_clicked();
+
+    void on_ellipseButton_clicked();
+
+    void on_rectangleButton_clicked();
+
+    void on_colorSelectionButton_clicked();
+
+    void on_penSizeSpinBox_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

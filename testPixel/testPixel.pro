@@ -23,3 +23,6 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     sizeselector.ui
+
+RESOURCES += \
+    resources.qrc
