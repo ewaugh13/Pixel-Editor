@@ -57,6 +57,7 @@ private:
     QGridLayout* mainSpace;
     SizeSelector size;
     DrawModel* artist;
+    QColorDialog* colorPicker;
 
 };
 

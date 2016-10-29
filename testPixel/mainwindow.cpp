@@ -82,15 +82,15 @@ void MainWindow::on_rectangleButton_clicked()
 
 void MainWindow::on_colorSelectionButton_clicked()
 {
-    QColorDialog* colorPicker = new QColorDialog();
-    colorPicker->show();
-    QColor  color = QColorDialog::getColor();
+    colorPicker = new QColorDialog();
+    QColor  color = colorPicker->getColor();
     colorPicker->close();
     QPalette palette;
     palette.setColor(QPalette::Window,color);
     ui->colorPreviewLabel->setAutoFillBackground(true);
     ui->colorPreviewLabel->setPalette(palette);
     emit setPenColor(color);
+    delete colorPicker;
 }
 
 
