@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 
+
 class DrawModel : public QWidget
 {
     Q_OBJECT
@@ -46,6 +47,8 @@ private:
     std::string currentTool;
     QColor eraseColor;
 
+    QImage picForeGround;
+    QImage picBackGround;
     int width;
     int height;
 
@@ -53,6 +56,8 @@ private:
     int scaleFactorY;
 
     int penWidth;
+
+    bool erasing;
 
     //enum Tools{Pen, Eraser, Line, Circle, FillBucket, Ellipse, Rectangle};
 
