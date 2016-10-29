@@ -32,6 +32,7 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
     QRect rectangle = paintEvent->rect();
     painter.scale(scaleFactorX, scaleFactorY);
     painter.drawImage(rectangle, picture, rectangle);
+    emit sendPreviewImage(picture);
 }
 
 void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
