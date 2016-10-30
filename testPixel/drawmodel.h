@@ -19,12 +19,17 @@ public:
     explicit DrawModel(QWidget *parent = 0);
 
 signals:
+    void sendEyedropperColor(QColor);
+    void sendPreviewImage(QImage);
 
 public slots:
     void userGivenWidthAndHeight(int, int);
     void changePenSize(int);
     void changePenColor(QColor);
     void changeTools(std::string);
+    void undoSlot();
+    void redoSlot();
+
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -37,6 +42,7 @@ protected:
     void drawAPoint(QPoint);
     void drawALine(QPoint, QPoint); //used for mouse move event to draw pixels
     void drawGrid();
+    QColor getPixelColor(QPoint);
 
 private:
     QImage picture;
@@ -49,6 +55,9 @@ private:
 
     QImage picForeGround;
     QImage picBackGround;
+    std::vector<QImage>* imageHistory;
+    std::vector<QImage>* redoStack;
+
     int width;
     int height;
 
@@ -58,6 +67,10 @@ private:
     int penWidth;
 
     bool erasing;
+
+    //used for line tool
+    void renderShapes(QPoint, QPoint); //shows line
+    void createShapes(QPoint, QPoint); //actually draws line
 
     //enum Tools{Pen, Eraser, Line, Circle, FillBucket, Ellipse, Rectangle};
 

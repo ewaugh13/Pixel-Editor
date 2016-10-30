@@ -9,5 +9,6 @@
         <file>eraser-512.png</file>
         <file>foundation_paint-bucket_simple-black_512x512.png</file>
         <file>shape_square-512.png</file>
+        <file>eyedropper.png</file>
     </qresource>
 </RCC>

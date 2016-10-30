@@ -25,12 +25,16 @@ public:
     int spriteHeight;
 public slots:
     void acceptWidthAndHeight(int,int);
+    void setColorPreviewWindow(QColor);
+    void receivePreviewImage(QImage);
 
 signals:
     void passWidthAndHeight(int,int);
     void setPenSize(int);
     void setPenColor(QColor);
     void setToolType(std::string);
+    void undoSignal();
+    void redoSignal();
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -51,12 +55,18 @@ private slots:
 
     void on_penSizeSpinBox_valueChanged(int arg1);
 
+    void on_eyedropperButton_clicked();
+
+    void on_undoButton_clicked();
+
+    void on_redoButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;
     QGridLayout* mainSpace;
     SizeSelector size;
-    DrawModel* artist;
+    QColorDialog* colorPicker;
 
 };
 
