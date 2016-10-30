@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     spriteWidth = 16;
     spriteHeight = 16;
-
+    resizeImage = false;
     QPalette palette;
     palette.setColor(QPalette::Window,QColor(255,255,255,255));
     ui->colorPreviewLabel->setAutoFillBackground(true);
@@ -29,10 +29,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->workspace, &DrawModel::sendEyedropperColor, this, &MainWindow::setColorPreviewWindow);
     QObject::connect(ui->workspace, &DrawModel::sendPreviewImage, this, &MainWindow::receivePreviewImage);
     QObject::connect(this, &MainWindow::undoSignal, ui->workspace, &DrawModel::undoSlot);
-    QObject::connect(this, &MainWindow::redoSignal, ui->workspace, &DrawModel::redoSlot);
+    QObject::connect(this, &MainWindow::redoSignal, ui->workspace, &DrawModel::redoSlot);\
 
+    QObject::connect(this, &MainWindow::rotateCanvas, ui->workspace, &DrawModel::rotateImage);
+    QObject::connect(this, &MainWindow::exportImage, ui->workspace, &DrawModel::saveImage);
 
-}\
+}
+
 
 MainWindow::~MainWindow()
 {
@@ -44,7 +47,8 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     spriteWidth = width;
     spriteHeight = height;
     this->show();
-    emit passWidthAndHeight(spriteWidth, spriteHeight);
+    emit passWidthAndHeight(spriteWidth, spriteHeight, resizeImage);
+    resizeImage = false;
 }
 
 void MainWindow::on_penSizeSlider_valueChanged(int value)
@@ -128,4 +132,30 @@ void MainWindow::on_undoButton_clicked()
 void MainWindow::on_redoButton_clicked()
 {
     emit redoSignal();
+}
+void MainWindow::on_pushButton_12_clicked()
+{
+    emit rotateCanvas(-90.0);
+}
+
+void MainWindow::on_pushButton_13_clicked()
+{
+    emit rotateCanvas(90.0);
+}
+
+void MainWindow::on_pushButton_15_clicked()
+{
+    size.show();
+    size.raise();
+    size.activateWindow();
+    resizeImage = true;
+}
+
+void MainWindow::on_pushButton_16_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               "",
+                               tr("Images (*.png *.jpg)"));
+
+    emit exportImage(fileName);
 }
