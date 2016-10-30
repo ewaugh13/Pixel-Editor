@@ -363,6 +363,8 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     picture = result;
     update();
 }
+//CITATION: This algorithm was derived and modified from the following tutorial:
+//http://www.williammalone.com/articles/html5-canvas-javascript-paint-bucket-tool/
 void DrawModel::boundaryFill(QPoint, QColor targetColor)
 {
     while(pixelStack.size())
