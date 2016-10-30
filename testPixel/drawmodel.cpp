@@ -390,6 +390,23 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
     }
 }
 
+
+void DrawModel::rotateImage(double angle){
+    QImage image  = QImage(width, height, QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+    QPainter p (&image);
+    p.translate(width/2, height/2);
+    p.rotate(angle);
+    p.translate(-width/2, -height/2);
+    p.drawImage(0,0,picForeGround);
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), image);
+    picForeGround = image;
+    picture = result;
+    update();
+}
+
 /*
 void DrawModel::resizeEvent(QResizeEvent *event)
 {

@@ -33,6 +33,7 @@ signals:
     void setPenSize(int);
     void setPenColor(QColor);
     void setToolType(std::string);
+    void rotateCanvas(double);
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -54,6 +55,10 @@ private slots:
     void on_penSizeSpinBox_valueChanged(int arg1);
 
     void on_eyedropperButton_clicked();
+
+    void on_pushButton_12_clicked();
+
+    void on_pushButton_13_clicked();
 
 private:
     Ui::MainWindow *ui;
