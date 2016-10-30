@@ -8,6 +8,7 @@
 #include "sizeselector.h"
 #include <string>
 #include <QColorDialog>
+#include <QFileDialog>
 
 
 namespace Ui {
@@ -34,6 +35,7 @@ signals:
     void setPenColor(QColor);
     void setToolType(std::string);
     void rotateCanvas(double);
+    void exportImage(QString);
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -61,6 +63,8 @@ private slots:
     void on_pushButton_13_clicked();
 
     void on_pushButton_15_clicked();
+
+    void on_pushButton_16_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -28,6 +28,7 @@ public slots:
     void changePenColor(QColor);
     void changeTools(std::string);
     void rotateImage(double);
+    void saveImage(QString);
 
 
 protected:

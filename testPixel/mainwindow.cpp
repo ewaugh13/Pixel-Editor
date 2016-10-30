@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->workspace, &DrawModel::sendEyedropperColor, this, &MainWindow::setColorPreviewWindow);
     QObject::connect(ui->workspace, &DrawModel::sendPreviewImage, this, &MainWindow::receivePreviewImage);
     QObject::connect(this, &MainWindow::rotateCanvas, ui->workspace, &DrawModel::rotateImage);
+    QObject::connect(this, &MainWindow::exportImage, ui->workspace, &DrawModel::saveImage);
+
 }
 
 MainWindow::~MainWindow()
@@ -134,4 +136,13 @@ void MainWindow::on_pushButton_15_clicked()
     size.raise();
     size.activateWindow();
     resizeImage = true;
+}
+
+void MainWindow::on_pushButton_16_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               "",
+                               tr("Images (*.png *.jpg)"));
+
+    emit exportImage(fileName);
 }

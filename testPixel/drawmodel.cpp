@@ -495,6 +495,10 @@ void DrawModel::rotateImage(double angle){
     update();
 }
 
+void DrawModel::saveImage(QString fileName){
+    picForeGround.save(fileName);
+}
+
 /*
 void DrawModel::resizeEvent(QResizeEvent *event)
 {
