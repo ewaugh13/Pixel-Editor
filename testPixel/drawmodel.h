@@ -24,10 +24,16 @@ signals:
     void sendPreviewImage(QImage);
 
 public slots:
-    void userGivenWidthAndHeight(int, int);
+    void userGivenWidthAndHeight(int, int, bool resizeImage);
     void changePenSize(int);
     void changePenColor(QColor);
     void changeTools(std::string);
+
+    void undoSlot();
+    void redoSlot();
+
+    void rotateImage(double);
+    void saveImage(QString);
 
 
 protected:
@@ -36,6 +42,8 @@ protected:
     void mouseMoveEvent(QMouseEvent*)Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent*)Q_DECL_OVERRIDE;
     //void resizeEvent(QResizeEvent*)Q_DECL_OVERRIDE;
+    void drawARect(QPoint, QPoint);
+    void drawACircle(QPoint, QPoint);
 
     //
     void drawAPoint(QPoint);
@@ -56,7 +64,10 @@ private:
     QImage picForeGround;
     QImage picBackGround;
 
+
     std::vector<QPoint> pixelStack;
+    std::vector<QImage>* imageHistory;
+    std::vector<QImage>* redoStack;
 
     int width;
     int height;
@@ -67,6 +78,7 @@ private:
     int penWidth;
 
     bool erasing;
+    bool drawing;
 
     //used for line tool
     void renderShapes(QPoint, QPoint); //shows line

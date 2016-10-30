@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
 <<<<<<< HEAD
-<!-- Written by QtCreator 4.1.0, 2016-10-28T00:54:34. -->
-=======
-<!-- Written by QtCreator 4.1.0, 2016-10-28T15:58:17. -->
->>>>>>> 871cd6a09564d0f1a42a4d151cb96026b1fef3c8
+<!-- Written by QtCreator 4.1.0, 2016-10-29T18:58:22. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{de91ed59-81ed-4495-ab35-093ed25e92ac}</value>
+  <value type="QByteArray">{0fd9bda5-ccc4-42b1-8e7b-1e0e7f87a545}</value>
+=======
+<!-- Written by QtCreator 4.1.0, 2016-10-29T17:33:30. -->
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{bba10d32-5056-4dfd-9c00-8fe4433f19ab}</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">0</value>
+  <value type="int">1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -63,14 +67,18 @@
  <data>
   <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 5.7.0 MinGW 32bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 5.7.0 MinGW 32bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.57.win32_mingw53_kit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 5.7.0 MSVC2015_64bit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 5.7.0 MSVC2015_64bit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.57.win64_msvc2015_64_kit</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Johnny/Documents/build-testPixel-Desktop_Qt_5_7_0_MinGW_32bit-Debug</value>
+<<<<<<< HEAD
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Debug</value>
+=======
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Debug</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -124,7 +132,11 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Johnny/Documents/build-testPixel-Desktop_Qt_5_7_0_MinGW_32bit-Release</value>
+<<<<<<< HEAD
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Release</value>
+=======
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Release</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -179,9 +191,10 @@
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.2">
 <<<<<<< HEAD
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Johnny/Documents/build-testPixel-Desktop_Qt_5_7_0_MinGW_32bit-Profile</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Profile</value>
 =======
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Computer Science HW/CS 3505/Assignment7v2/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Profile</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Profile</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -292,14 +305,23 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">testPixel</value>
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Computer Science HW/CS 3505/Assignment7v2/testPixel/testPixel.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/testPixel/testPixel.pro</value>
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">testPixel2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Jerry/Desktop/A7/testPixel/testPixel.pro</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">testPixel.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Computer Science HW/CS 3505/Assignment7v2/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Debug</value>
+<<<<<<< HEAD
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Debug</value>
+=======
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_7_0_MSVC2015_64bit-Debug</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -320,7 +342,11 @@
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Computer Science HW/CS 3505/Assignment7v2/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Debug</value>
+<<<<<<< HEAD
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Debug</value>
+=======
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Debug</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -374,7 +400,11 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Computer Science HW/CS 3505/Assignment7v2/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Release</value>
+<<<<<<< HEAD
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Release</value>
+=======
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Release</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -428,8 +458,11 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.2">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Computer Science HW/CS 3505/Assignment7v2/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Profile</value>
->>>>>>> 871cd6a09564d0f1a42a4d151cb96026b1fef3c8
+<<<<<<< HEAD
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Profile</value>
+=======
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Profile</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -540,18 +573,23 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">testPixel</value>
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Johnny/Documents/GitHub/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/testPixel/testPixel.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/User/Desktop/CS3505/Assignment7/cs3505-a7-sprite-editor-git-gud-gaming-and-some-guy-named-eric/testPixel/testPixel.pro</value>
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">testPixel2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/Jerry/Desktop/A7/testPixel/testPixel.pro</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">testPixel.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
 <<<<<<< HEAD
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/Johnny/Documents/build-testPixel-Desktop_Qt_5_7_0_MinGW_32bit-Debug</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
 =======
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Computer Science HW/CS 3505/Assignment7v2/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Debug</value>
->>>>>>> 871cd6a09564d0f1a42a4d151cb96026b1fef3c8
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">C:/Users/Jerry/Desktop/build-testPixel-Desktop_Qt_5_6_1_MSVC2015_64bit-Debug</value>
+>>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
@@ -564,7 +602,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.TargetCount</variable>
-  <value type="int">1</value>
+  <value type="int">2</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>
