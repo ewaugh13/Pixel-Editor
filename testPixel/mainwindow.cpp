@@ -8,20 +8,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     //central = new QWidget(this->centralWidget());
-    artist = new DrawModel;
     size.show();
     size.raise();
     size.activateWindow();
 
-    //mainSpace = new QGridLayout(ui->workspace);
-    //ui->workspace->layout()->addWidget(artist);  //works because widget is also a grid layout
     spriteWidth = 16;
     spriteHeight = 16;
 
-    //mainSpace->setColumnStretch(0,1);
-    //mainSpace->setColumnStretch(3,1);
-    //mainSpace->addWidget(artist,0,0,1,4);
-    //setLayout(mainSpace);
+    QPalette palette;
+    palette.setColor(QPalette::Window,QColor(255,255,255,255));
+    ui->colorPreviewLabel->setAutoFillBackground(true);
+    ui->colorPreviewLabel->setPalette(palette);
 
     //connection between popup window and mainwindow
     QObject::connect(&size, &SizeSelector::setWidthAndHeight, this, &MainWindow::acceptWidthAndHeight);
@@ -30,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::setPenSize, ui->workspace, &DrawModel::changePenSize);
     QObject::connect(this, &MainWindow::setPenColor, ui->workspace, &DrawModel::changePenColor);
     QObject::connect(ui->workspace, &DrawModel::sendEyedropperColor, this, &MainWindow::setColorPreviewWindow);
+    QObject::connect(ui->workspace, &DrawModel::sendPreviewImage, this, &MainWindow::receivePreviewImage);
 }
 
 MainWindow::~MainWindow()
@@ -110,4 +108,10 @@ void MainWindow::setColorPreviewWindow(QColor newColor)
     palette.setColor(QPalette::Window,newColor);
     ui->colorPreviewLabel->setAutoFillBackground(true);
     ui->colorPreviewLabel->setPalette(palette);
+}
+
+void MainWindow::receivePreviewImage(QImage preview)
+{
+    ui->previewLabel->setPixmap(QPixmap::fromImage(preview.scaled(128,128)));
+
 }

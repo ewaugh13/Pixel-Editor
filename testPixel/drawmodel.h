@@ -20,6 +20,7 @@ public:
 
 signals:
     void sendEyedropperColor(QColor);
+    void sendPreviewImage(QImage);
 
 public slots:
     void userGivenWidthAndHeight(int, int);
@@ -63,6 +64,7 @@ private:
     int penWidth;
 
     bool erasing;
+    bool drawing;
 
     //used for line tool
     void renderShapes(QPoint, QPoint); //shows line

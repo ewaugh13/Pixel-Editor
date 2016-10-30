@@ -26,6 +26,7 @@ public:
 public slots:
     void acceptWidthAndHeight(int,int);
     void setColorPreviewWindow(QColor);
+    void receivePreviewImage(QImage);
 
 signals:
     void passWidthAndHeight(int,int);
@@ -59,7 +60,6 @@ private:
     QWidget* central;
     QGridLayout* mainSpace;
     SizeSelector size;
-    DrawModel* artist;
     QColorDialog* colorPicker;
 
 };

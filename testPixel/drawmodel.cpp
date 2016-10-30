@@ -22,8 +22,9 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     picForeGround.fill(Qt::transparent);
     currentTool = "Pen";
     eraseColor = QColor(0,0,0,0);
+    drawing = false;
+    this->setMouseTracking(true);
 }
-
 
 void DrawModel::paintEvent(QPaintEvent * paintEvent)
 {
@@ -32,6 +33,7 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
     QRect rectangle = paintEvent->rect();
     painter.scale(scaleFactorX, scaleFactorY);
     painter.drawImage(rectangle, picture, rectangle);
+    emit sendPreviewImage(picture);
 }
 
 void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
@@ -42,24 +44,59 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
 
     if(currentTool == "Pen")
     {
-        drawALine(lastPoint, QPoint(x,y));
+        if(drawing == true)
+        {
+            drawALine(lastPoint, QPoint(x,y));
+        }
+        else
+        {
+            renderShapes(QPoint(x,y), QPoint(x,y));
+        }
     }
     else if(currentTool == "Eraser")
     {
         erasing = true;
-        drawALine( lastPoint, QPoint(x,y));
+        if(drawing == true)
+        {
+            drawALine(lastPoint, QPoint(x,y));
+        }
+        else
+        {
+            renderShapes(QPoint(x,y), QPoint(x,y));
+        }
     }
     else if(currentTool == "Ellipse")
     {
-        renderShapes(lastPoint, QPoint(x,y));
+        if(drawing == true)
+        {
+            renderShapes(lastPoint, QPoint(x,y));
+        }
+        else
+        {
+            renderShapes(QPoint(x,y), QPoint(x,y));
+        }
     }
     else if(currentTool == "Rectangle")
     {
-        renderShapes(lastPoint, QPoint(x,y));
+        if(drawing == true)
+        {
+            renderShapes(lastPoint, QPoint(x,y));
+        }
+        else
+        {
+            renderShapes(QPoint(x,y), QPoint(x,y));
+        }
     }
     else if(currentTool == "Line")
     {
-        renderShapes(lastPoint, QPoint(x,y));
+        if(drawing == true)
+        {
+            renderShapes(lastPoint, QPoint(x,y));
+        }
+        else
+        {
+            renderShapes(QPoint(x,y), QPoint(x,y));
+        }
     }
     else if(currentTool == "FillBucket")
     {
@@ -70,14 +107,14 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
 
 void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
 {
+    drawing = true;
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
     lastPoint = QPoint(x,y);
+    std::cout << lastPoint.x() << "," << lastPoint.y() << std::endl;
     if(currentTool == "Pen")
     {
-        std::cout << currentTool << std::endl;
-
         drawAPoint(QPoint(x,y));
     }
     else if(currentTool == "Eraser")
@@ -110,6 +147,7 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
 
 void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
 {
+    drawing = false;
     QPoint point(mouseEvent->pos());
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
@@ -291,25 +329,46 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
     pen.setWidth(penWidth);
     pen.setColor(*currentColor);
     painter.setPen(pen);
-    if(currentTool == "Line")
+    if(drawing == true)
     {
-        painter.drawLine(start, finish);
+        std::cout << "we not here" << std::endl;
+        if(currentTool == "Line")
+        {
+            painter.drawLine(start, finish);
+        }
+        else if(currentTool == "Rectangle")
+        {
+            QPoint horizontalToStart(finish.x(), start.y());
+            QPoint horizontalToEnd(start.x(), finish.y());
+            painter.drawLine(start, horizontalToStart);
+            painter.drawLine(start, horizontalToEnd);
+            painter.drawLine(finish, horizontalToStart);
+            painter.drawLine(finish, horizontalToEnd);
+        }
+        else if(currentTool == "Ellipse")
+        {
+            painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
+        }
     }
-    else if(currentTool == "Rectangle")
+    else
     {
-
-        QPoint horizontalToStart(finish.x(), start.y());
-        QPoint horizontalToEnd(start.x(), finish.y());
-        painter.drawLine(start, horizontalToStart);
-        painter.drawLine(start, horizontalToEnd);
-        painter.drawLine(finish, horizontalToStart);
-        painter.drawLine(finish, horizontalToEnd);
+        std::cout << "we here" << std::endl;
+        if(currentTool == "Eraser")
+        {
+            QColor transparentColor = eraseColor;
+            transparentColor.setAlpha(transparentColor.alpha() + 50);
+            pen.setColor(transparentColor);
+            painter.setPen(pen);
+        }
+        else
+        {
+            QColor transparentColor = *currentColor;
+            transparentColor.setAlpha(transparentColor.alpha() / 2);
+            pen.setColor(transparentColor);
+            painter.setPen(pen);
+        }
+        painter.drawLine(start, start);
     }
-    else if(currentTool == "Ellipse")
-    {
-        painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
-    }
-
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), realTimeImage);
