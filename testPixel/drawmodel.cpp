@@ -22,6 +22,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     picForeGround.fill(Qt::transparent);
     currentTool = "Pen";
     eraseColor = QColor(0,0,0,0);
+
 }
 
 
@@ -103,6 +104,8 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
         QColor targetColor = getPixelColor(QPoint(x,y));
         if(targetColor != *currentColor)//Only begins boundaryFill if the pixel clicked on is NOT the same as the currentColor (prevents refilling)
         {
+            pixelStack.clear();
+            pixelStack.push_back(QPoint(x,y));
             boundaryFill(QPoint(x,y),targetColor);
         }
 
@@ -360,42 +363,70 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     picture = result;
     update();
 }
-void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
+void DrawModel::boundaryFill(QPoint, QColor targetColor)
 {
-    int height = picForeGround.height();
-    int width = picForeGround.width();
-
-    if(getPixelColor(pos) == targetColor)
+    while(pixelStack.size())
     {
-      int originalPenWidth = penWidth;
-      penWidth = 1;
-      drawAPoint(pos);
-      penWidth = originalPenWidth;
-      if(pos.y() + 1 < height)
-      {
-          boundaryFill(QPoint(pos.x(),pos.y()+1),targetColor);
-      }
-      if(pos.x() + 1 < width)
-      {
-          boundaryFill(QPoint(pos.x()+1,pos.y()),targetColor);
-      }
-      if(pos.y() - 1 > -1)
-      {
-          boundaryFill(QPoint(pos.x(),pos.y()-1),targetColor);
-      }
-      if(pos.x() - 1 > -1)
-      {
-          boundaryFill(QPoint(pos.x()-1,pos.y()),targetColor);
-      }
+        QPoint newPos;
+        int x, y, row;
+        bool reachLeft, reachRight;
+        int originalPenWidth = penWidth;
+
+        newPos = pixelStack[pixelStack.size()-1];
+        pixelStack.pop_back();
+
+        x = newPos.x();
+        y = newPos.y();
+
+        row = y * picForeGround.width() + x;
+
+        while(y-- >= -1 && (getPixelColor(QPoint(x,y)) == targetColor))
+        {
+            row -= picForeGround.width();
+        }
+        row += picForeGround.width();
+
+        reachLeft = false;
+        reachRight = false;
+
+        while(y++ < picForeGround.height() - 1  && (getPixelColor(QPoint(x,y)) == targetColor))
+        {
+
+            penWidth = 1;
+            drawAPoint(QPoint(x,y));
+            penWidth = originalPenWidth;
+            if(x > 0)
+            {
+                if(getPixelColor(QPoint(x-1,y)) == targetColor)
+                {
+                    if(!reachLeft)
+                    {
+                        pixelStack.push_back(QPoint(x-1,y));
+                        reachLeft = true;
+                    }
+                }
+                else if(reachLeft)
+                {
+                    reachLeft = false;
+                }
+            }
+            if(x < picForeGround.width() - 1)
+            {
+                if(getPixelColor(QPoint(x+1,y)) == targetColor)
+                {
+                    if(!reachRight)
+                    {
+                        pixelStack.push_back(QPoint(x+1,y));
+                        reachRight = true;
+                    }
+                }
+                else if(reachRight)
+                {
+                    reachRight = false;
+                }
+            }
+           row += picForeGround.width();
+        }
     }
 }
-
-/*
-void DrawModel::resizeEvent(QResizeEvent *event)
-{
-    scaleFactorX = this->width/width;
-    scaleFactorY = this->height/height;
-}
-
-*/
 

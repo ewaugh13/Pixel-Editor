@@ -1,6 +1,7 @@
 #ifndef DRAWMODEL_H
 #define DRAWMODEL_H
 
+#include <vector>
 #include <QWidget>
 #include <QPixmap>
 #include <QPen>
@@ -54,6 +55,9 @@ private:
 
     QImage picForeGround;
     QImage picBackGround;
+
+    std::vector<QPoint> pixelStack;
+
     int width;
     int height;
 
