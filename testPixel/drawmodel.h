@@ -39,6 +39,7 @@ protected:
     void drawAPoint(QPoint);
     void drawALine(QPoint, QPoint); //used for mouse move event to draw pixels
     void drawGrid();
+
     QColor getPixelColor(QPoint);
 
 private:
@@ -65,7 +66,7 @@ private:
     //used for line tool
     void renderShapes(QPoint, QPoint); //shows line
     void createShapes(QPoint, QPoint); //actually draws line
-
+    void boundaryFill(QPoint, QColor targetColor);
     //enum Tools{Pen, Eraser, Line, Circle, FillBucket, Ellipse, Rectangle};
 
     //Tools ourTool;

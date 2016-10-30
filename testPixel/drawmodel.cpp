@@ -100,6 +100,12 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "FillBucket")
     {
+        QColor targetColor = getPixelColor(QPoint(x,y));
+        if(targetColor != *currentColor)//Only begins boundaryFill if the pixel clicked on is NOT the same as the currentColor (prevents refilling)
+        {
+            boundaryFill(QPoint(x,y),targetColor);
+        }
+
     }
     else if(currentTool == "Circle")
     {
@@ -138,6 +144,10 @@ void DrawModel::drawAPoint(QPoint pos)
     {
         painter.setCompositionMode(QPainter::CompositionMode_Clear);
         pen.setColor(eraseColor);
+    }
+    else if(currentTool == "FillBucket")
+    {
+        pen.setColor(*currentColor);
     }
     pen.setWidth(penWidth);
     painter.setPen(pen);
@@ -276,7 +286,6 @@ QColor DrawModel::getPixelColor(QPoint pos)
 {
     QColor theColor;
     theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
-    std::cout<<theColor.red()<<","<<theColor.green()<<","<<theColor.blue()<<","<<theColor.alpha()<<std::endl;
     return theColor;
 }
 
@@ -318,6 +327,35 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     painter2.drawImage(QPoint(0,0), picForeGround);
     picture = result;
     update();
+}
+void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
+{
+    int height = picForeGround.height();
+    int width = picForeGround.width();
+
+    if(getPixelColor(pos) == targetColor)
+    {
+      int originalPenWidth = penWidth;
+      penWidth = 1;
+      drawAPoint(pos);
+      penWidth = originalPenWidth;
+      if(pos.y() + 1 < height)
+      {
+          boundaryFill(QPoint(pos.x(),pos.y()+1),targetColor);
+      }
+      if(pos.x() + 1 < width)
+      {
+          boundaryFill(QPoint(pos.x()+1,pos.y()),targetColor);
+      }
+      if(pos.y() - 1 > -1)
+      {
+          boundaryFill(QPoint(pos.x(),pos.y()-1),targetColor);
+      }
+      if(pos.x() - 1 > -1)
+      {
+          boundaryFill(QPoint(pos.x()-1,pos.y()),targetColor);
+      }
+    }
 }
 
 /*
