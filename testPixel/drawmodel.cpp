@@ -32,6 +32,7 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
     QRect rectangle = paintEvent->rect();
     painter.scale(scaleFactorX, scaleFactorY);
     painter.drawImage(rectangle, picture, rectangle);
+    emit sendPreviewImage(picture);
 }
 
 void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
@@ -51,10 +52,11 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Ellipse")
     {
-
+        renderShapes(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Rectangle")
     {
+        renderShapes(lastPoint, QPoint(x,y));
     }
     else if(currentTool == "Line")
     {
@@ -63,10 +65,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     else if(currentTool == "FillBucket")
     {
     }
-    else if(currentTool == "Circle")
-    {
 
-    }
 
 }
 
@@ -89,10 +88,11 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "Ellipse")
     {
-
+        renderShapes(QPoint(x,y), QPoint(x,y));
     }
     else if(currentTool == "Rectangle")
     {
+        renderShapes(QPoint(x,y), QPoint(x,y));
     }
     else if(currentTool == "Line")
     {
@@ -105,10 +105,6 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
         {
             boundaryFill(QPoint(x,y),targetColor);
         }
-
-    }
-    else if(currentTool == "Circle")
-    {
 
     }
     else if(currentTool == "Eyedropper")
@@ -125,6 +121,15 @@ void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
     if(currentTool == "Line")
+    {
+        createShapes(lastPoint, QPoint(x,y));
+    }
+    else if(currentTool == "Rectangle")
+    {
+        createShapes(lastPoint, QPoint(x,y));
+    }
+
+    else if(currentTool == "Ellipse")
     {
         createShapes(lastPoint, QPoint(x,y));
     }
@@ -261,10 +266,6 @@ void DrawModel::changeTools(std::string tool)
     else if(tool == "FillBucket")
     {
     }
-    else if(tool == "Circle")
-    {
-
-    }
     else if(tool == "Eyedropper")
     {
 
@@ -286,6 +287,10 @@ QColor DrawModel::getPixelColor(QPoint pos)
 {
     QColor theColor;
     theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
+    if(currentTool == "Eyedropper" && theColor == Qt::transparent)
+    {
+        theColor = *currentColor;
+    }
     return theColor;
 }
 
@@ -293,15 +298,29 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
 {
     QImage realTimeImage = picForeGround;
     QPainter painter(&realTimeImage);
-    painter.setBrush(*currentBrush);
+    painter.setBrush(Qt::transparent);
     pen.setWidth(penWidth);
     pen.setColor(*currentColor);
     painter.setPen(pen);
-
     if(currentTool == "Line")
     {
         painter.drawLine(start, finish);
     }
+    else if(currentTool == "Rectangle")
+    {
+
+        QPoint horizontalToStart(finish.x(), start.y());
+        QPoint horizontalToEnd(start.x(), finish.y());
+        painter.drawLine(start, horizontalToStart);
+        painter.drawLine(start, horizontalToEnd);
+        painter.drawLine(finish, horizontalToStart);
+        painter.drawLine(finish, horizontalToEnd);
+    }
+    else if(currentTool == "Ellipse")
+    {
+        painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
+    }
+
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), realTimeImage);
@@ -313,7 +332,7 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
 {
 
     QPainter painter(&picForeGround);
-    painter.setBrush(*currentBrush);
+    painter.setBrush(Qt::transparent);
     pen.setWidth(penWidth);
     pen.setColor(*currentColor);
     painter.setPen(pen);
@@ -321,6 +340,19 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     if(currentTool == "Line")
     {
         painter.drawLine(start, finish);
+    }
+    else if(currentTool == "Rectangle")
+    {
+        QPoint horizontalToStart(finish.x(), start.y());
+        QPoint horizontalToEnd(start.x(), finish.y());
+        painter.drawLine(start, horizontalToStart);
+        painter.drawLine(start, horizontalToEnd);
+        painter.drawLine(finish, horizontalToStart);
+        painter.drawLine(finish, horizontalToEnd);
+    }
+    else if(currentTool == "Ellipse")
+    {
+        painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
     }
     QImage result = picBackGround;
     QPainter painter2(&result);

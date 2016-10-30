@@ -20,6 +20,7 @@ public:
 
 signals:
     void sendEyedropperColor(QColor);
+    void sendPreviewImage(QImage);
 
 public slots:
     void userGivenWidthAndHeight(int, int);
