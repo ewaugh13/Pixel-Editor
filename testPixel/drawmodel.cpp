@@ -224,23 +224,43 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor colo
 
 }
 
-void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
+void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool resizeImage)
 {
     width = passedWidth;
     height = passedHeight;
     scaleFactorX = 512/width;
     scaleFactorY = 512/height;
-
-    picForeGround = QImage(width, height, QImage::Format_ARGB32);
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
-    picForeGround.fill(Qt::transparent);
-    QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
-    newPicture.fill(qRgb(255,255,255));
-    QPainter painter(&newPicture);
-    painter.setBrush(*currentBrush);
-    painter.drawImage(QPoint(0,0), newPicture);
-    picture = newPicture;
-    drawGrid();
+    if(resizeImage){
+
+        QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
+        newPicture.fill(Qt::transparent);
+        QPainter p (&newPicture);
+        p.drawImage(0,0,picForeGround);
+        drawGrid();
+        QImage result = picBackGround;
+        QPainter painter(&result);
+        painter.drawImage(QPoint(0,0),newPicture);
+        picForeGround = newPicture;
+        picture = result;
+        update();
+    }
+    else{
+        width = passedWidth;
+        height = passedHeight;
+        scaleFactorX = 512/width;
+        scaleFactorY = 512/height;
+        picForeGround = QImage(width, height, QImage::Format_ARGB32);
+
+        picForeGround.fill(Qt::transparent);
+        QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
+        newPicture.fill(qRgb(255,255,255));
+        QPainter painter(&newPicture);
+        painter.setBrush(*currentBrush);
+        painter.drawImage(QPoint(0,0), newPicture);
+        picture = newPicture;
+        drawGrid();
+    }
 }
 
 void DrawModel::changeTools(std::string tool)

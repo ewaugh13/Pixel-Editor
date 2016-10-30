@@ -23,7 +23,7 @@ signals:
     void sendPreviewImage(QImage);
 
 public slots:
-    void userGivenWidthAndHeight(int, int);
+    void userGivenWidthAndHeight(int, int, bool resizeImage);
     void changePenSize(int);
     void changePenColor(QColor);
     void changeTools(std::string);

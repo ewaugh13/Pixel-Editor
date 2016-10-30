@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     spriteWidth = 16;
     spriteHeight = 16;
-
+    resizeImage = false;
     QPalette palette;
     palette.setColor(QPalette::Window,QColor(255,255,255,255));
     ui->colorPreviewLabel->setAutoFillBackground(true);
@@ -41,7 +41,8 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     spriteWidth = width;
     spriteHeight = height;
     this->show();
-    emit passWidthAndHeight(spriteWidth, spriteHeight);
+    emit passWidthAndHeight(spriteWidth, spriteHeight, resizeImage);
+    resizeImage = false;
 }
 
 void MainWindow::on_penSizeSlider_valueChanged(int value)
@@ -125,4 +126,12 @@ void MainWindow::on_pushButton_12_clicked()
 void MainWindow::on_pushButton_13_clicked()
 {
     emit rotateCanvas(90.0);
+}
+
+void MainWindow::on_pushButton_15_clicked()
+{
+    size.show();
+    size.raise();
+    size.activateWindow();
+    resizeImage = true;
 }

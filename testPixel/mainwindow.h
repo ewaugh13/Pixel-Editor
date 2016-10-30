@@ -29,7 +29,7 @@ public slots:
     void receivePreviewImage(QImage);
 
 signals:
-    void passWidthAndHeight(int,int);
+    void passWidthAndHeight(int,int, bool);
     void setPenSize(int);
     void setPenColor(QColor);
     void setToolType(std::string);
@@ -60,12 +60,15 @@ private slots:
 
     void on_pushButton_13_clicked();
 
+    void on_pushButton_15_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;
     QGridLayout* mainSpace;
     SizeSelector size;
     QColorDialog* colorPicker;
+    bool resizeImage;
 
 };
 
