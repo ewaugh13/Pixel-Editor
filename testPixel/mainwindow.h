@@ -29,10 +29,11 @@ public slots:
     void receivePreviewImage(QImage);
 
 signals:
-    void passWidthAndHeight(int,int);
+    void passWidthAndHeight(int,int, bool);
     void setPenSize(int);
     void setPenColor(QColor);
     void setToolType(std::string);
+    void rotateCanvas(double);
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -55,12 +56,19 @@ private slots:
 
     void on_eyedropperButton_clicked();
 
+    void on_pushButton_12_clicked();
+
+    void on_pushButton_13_clicked();
+
+    void on_pushButton_15_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;
     QGridLayout* mainSpace;
     SizeSelector size;
     QColorDialog* colorPicker;
+    bool resizeImage;
 
 };
 

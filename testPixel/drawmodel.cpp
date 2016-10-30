@@ -136,6 +136,12 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "FillBucket")
     {
+        QColor targetColor = getPixelColor(QPoint(x,y));
+        if(targetColor != *currentColor)//Only begins boundaryFill if the pixel clicked on is NOT the same as the currentColor (prevents refilling)
+        {
+            boundaryFill(QPoint(x,y),targetColor);
+        }
+
     }
     else if(currentTool == "Eyedropper")
     {
@@ -180,6 +186,10 @@ void DrawModel::drawAPoint(QPoint pos)
     {
         painter.setCompositionMode(QPainter::CompositionMode_Clear);
         pen.setColor(eraseColor);
+    }
+    else if(currentTool == "FillBucket")
+    {
+        pen.setColor(*currentColor);
     }
     pen.setWidth(penWidth);
     painter.setPen(pen);
@@ -251,23 +261,43 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor colo
 
 }
 
-void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight)
+void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool resizeImage)
 {
     width = passedWidth;
     height = passedHeight;
     scaleFactorX = 512/width;
     scaleFactorY = 512/height;
-
-    picForeGround = QImage(width, height, QImage::Format_ARGB32);
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
-    picForeGround.fill(Qt::transparent);
-    QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
-    newPicture.fill(qRgb(255,255,255));
-    QPainter painter(&newPicture);
-    painter.setBrush(*currentBrush);
-    painter.drawImage(QPoint(0,0), newPicture);
-    picture = newPicture;
-    drawGrid();
+    if(resizeImage){
+
+        QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
+        newPicture.fill(Qt::transparent);
+        QPainter p (&newPicture);
+        p.drawImage(0,0,picForeGround);
+        drawGrid();
+        QImage result = picBackGround;
+        QPainter painter(&result);
+        painter.drawImage(QPoint(0,0),newPicture);
+        picForeGround = newPicture;
+        picture = result;
+        update();
+    }
+    else{
+        width = passedWidth;
+        height = passedHeight;
+        scaleFactorX = 512/width;
+        scaleFactorY = 512/height;
+        picForeGround = QImage(width, height, QImage::Format_ARGB32);
+
+        picForeGround.fill(Qt::transparent);
+        QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
+        newPicture.fill(qRgb(255,255,255));
+        QPainter painter(&newPicture);
+        painter.setBrush(*currentBrush);
+        painter.drawImage(QPoint(0,0), newPicture);
+        picture = newPicture;
+        drawGrid();
+    }
 }
 
 void DrawModel::changeTools(std::string tool)
@@ -314,10 +344,10 @@ QColor DrawModel::getPixelColor(QPoint pos)
 {
     QColor theColor;
     theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
-    if(theColor == Qt::transparent){
+    if(currentTool == "Eyedropper" && theColor == Qt::transparent)
+    {
         theColor = *currentColor;
     }
-
     return theColor;
 }
 
@@ -405,6 +435,52 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), picForeGround);
+    picture = result;
+    update();
+}
+void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
+{
+    int height = picForeGround.height();
+    int width = picForeGround.width();
+
+    if(getPixelColor(pos) == targetColor)
+    {
+      int originalPenWidth = penWidth;
+      penWidth = 1;
+      drawAPoint(pos);
+      penWidth = originalPenWidth;
+      if(pos.y() + 1 < height)
+      {
+          boundaryFill(QPoint(pos.x(),pos.y()+1),targetColor);
+      }
+      if(pos.x() + 1 < width)
+      {
+          boundaryFill(QPoint(pos.x()+1,pos.y()),targetColor);
+      }
+      if(pos.y() - 1 > -1)
+      {
+          boundaryFill(QPoint(pos.x(),pos.y()-1),targetColor);
+      }
+      if(pos.x() - 1 > -1)
+      {
+          boundaryFill(QPoint(pos.x()-1,pos.y()),targetColor);
+      }
+    }
+}
+
+
+void DrawModel::rotateImage(double angle){
+    QImage image  = QImage(width, height, QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+    QPainter p (&image);
+    p.translate(width/2, height/2);
+    p.rotate(angle);
+    p.translate(-width/2, -height/2);
+    p.drawImage(0,0,picForeGround);
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), image);
+    picForeGround = image;
     picture = result;
     update();
 }
