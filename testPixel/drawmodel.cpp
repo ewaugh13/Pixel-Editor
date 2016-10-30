@@ -100,6 +100,17 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
     }
     else if(currentTool == "FillBucket")
     {
+        if(drawing == false)
+        {
+            renderShapes(QPoint(x,y), QPoint(x,y));
+        }
+    }
+    else if(currentTool == "Eyedropper")
+    {
+        if(drawing == false)
+        {
+            renderShapes(QPoint(x,y), QPoint(x,y));
+        }
     }
 
 
@@ -112,7 +123,6 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     int x = point.x()/scaleFactorX;
     int y = point.y()/scaleFactorY;
     lastPoint = QPoint(x,y);
-    std::cout << lastPoint.x() << "," << lastPoint.y() << std::endl;
     if(currentTool == "Pen")
     {
         drawAPoint(QPoint(x,y));
@@ -231,7 +241,7 @@ void DrawModel::drawGrid()
     update();
 }
 
-void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)//Remove QColor color
+void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)
 {
     QPainter painter(&picForeGround);
 
@@ -332,7 +342,6 @@ void DrawModel::changeTools(std::string tool)
 
 void DrawModel::changePenSize(int size)
 {
-
     penWidth = size;
 }
 
@@ -340,6 +349,7 @@ void DrawModel::changePenColor(QColor newColor)
 {
     *currentColor = newColor;
 }
+
 QColor DrawModel::getPixelColor(QPoint pos)
 {
     QColor theColor;
@@ -383,7 +393,7 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
     else
     {
         std::cout << "we here" << std::endl;
-        if(currentTool == "Eraser")
+        if(currentTool == "Eraser" || currentTool == "Eyedropper")
         {
             QColor transparentColor = eraseColor;
             transparentColor.setAlpha(transparentColor.alpha() + 50);
@@ -438,6 +448,7 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     picture = result;
     update();
 }
+
 void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
 {
     int height = picForeGround.height();
@@ -467,7 +478,6 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
       }
     }
 }
-
 
 void DrawModel::rotateImage(double angle){
     QImage image  = QImage(width, height, QImage::Format_ARGB32);
