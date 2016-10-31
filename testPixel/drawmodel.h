@@ -22,6 +22,7 @@ public:
 signals:
     void sendEyedropperColor(QColor);
     void sendPreviewImage(QImage);
+    void addFrameToTimeline(QImage);
 
 public slots:
     void userGivenWidthAndHeight(int, int, bool resizeImage);
@@ -34,6 +35,8 @@ public slots:
 
     void rotateImage(double);
     void saveImage(QString);
+
+    void getFrameAndEmit();
 
 
 protected:
