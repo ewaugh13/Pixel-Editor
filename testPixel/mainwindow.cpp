@@ -34,8 +34,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::rotateCanvas, ui->workspace, &DrawModel::rotateImage);
     QObject::connect(this, &MainWindow::exportImage, ui->workspace, &DrawModel::saveImage);
 
+    playTimer = new QTimer(this);
+    connect(playTimer, SIGNAL(timeout()), this, SLOT(playPreview()));
+    // for use of adding frames and playing frames
+    QObject::connect(this, &MainWindow::addCurrentFrame, ui->workspace, &DrawModel::getFrameAndEmit);
+    QObject::connect(ui->workspace, &DrawModel::addFrameToTimeline, this, &MainWindow::addFrameToTimeline);
+    QObject::connect(this, &MainWindow::playPreviewWindow, this, &MainWindow::playPreview);
 }
-
 
 MainWindow::~MainWindow()
 {
@@ -158,4 +163,35 @@ void MainWindow::on_pushButton_16_clicked()
                                tr("Images (*.png *.jpg)"));
 
     emit exportImage(fileName);
+}
+
+void MainWindow::on_addFrameButton_clicked()
+{
+    emit addCurrentFrame();
+}
+void MainWindow::addFrameToTimeline(QImage frame)
+{
+    timelineImages.push_back(frame);
+    ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128,128)));
+}
+void MainWindow::playPreview()
+{
+        if(currentFrame < timelineImages.size())
+        {
+            ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
+            currentFrame++;
+        }
+        else
+        {
+            std::cout << "stoped" << std::endl;
+            currentFrame = 0;
+            playTimer->stop();
+        }
+}
+
+void MainWindow::on_playButton_clicked()
+{
+    currentFrame = 0;
+    playTimer->start(30);
+    emit playPreviewWindow();
 }

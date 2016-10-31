@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QTimer>
 #include <QMainWindow>
 #include <QLayout>
 #include <QtCore>
@@ -28,6 +29,8 @@ public slots:
     void acceptWidthAndHeight(int,int);
     void setColorPreviewWindow(QColor);
     void receivePreviewImage(QImage);
+    void addFrameToTimeline(QImage);
+    void playPreview();
 
 signals:
     void passWidthAndHeight(int,int, bool);
@@ -38,6 +41,8 @@ signals:
     void redoSignal();
     void rotateCanvas(double);
     void exportImage(QString);
+    void addCurrentFrame();
+    void playPreviewWindow();
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -72,13 +77,21 @@ private slots:
 
     void on_pushButton_16_clicked();
 
+    void on_addFrameButton_clicked();
+
+    void on_playButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;
     QGridLayout* mainSpace;
     SizeSelector size;
     QColorDialog* colorPicker;
+    std::vector<QImage> timelineImages;
     bool resizeImage;
+    int currentFrame;
+    QTimer* playTimer;
+
 
 };
 

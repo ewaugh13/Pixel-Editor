@@ -38,7 +38,8 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
     QRect rectangle = paintEvent->rect();
     painter.scale(scaleFactorX, scaleFactorY);
     painter.drawImage(rectangle, picture, rectangle);
-    emit sendPreviewImage(picture);
+    //emit sendPreviewImage(picture);
+
 }
 
 void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
@@ -413,7 +414,6 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
     }
     else
     {
-        std::cout << "we here" << std::endl;
         if(currentTool == "Eraser" || currentTool == "Eyedropper")
         {
             QColor transparentColor = eraseColor;
@@ -588,6 +588,10 @@ void DrawModel::rotateImage(double angle){
 
 void DrawModel::saveImage(QString fileName){
     picForeGround.save(fileName);
+}
+void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture to timeline vector
+{
+    emit addFrameToTimeline(picture);
 }
 
 /*
