@@ -29,6 +29,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
 
     drawing = false;
     this->setMouseTracking(true);
+    playing = false;
 }
 
 void DrawModel::paintEvent(QPaintEvent * paintEvent)
@@ -38,7 +39,9 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
     QRect rectangle = paintEvent->rect();
     painter.scale(scaleFactorX, scaleFactorY);
     painter.drawImage(rectangle, picture, rectangle);
-    //emit sendPreviewImage(picture);
+    if(!playing){
+        emit sendPreviewImage(picture);
+    }
 
 }
 
@@ -591,7 +594,11 @@ void DrawModel::saveImage(QString fileName){
 }
 void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture to timeline vector
 {
-    emit addFrameToTimeline(picture);
+    QImage result = picBackGround;
+    QPainter p(&result);
+    p.drawImage(QPoint(0,0),picForeGround);
+    playing = true;
+    emit addFrameToTimeline(result);
 }
 
 /*
