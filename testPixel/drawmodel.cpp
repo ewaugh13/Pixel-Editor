@@ -137,6 +137,8 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     {
         imageHistory->push_back(picForeGround);
     }
+    //if a distinct change occurs cannot redo because this is new history
+    redoStack->clear();
 
     drawing = true;
     QPoint point(mouseEvent->pos());
@@ -573,7 +575,18 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
         }
     }
 }
-void DrawModel::rotateImage(double angle){
+void DrawModel::rotateImage(double angle)
+{
+    //Added to check for rotates when undoing and redoing actions
+    if (imageHistory->size()>=3)
+    {
+        imageHistory->erase(imageHistory->begin());
+        imageHistory->push_back(picForeGround);
+    }
+    else
+    {
+        imageHistory->push_back(picForeGround);
+    }
     QImage image  = QImage(width, height, QImage::Format_ARGB32);
     image.fill(Qt::transparent);
     QPainter p (&image);
