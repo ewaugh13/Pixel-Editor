@@ -83,6 +83,8 @@ private:
     bool erasing;
     bool drawing;
 
+    bool playing;
+
     //used for line tool
     void renderShapes(QPoint, QPoint); //shows line
     void createShapes(QPoint, QPoint); //actually draws line
