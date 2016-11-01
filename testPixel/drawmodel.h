@@ -38,6 +38,8 @@ public slots:
 
     void getFrameAndEmit();
 
+    void previewHasStopped(bool);
+
 
 protected:
     void paintEvent(QPaintEvent*);

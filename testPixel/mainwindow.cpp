@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::addCurrentFrame, ui->workspace, &DrawModel::getFrameAndEmit);
     QObject::connect(ui->workspace, &DrawModel::addFrameToTimeline, this, &MainWindow::addFrameToTimeline);
     QObject::connect(this, &MainWindow::playPreviewWindow, this, &MainWindow::playPreview);
+    QObject::connect(this, &MainWindow::previewStopped, ui->workspace, &DrawModel::previewHasStopped);
 }
 
 MainWindow::~MainWindow()
@@ -164,19 +165,7 @@ void MainWindow::playPreview()
     }
     ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
     currentFrame++;
-    /*
-    if(currentFrame < timelineImages.size())
-    {
-        ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
-        currentFrame++;
-    }
-    else
-    {
-        std::cout << "stopped" << std::endl;
-        currentFrame = 0;
-        playTimer->stop();
-    }
-    */
+
 }
 //Starts playback of frame previews at the set fps
 void MainWindow::on_playButton_clicked()
@@ -192,7 +181,8 @@ void MainWindow::on_stopButton_clicked()
     playTimer->stop();
     currentFrame = timelineImages.size() - 1;
     previewPlaying = false;
-    ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
+    //ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
+    emit previewStopped(false); //returns preview to active image preview
 }
 //Changes Fps of preview playback and restarts preview
 void MainWindow::on_fpsSpinBox_valueChanged(int arg1)

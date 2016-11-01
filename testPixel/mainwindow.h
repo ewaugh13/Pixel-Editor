@@ -43,6 +43,7 @@ signals:
     void exportImage(QString);
     void addCurrentFrame();
     void playPreviewWindow();
+    void previewStopped(bool);
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);

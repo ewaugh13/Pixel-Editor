@@ -15,7 +15,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     QPainter painter(&newPicture);
     painter.setBrush(*currentBrush);
     painter.drawImage(QPoint(0,0), newPicture);
-    picture = newPicture;
+    picture = newPicture.copy();
 
     picForeGround = QImage(width, height, QImage::Format_ARGB32);
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
@@ -234,7 +234,10 @@ void DrawModel::drawAPoint(QPoint pos)
     QPainter p(&result);
     p.drawImage(QPoint(0,0),picForeGround);
     picture = result;
-    update();
+    if(currentTool != "FillBucket")
+    {
+        update();
+    }
     lastPoint = pos;
     if(currentTool == "Eraser"){
         painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
@@ -574,6 +577,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
            row += picForeGround.width();
         }
     }
+    update();
 }
 void DrawModel::rotateImage(double angle)
 {
@@ -612,6 +616,11 @@ void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture 
     p.drawImage(QPoint(0,0),picForeGround);
     playing = true;
     emit addFrameToTimeline(result);
+}
+
+void DrawModel::previewHasStopped(bool notPlaying)
+{
+    playing = notPlaying;
 }
 
 /*
