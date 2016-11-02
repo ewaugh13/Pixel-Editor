@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(this, &MainWindow::rotateCanvas, ui->workspace, &DrawModel::rotateImage);
     QObject::connect(this, &MainWindow::exportImage, ui->workspace, &DrawModel::saveImage);
+    QObject::connect(this, &MainWindow::importImage, ui->workspace, &DrawModel::openImage);
+    QObject::connect(this, &MainWindow::vertMirror, ui->workspace, &DrawModel::mirrorVert);
+    QObject::connect(this, &MainWindow::horzMirror, ui->workspace, &DrawModel::mirrorHorz);
 
     playTimer = new QTimer(this);
     connect(playTimer, SIGNAL(timeout()), this, SLOT(playPreview()));
@@ -40,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::addCurrentFrame, ui->workspace, &DrawModel::getFrameAndEmit);
     QObject::connect(ui->workspace, &DrawModel::addFrameToTimeline, this, &MainWindow::addFrameToTimeline);
     QObject::connect(this, &MainWindow::playPreviewWindow, this, &MainWindow::playPreview);
+
 }
 
 MainWindow::~MainWindow()
@@ -158,11 +162,8 @@ void MainWindow::on_pushButton_15_clicked()
 
 void MainWindow::on_pushButton_16_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                               "",
-                               tr("Images (*.png *.jpg)"));
+    exportPicture();
 
-    emit exportImage(fileName);
 }
 
 void MainWindow::on_addFrameButton_clicked()
@@ -194,4 +195,38 @@ void MainWindow::on_playButton_clicked()
     currentFrame = 0;
     playTimer->start(30);
     emit playPreviewWindow();
+}
+
+void MainWindow::on_actionExport_triggered()
+{
+    exportPicture();
+}
+
+void MainWindow::exportPicture(){
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               "",
+                               tr("Images (*.png *.jpg)"));
+
+    emit exportImage(fileName);
+}
+
+void MainWindow::importPicture(){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Picture"), "", tr("Images (*.png *.jpg)"));
+
+    emit importImage(fileName);
+}
+
+void MainWindow::on_actionImport_triggered()
+{
+    importPicture();
+}
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    emit vertMirror();
+}
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    emit horzMirror();
 }

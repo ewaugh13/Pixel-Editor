@@ -35,8 +35,11 @@ public slots:
 
     void rotateImage(double);
     void saveImage(QString);
-
+    void openImage(QString);
     void getFrameAndEmit();
+
+    void mirrorVert();
+    void mirrorHorz();
 
 
 protected:
@@ -93,6 +96,9 @@ private:
 
     //Tools ourTool;
 
+
+
+    void updateCanvas(QImage);
 };
 
 #endif // DRAWMODEL_H

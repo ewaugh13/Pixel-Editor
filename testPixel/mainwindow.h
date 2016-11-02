@@ -31,6 +31,7 @@ public slots:
     void receivePreviewImage(QImage);
     void addFrameToTimeline(QImage);
     void playPreview();
+    void on_pushButton_16_clicked();
 
 signals:
     void passWidthAndHeight(int,int, bool);
@@ -41,8 +42,12 @@ signals:
     void redoSignal();
     void rotateCanvas(double);
     void exportImage(QString);
+    void importImage(QString);
     void addCurrentFrame();
     void playPreviewWindow();
+    void vertMirror();
+    void horzMirror();
+
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -75,11 +80,19 @@ private slots:
 
     void on_pushButton_15_clicked();
 
-    void on_pushButton_16_clicked();
+
 
     void on_addFrameButton_clicked();
 
     void on_playButton_clicked();
+
+    void on_actionExport_triggered();
+
+    void on_actionImport_triggered();
+
+    void on_pushButton_10_clicked();
+
+    void on_pushButton_11_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -92,6 +105,10 @@ private:
     int currentFrame;
     QTimer* playTimer;
 
+    void exportPicture();
+    void saveSSP();
+    void openSSP();
+    void importPicture();
 
 };
 
