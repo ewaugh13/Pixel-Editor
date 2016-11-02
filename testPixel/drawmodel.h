@@ -38,8 +38,12 @@ public slots:
     void openImage(QString);
     void getFrameAndEmit();
 
+
     void mirrorVert();
     void mirrorHorz();
+
+    void previewHasStopped(bool);
+
 
 
 protected:

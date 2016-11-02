@@ -123,7 +123,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="drawingToolsLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -156,42 +156,42 @@
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="1" column="0">
-      <widget class="QPushButton" name="pushButton_9">
+      <widget class="QPushButton" name="cutButton">
        <property name="text">
         <string>Cut</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QPushButton" name="pushButton_11">
+      <widget class="QPushButton" name="horizontalMirrorButton">
        <property name="text">
         <string>Horizontal Mirror</string>
        </property>
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QPushButton" name="pushButton_10">
+      <widget class="QPushButton" name="verticalMirrorButton">
        <property name="text">
         <string>Vertical Mirror</string>
        </property>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QPushButton" name="pushButton_8">
+      <widget class="QPushButton" name="pasteButton">
        <property name="text">
         <string>Paste</string>
        </property>
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton_7">
+      <widget class="QPushButton" name="copyButton">
        <property name="text">
         <string>Copy</string>
        </property>
       </widget>
      </item>
      <item row="4" column="0">
-      <widget class="QPushButton" name="pushButton_12">
+      <widget class="QPushButton" name="rotateCounterClockwiseButton">
        <property name="text">
         <string>Rotate</string>
        </property>
@@ -202,7 +202,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QPushButton" name="pushButton_13">
+      <widget class="QPushButton" name="rotateClockwiseButton">
        <property name="text">
         <string>Rotate</string>
        </property>
@@ -213,21 +213,21 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QPushButton" name="pushButton_14">
+      <widget class="QPushButton" name="newFrameButton">
        <property name="text">
         <string>New Frame</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_15">
+      <widget class="QPushButton" name="resizeButton">
        <property name="text">
         <string>Resize</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QPushButton" name="pushButton_16">
+      <widget class="QPushButton" name="exportButton">
        <property name="text">
         <string>Export</string>
        </property>
@@ -268,7 +268,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="penSizeLabel">
     <property name="geometry">
      <rect>
       <x>45</x>
@@ -348,10 +348,24 @@
       <x>700</x>
       <y>370</y>
       <width>171</width>
-      <height>61</height>
+      <height>111</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
+     <item row="2" column="0">
+      <widget class="QPushButton" name="playButton">
+       <property name="text">
+        <string>Play Preview</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="stopButton">
+       <property name="text">
+        <string>Stop Button</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="addFrameButton">
        <property name="text">
@@ -359,15 +373,63 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="playButton">
-       <property name="text">
-        <string>Play Preview</string>
-       </property>
-      </widget>
+     <item row="5" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="fpsLabel">
+         <property name="text">
+          <string>Frames Per Sec:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="fpsSpinBox">
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>60</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
+   <widget class="QSlider" name="fpsSlider">
+    <property name="geometry">
+     <rect>
+      <x>699</x>
+      <y>490</y>
+      <width>171</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>60</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <zorder>workspace</zorder>
+   <zorder>verticalLayoutWidget</zorder>
+   <zorder>drawingToolsLabel</zorder>
+   <zorder>gridLayoutWidget</zorder>
+   <zorder>penSizeSlider</zorder>
+   <zorder>penSizeLabel</zorder>
+   <zorder>verticalLayoutWidget_2</zorder>
+   <zorder>penSizeSpinBox</zorder>
+   <zorder>previewLabel</zorder>
+   <zorder>gridLayoutWidget_2</zorder>
+   <zorder>horizontalSlider</zorder>
+   <zorder>fpsSlider</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

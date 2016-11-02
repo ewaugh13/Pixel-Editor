@@ -45,8 +45,11 @@ signals:
     void importImage(QString);
     void addCurrentFrame();
     void playPreviewWindow();
+
     void vertMirror();
     void horzMirror();
+
+    void previewStopped(bool);
 
 
 private slots:
@@ -74,17 +77,23 @@ private slots:
 
     void on_redoButton_clicked();
 
-    void on_pushButton_12_clicked();
-
-    void on_pushButton_13_clicked();
-
-    void on_pushButton_15_clicked();
-
-
-
     void on_addFrameButton_clicked();
 
     void on_playButton_clicked();
+
+    void on_stopButton_clicked();
+
+    void on_fpsSpinBox_valueChanged(int arg1);
+
+    void on_fpsSlider_valueChanged(int value);
+
+    void on_exportButton_clicked();
+
+    void on_resizeButton_clicked();
+
+    void on_rotateClockwiseButton_clicked();
+
+    void on_rotateCounterClockwiseButton_clicked();
 
     void on_actionExport_triggered();
 
@@ -103,7 +112,9 @@ private:
     std::vector<QImage> timelineImages;
     bool resizeImage;
     int currentFrame;
+    int fpsPreview;
     QTimer* playTimer;
+    bool previewPlaying;
 
     void exportPicture();
     void saveSSP();
