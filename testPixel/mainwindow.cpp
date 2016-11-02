@@ -187,7 +187,7 @@ void MainWindow::on_playButton_clicked()
 void MainWindow::on_stopButton_clicked()
 {
     playTimer->stop();
-    currentFrame = timelineImages.size() - 1;
+    currentFrame = (int)timelineImages.size() - 1;
     previewPlaying = false;
     //ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
     emit previewStopped(false); //returns preview to active image preview
