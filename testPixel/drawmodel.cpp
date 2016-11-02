@@ -15,7 +15,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     QPainter painter(&newPicture);
     painter.setBrush(*currentBrush);
     painter.drawImage(QPoint(0,0), newPicture);
-    picture = newPicture;
+    picture = newPicture.copy();
 
     picForeGround = QImage(width, height, QImage::Format_ARGB32);
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
@@ -137,6 +137,8 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     {
         imageHistory->push_back(picForeGround);
     }
+    //if a distinct change occurs cannot redo because this is new history
+    redoStack->clear();
 
     drawing = true;
     QPoint point(mouseEvent->pos());
@@ -232,7 +234,10 @@ void DrawModel::drawAPoint(QPoint pos)
     QPainter p(&result);
     p.drawImage(QPoint(0,0),picForeGround);
     picture = result;
-    update();
+    if(currentTool != "FillBucket")
+    {
+        update();
+    }
     lastPoint = pos;
     if(currentTool == "Eraser"){
         painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
@@ -572,8 +577,20 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
            row += picForeGround.width();
         }
     }
+    update();
 }
-void DrawModel::rotateImage(double angle){
+void DrawModel::rotateImage(double angle)
+{
+    //Added to check for rotates when undoing and redoing actions
+    if (imageHistory->size()>=3)
+    {
+        imageHistory->erase(imageHistory->begin());
+        imageHistory->push_back(picForeGround);
+    }
+    else
+    {
+        imageHistory->push_back(picForeGround);
+    }
     QImage image  = QImage(width, height, QImage::Format_ARGB32);
     image.fill(Qt::transparent);
     QPainter p (&image);
@@ -599,6 +616,11 @@ void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture 
     p.drawImage(QPoint(0,0),picForeGround);
     playing = true;
     emit addFrameToTimeline(result);
+}
+
+void DrawModel::previewHasStopped(bool notPlaying)
+{
+    playing = notPlaying;
 }
 
 /*
