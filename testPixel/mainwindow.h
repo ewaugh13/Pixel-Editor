@@ -44,6 +44,7 @@ signals:
     void addCurrentFrame();
     void playPreviewWindow();
     void previewStopped(bool);
+    void changeTransparency(int);
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -87,6 +88,10 @@ private slots:
     void on_rotateClockwiseButton_clicked();
 
     void on_rotateCounterClockwiseButton_clicked();
+
+    void on_transparencySpinBox_valueChanged(int arg1);
+
+    void on_transparencySlider_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;
