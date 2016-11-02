@@ -262,15 +262,6 @@ void MainWindow::on_actionImport_triggered()
     importPicture();
 }
 
-void MainWindow::on_pushButton_10_clicked()
-{
-    emit vertMirror();
-}
-
-void MainWindow::on_pushButton_11_clicked()
-{
-    emit horzMirror();
-}
 void MainWindow::on_transparencySpinBox_valueChanged(int arg1)
 {
     ui->transparencySlider->setValue(arg1);
@@ -282,4 +273,14 @@ void MainWindow::on_transparencySlider_valueChanged(int value)
     ui->transparencySpinBox->setValue(value);
     emit changeTransparency(value);
 
+}
+
+void MainWindow::on_horizontalMirrorButton_clicked()
+{
+    emit horzMirror();
+}
+
+void MainWindow::on_verticalMirrorButton_clicked()
+{
+    emit vertMirror();
 }

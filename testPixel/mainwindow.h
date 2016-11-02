@@ -31,7 +31,7 @@ public slots:
     void receivePreviewImage(QImage);
     void addFrameToTimeline(QImage);
     void playPreview();
-    void on_pushButton_16_clicked();
+    //void on_pushButton_16_clicked();
 
 signals:
     void passWidthAndHeight(int,int, bool);
@@ -101,14 +101,14 @@ private slots:
 
     void on_actionImport_triggered();
 
-    void on_pushButton_10_clicked();
-
-    void on_pushButton_11_clicked();
-
     void on_transparencySpinBox_valueChanged(int arg1);
 
     void on_transparencySlider_valueChanged(int value);
 
+
+    void on_horizontalMirrorButton_clicked();
+
+    void on_verticalMirrorButton_clicked();
 
 private:
     Ui::MainWindow *ui;
