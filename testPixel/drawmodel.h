@@ -44,6 +44,8 @@ public slots:
 
     void previewHasStopped(bool);
 
+    void acceptTransparency(int);
+
 
 
 protected:

@@ -50,6 +50,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(this, &MainWindow::previewStopped, ui->workspace, &DrawModel::previewHasStopped);
 
+    //send signal for new transparency of pixel color
+    QObject::connect(this, &MainWindow::changeTransparency, ui->workspace, &DrawModel::acceptTransparency);
+
 }
 
 MainWindow::~MainWindow()
@@ -234,6 +237,7 @@ void MainWindow::on_rotateCounterClockwiseButton_clicked()
     emit rotateCanvas(-90.0);
 }
 
+
 void MainWindow::on_actionExport_triggered()
 {
     exportPicture();
@@ -266,4 +270,16 @@ void MainWindow::on_pushButton_10_clicked()
 void MainWindow::on_pushButton_11_clicked()
 {
     emit horzMirror();
+}
+void MainWindow::on_transparencySpinBox_valueChanged(int arg1)
+{
+    ui->transparencySlider->setValue(arg1);
+    emit changeTransparency(arg1);
+}
+
+void MainWindow::on_transparencySlider_valueChanged(int value)
+{
+    ui->transparencySpinBox->setValue(value);
+    emit changeTransparency(value);
+
 }

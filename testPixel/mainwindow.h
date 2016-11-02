@@ -50,6 +50,7 @@ signals:
     void horzMirror();
 
     void previewStopped(bool);
+    void changeTransparency(int);
 
 
 private slots:
@@ -95,6 +96,7 @@ private slots:
 
     void on_rotateCounterClockwiseButton_clicked();
 
+
     void on_actionExport_triggered();
 
     void on_actionImport_triggered();
@@ -102,6 +104,11 @@ private slots:
     void on_pushButton_10_clicked();
 
     void on_pushButton_11_clicked();
+
+    void on_transparencySpinBox_valueChanged(int arg1);
+
+    void on_transparencySlider_valueChanged(int value);
+
 
 private:
     Ui::MainWindow *ui;

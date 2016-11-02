@@ -630,6 +630,12 @@ void DrawModel::previewHasStopped(bool notPlaying)
 }
 
 
+void DrawModel::acceptTransparency(int newTransparency)
+{
+    currentColor->setAlpha(newTransparency);
+}
+
+
 /*
 void DrawModel::resizeEvent(QResizeEvent *event)
 
