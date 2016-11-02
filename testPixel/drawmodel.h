@@ -23,6 +23,9 @@ signals:
     void sendEyedropperColor(QColor);
     void sendPreviewImage(QImage);
     void addFrameToTimeline(QImage);
+    void addFrameToPreviewTimeline(QImage);
+    void updateTimelineFrame(QImage);
+    void updatePreviewFrame(QImage);
 
 public slots:
     void userGivenWidthAndHeight(int, int, bool resizeImage);
@@ -41,6 +44,12 @@ public slots:
     void previewHasStopped(bool);
 
     void acceptTransparency(int);
+
+    void acceptChangeOfFrame(QImage);
+
+    void addForegroundToTimeline(QImage);
+
+    void getFrameToUpdate();
 
 
 protected:

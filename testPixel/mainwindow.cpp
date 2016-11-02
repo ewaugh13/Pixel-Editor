@@ -47,6 +47,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::previewStopped, ui->workspace, &DrawModel::previewHasStopped);
     //send signal for new transparency of pixel color
     QObject::connect(this, &MainWindow::changeTransparency, ui->workspace, &DrawModel::acceptTransparency);
+    //change workspace image
+    QObject::connect(this, &MainWindow::changeFrame, ui->workspace, &DrawModel::acceptChangeOfFrame);
+    //Add current working frame to the previewVector
+    QObject::connect(ui->workspace,&DrawModel::addFrameToPreviewTimeline,this,&MainWindow::addFrameToPreviewTimeline);
+    //Retrieve the current frame from DrawModel and give to MainWindow so it can update itself in the timelineVector and previewVector
+    QObject::connect(this, &MainWindow::updateFrame, ui->workspace, &DrawModel::getFrameToUpdate);
+    //Gets the foreground to UPDATE the timeline Vector
+    QObject::connect(ui->workspace,&DrawModel::updateTimelineFrame,this,&MainWindow::updateTimelineFrame);
+    //Gets the composite image to UPDATE the preview Vector
+    QObject::connect(ui->workspace,&DrawModel::updatePreviewFrame,this,&MainWindow::updatePreviewFrame);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -156,32 +168,46 @@ void MainWindow::on_addFrameButton_clicked()
 void MainWindow::addFrameToTimeline(QImage frame)
 {
     timelineImages.push_back(frame);
+    ui->frameSlider->setMaximum(timelineImages.size()-1);
+    ui->frameSpinBox->setMaximum(timelineImages.size()-1);
+    ui->frameSlider->setValue(timelineImages.size()-1);
+    ui->frameSpinBox->setValue(timelineImages.size()-1);
+}
+void MainWindow::addFrameToPreviewTimeline(QImage frame)
+{
+    previewImages.push_back(frame);
     ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128,128)));
 }
+
 //Start preview of frames of current working sprite
 void MainWindow::playPreview()
 {
-    if(currentFrame == timelineImages.size())
+    if(currentFrame == previewImages.size())
     {
         currentFrame = 0;
     }
-    ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
+    ui->previewLabel->setPixmap(QPixmap::fromImage(previewImages[currentFrame].scaled(128,128)));
     currentFrame++;
 
 }
 //Starts playback of frame previews at the set fps
 void MainWindow::on_playButton_clicked()
 {
-    currentFrame = 0;
-    playTimer->start(fpsPreview);
-    previewPlaying = true;
-    emit playPreviewWindow();
+    if(previewImages.size() > 0)
+    {
+        currentFrame = 0;
+        playTimer->start(fpsPreview);
+        previewPlaying = true;
+        emit playPreviewWindow();
+        emit previewStopped(true);  //means that preview is currently playing, and doesn't allow preview to update in real time
+    }
+
 }
 //Stop preview playback and put to last frame in timeline
 void MainWindow::on_stopButton_clicked()
 {
     playTimer->stop();
-    currentFrame = timelineImages.size() - 1;
+    currentFrame = previewImages.size() - 1;
     previewPlaying = false;
     //ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
     emit previewStopped(false); //returns preview to active image preview
@@ -205,6 +231,16 @@ void MainWindow::on_fpsSlider_valueChanged(int value)
     {
         emit on_playButton_clicked();
     }
+}
+//Update the current frame in the timeline vector
+void MainWindow::updateTimelineFrame(QImage frame)
+{
+    timelineImages[ui->frameSlider->value()] = frame.copy();
+}
+//Update the current frame in the preview vector
+void MainWindow::updatePreviewFrame(QImage frame)
+{
+    previewImages[ui->frameSlider->value()] = frame.copy();
 }
 
 void MainWindow::on_exportButton_clicked()
@@ -244,4 +280,21 @@ void MainWindow::on_transparencySlider_valueChanged(int value)
 {
     ui->transparencySpinBox->setValue(value);
     emit changeTransparency(value);
+}
+
+void MainWindow::on_frameSlider_valueChanged(int value)
+{
+    ui->frameSpinBox->setValue(value);
+    emit changeFrame(timelineImages[value]);
+}
+
+void MainWindow::on_frameSpinBox_valueChanged(int arg1)
+{
+    ui->frameSlider->setValue(arg1);
+    emit changeFrame(timelineImages[arg1]);
+}
+
+void MainWindow::on_saveFrameButton_clicked()
+{
+    emit updateFrame();
 }

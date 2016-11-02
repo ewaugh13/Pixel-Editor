@@ -39,7 +39,8 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
     QRect rectangle = paintEvent->rect();
     painter.scale(scaleFactorX, scaleFactorY);
     painter.drawImage(rectangle, picture, rectangle);
-    if(!playing){
+    if(!playing)
+    {
         emit sendPreviewImage(picture);
     }
 
@@ -230,16 +231,17 @@ void DrawModel::drawAPoint(QPoint pos)
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawPoint(pos);
-    QImage result = picBackGround;
+    QImage result = picBackGround.copy();
     QPainter p(&result);
     p.drawImage(QPoint(0,0),picForeGround);
-    picture = result;
+    picture = result.copy();
     if(currentTool != "FillBucket")
     {
         update();
     }
     lastPoint = pos;
-    if(currentTool == "Eraser"){
+    if(currentTool == "Eraser")
+    {
         painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
         erasing = false;
     }
@@ -266,7 +268,7 @@ void DrawModel::drawGrid()
             painter.drawPoint(i , j);
         }
     }
-    picture = picBackGround;
+    picture = picBackGround.copy();
     update();
 }
 
@@ -292,9 +294,10 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)
     QImage result = picBackGround;
     QPainter p(&result);
     p.drawImage(QPoint(0,0),picForeGround);
-    picture = result;
+    picture = result.copy();
     update();
-    if(currentTool == "Eraser"){
+    if(currentTool == "Eraser")
+    {
         painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
         erasing = false;
     }
@@ -308,7 +311,8 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
     scaleFactorX = 512/width;
     scaleFactorY = 512/height;
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
-    if(resizeImage){
+    if(resizeImage)
+    {
 
         QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
         newPicture.fill(Qt::transparent);
@@ -318,11 +322,12 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         QImage result = picBackGround;
         QPainter painter(&result);
         painter.drawImage(QPoint(0,0),newPicture);
-        picForeGround = newPicture;
-        picture = result;
+        picForeGround = newPicture.copy();
+        picture = result.copy();
         update();
     }
-    else{
+    else
+    {
         width = passedWidth;
         height = passedHeight;
         scaleFactorX = 512/width;
@@ -335,39 +340,14 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         QPainter painter(&newPicture);
         painter.setBrush(*currentBrush);
         painter.drawImage(QPoint(0,0), newPicture);
-        picture = newPicture;
+        picture = newPicture.copy();
         drawGrid();
     }
 }
 
 void DrawModel::changeTools(std::string tool)
 {
-
     currentTool = tool;
-    if(tool == "Pen")
-    {
-
-    }
-    else if(tool == "Eraser")
-    {
-    }
-    else if(tool == "Ellipse")
-    {
-    }
-    else if(tool == "Rectangle")
-    {
-    }
-    else if(tool == "Line")
-    {
-    }
-    else if(tool == "FillBucket")
-    {
-    }
-    else if(tool == "Eyedropper")
-    {
-
-    }
-
 }
 
 void DrawModel::changePenSize(int size)
@@ -441,7 +421,7 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), realTimeImage);
-    picture = result;
+    picture = result.copy();
     update();
 }
 
@@ -473,7 +453,7 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), picForeGround);
-    picture = result;
+    picture = result.copy();
     update();
 }
 void DrawModel::undoSlot()
@@ -490,7 +470,7 @@ void DrawModel::undoSlot()
         QImage result = picBackGround;
         QPainter painter2(&result);
         painter2.drawImage(QPoint(0,0), picForeGround);
-        picture = result;
+        picture = result.copy();
         update();
     }
 
@@ -505,7 +485,7 @@ void DrawModel::redoSlot()
         QImage result = picBackGround;
         QPainter painter2(&result);
         painter2.drawImage(QPoint(0, 0), picForeGround);
-        picture = result;
+        picture = result.copy();
         update();
     }
 }
@@ -601,21 +581,37 @@ void DrawModel::rotateImage(double angle)
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), image);
-    picForeGround = image;
-    picture = result;
+    picForeGround = image.copy();
+    picture = result.copy();
     update();
 }
 
 void DrawModel::saveImage(QString fileName){
     picForeGround.save(fileName);
 }
-void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture to timeline vector
+void DrawModel::getFrameToUpdate()
 {
-    QImage result = picBackGround;
+    emit updateTimelineFrame(picForeGround.copy());//send foreground to mainwindow to replace itself on timeline vector
+
+    QImage result = picBackGround.copy(); //then composite the foreground w the background and update it on the preview vector
     QPainter p(&result);
     p.drawImage(QPoint(0,0),picForeGround);
-    playing = true;
-    emit addFrameToTimeline(result);
+    emit updatePreviewFrame(result);
+}
+
+void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture to timeline vector
+{
+    addForegroundToTimeline(picForeGround.copy());//send just the foreground to the timeline vector
+
+    QImage result = picBackGround.copy(); //then composite the foreground w the background and send it to the preview vector
+    QPainter p(&result);
+    p.drawImage(QPoint(0,0),picForeGround);
+    //playing = true;
+    emit addFrameToPreviewTimeline(result);
+}
+void DrawModel::addForegroundToTimeline(QImage foreground)
+{
+    emit addFrameToTimeline(foreground);
 }
 
 void DrawModel::previewHasStopped(bool notPlaying)
@@ -626,6 +622,23 @@ void DrawModel::previewHasStopped(bool notPlaying)
 void DrawModel::acceptTransparency(int newTransparency)
 {
     currentColor->setAlpha(newTransparency);
+}
+
+void DrawModel::acceptChangeOfFrame(QImage newFrame)
+{
+    picForeGround = newFrame.copy();
+    QPainter painter(&picForeGround);
+    painter.setBrush(Qt::transparent);
+    pen.setWidth(penWidth);
+    pen.setColor(*currentColor);
+    painter.setPen(pen);
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), picForeGround);
+    picture = result.copy();
+    update();
+
+
 }
 
 /*

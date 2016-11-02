@@ -30,6 +30,9 @@ public slots:
     void setColorPreviewWindow(QColor);
     void receivePreviewImage(QImage);
     void addFrameToTimeline(QImage);
+    void addFrameToPreviewTimeline(QImage);
+    void updateTimelineFrame(QImage);
+    void updatePreviewFrame(QImage);
     void playPreview();
 
 signals:
@@ -45,6 +48,8 @@ signals:
     void playPreviewWindow();
     void previewStopped(bool);
     void changeTransparency(int);
+    void changeFrame(QImage);
+    void updateFrame();
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -93,6 +98,12 @@ private slots:
 
     void on_transparencySlider_valueChanged(int value);
 
+    void on_frameSlider_valueChanged(int value);
+
+    void on_frameSpinBox_valueChanged(int arg1);
+
+    void on_saveFrameButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;
@@ -100,6 +111,7 @@ private:
     SizeSelector size;
     QColorDialog* colorPicker;
     std::vector<QImage> timelineImages;
+    std::vector<QImage> previewImages;
     bool resizeImage;
     int currentFrame;
     int fpsPreview;
