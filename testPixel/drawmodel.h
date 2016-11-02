@@ -38,8 +38,12 @@ public slots:
 
     void rotateImage(double);
     void saveImage(QString);
-
+    void openImage(QString);
     void getFrameAndEmit();
+
+
+    void mirrorVert();
+    void mirrorHorz();
 
     void previewHasStopped(bool);
 
@@ -50,6 +54,7 @@ public slots:
     void addForegroundToTimeline(QImage);
 
     void getFrameToUpdate();
+
 
 
 protected:
@@ -106,6 +111,9 @@ private:
 
     //Tools ourTool;
 
+
+
+    void updateCanvas(QImage);
 };
 
 #endif // DRAWMODEL_H

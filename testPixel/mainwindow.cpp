@@ -37,6 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(this, &MainWindow::rotateCanvas, ui->workspace, &DrawModel::rotateImage);
     QObject::connect(this, &MainWindow::exportImage, ui->workspace, &DrawModel::saveImage);
+    QObject::connect(this, &MainWindow::importImage, ui->workspace, &DrawModel::openImage);
+    QObject::connect(this, &MainWindow::vertMirror, ui->workspace, &DrawModel::mirrorVert);
+    QObject::connect(this, &MainWindow::horzMirror, ui->workspace, &DrawModel::mirrorHorz);
 
 
     QObject::connect(playTimer, &QTimer::timeout, this, &MainWindow::playPreview);
@@ -44,7 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::addCurrentFrame, ui->workspace, &DrawModel::getFrameAndEmit);
     QObject::connect(ui->workspace, &DrawModel::addFrameToTimeline, this, &MainWindow::addFrameToTimeline);
     QObject::connect(this, &MainWindow::playPreviewWindow, this, &MainWindow::playPreview);
+
     QObject::connect(this, &MainWindow::previewStopped, ui->workspace, &DrawModel::previewHasStopped);
+
     //send signal for new transparency of pixel color
     QObject::connect(this, &MainWindow::changeTransparency, ui->workspace, &DrawModel::acceptTransparency);
     //change workspace image
@@ -57,7 +62,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->workspace,&DrawModel::updateTimelineFrame,this,&MainWindow::updateTimelineFrame);
     //Gets the composite image to UPDATE the preview Vector
     QObject::connect(ui->workspace,&DrawModel::updatePreviewFrame,this,&MainWindow::updatePreviewFrame);
-
 
 }
 
@@ -245,11 +249,8 @@ void MainWindow::updatePreviewFrame(QImage frame)
 
 void MainWindow::on_exportButton_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                               "",
-                               tr("Images (*.png *.jpg)"));
+    exportPicture();
 
-    emit exportImage(fileName);
 }
 
 void MainWindow::on_resizeButton_clicked()
@@ -270,6 +271,31 @@ void MainWindow::on_rotateCounterClockwiseButton_clicked()
     emit rotateCanvas(-90.0);
 }
 
+
+void MainWindow::on_actionExport_triggered()
+{
+    exportPicture();
+}
+
+void MainWindow::exportPicture(){
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               "",
+                               tr("Images (*.png *.jpg)"));
+
+    emit exportImage(fileName);
+}
+
+void MainWindow::importPicture(){
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Picture"), "", tr("Images (*.png *.jpg)"));
+
+    emit importImage(fileName);
+}
+
+void MainWindow::on_actionImport_triggered()
+{
+    importPicture();
+}
+
 void MainWindow::on_transparencySpinBox_valueChanged(int arg1)
 {
     ui->transparencySlider->setValue(arg1);
@@ -280,6 +306,17 @@ void MainWindow::on_transparencySlider_valueChanged(int value)
 {
     ui->transparencySpinBox->setValue(value);
     emit changeTransparency(value);
+
+}
+
+void MainWindow::on_horizontalMirrorButton_clicked()
+{
+    emit horzMirror();
+}
+
+void MainWindow::on_verticalMirrorButton_clicked()
+{
+    emit vertMirror();
 }
 
 void MainWindow::on_frameSlider_valueChanged(int value)

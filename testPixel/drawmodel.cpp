@@ -208,12 +208,21 @@ void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
     }
 }
 
+void DrawModel::updateCanvas(QImage drawing)
+{
+
+    QImage result = picBackGround.copy();
+    QPainter p(&result);
+    p.drawImage(QPoint(0,0),drawing);
+    picture = result.copy();
+    update();
+}
+
 void DrawModel::drawAPoint(QPoint pos)
 {
 
 
     QPainter painter(&picForeGround);
-
     painter.setBrush(*currentBrush);
     if(currentTool == "Pen")
     {
@@ -231,6 +240,7 @@ void DrawModel::drawAPoint(QPoint pos)
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawPoint(pos);
+            /*
     QImage result = picBackGround.copy();
     QPainter p(&result);
     p.drawImage(QPoint(0,0),picForeGround);
@@ -238,7 +248,9 @@ void DrawModel::drawAPoint(QPoint pos)
     if(currentTool != "FillBucket")
     {
         update();
-    }
+    }*/
+    updateCanvas(picForeGround);
+
     lastPoint = pos;
     if(currentTool == "Eraser")
     {
@@ -291,11 +303,16 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)
     painter.setPen(pen);
     painter.drawLine(lastPos, currentPos);
     lastPoint = currentPos;
+/*
     QImage result = picBackGround;
     QPainter p(&result);
     p.drawImage(QPoint(0,0),picForeGround);
     picture = result.copy();
     update();
+    if(currentTool == "Eraser")
+    {
+*/
+    updateCanvas(picForeGround);
     if(currentTool == "Eraser")
     {
         painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
@@ -319,12 +336,18 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         QPainter p (&newPicture);
         p.drawImage(0,0,picForeGround);
         drawGrid();
+/*
         QImage result = picBackGround;
         QPainter painter(&result);
         painter.drawImage(QPoint(0,0),newPicture);
         picForeGround = newPicture.copy();
         picture = result.copy();
         update();
+        */
+
+        picForeGround = newPicture.copy();
+        updateCanvas(picForeGround);
+
     }
     else
     {
@@ -418,11 +441,14 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
         }
         painter.drawLine(start, start);
     }
+/*
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), realTimeImage);
     picture = result.copy();
     update();
+*/
+   updateCanvas(realTimeImage);
 }
 
 void DrawModel::createShapes(QPoint start, QPoint finish)
@@ -450,12 +476,17 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     {
         painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
     }
+/*
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), picForeGround);
     picture = result.copy();
     update();
+*/
+    updateCanvas(picForeGround);
+
 }
+
 void DrawModel::undoSlot()
 {
     if (imageHistory->size() > 0)
@@ -467,14 +498,19 @@ void DrawModel::undoSlot()
 
         std::cout << redoStack->size() << std::endl;
         imageHistory->pop_back();
+/*
         QImage result = picBackGround;
         QPainter painter2(&result);
         painter2.drawImage(QPoint(0,0), picForeGround);
         picture = result.copy();
         update();
+*/
+       updateCanvas(picForeGround);
+
     }
 
 }
+
 void DrawModel::redoSlot()
 {
     if(redoStack->size() > 0)
@@ -482,11 +518,15 @@ void DrawModel::redoSlot()
         imageHistory->push_back(picForeGround);
         picForeGround = (*redoStack)[redoStack->size() - 1];
         redoStack->pop_back();
+/*
         QImage result = picBackGround;
         QPainter painter2(&result);
         painter2.drawImage(QPoint(0, 0), picForeGround);
         picture = result.copy();
         update();
+*/
+        updateCanvas(picForeGround);
+
     }
 }
 
@@ -559,6 +599,8 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
     }
     update();
 }
+
+
 void DrawModel::rotateImage(double angle)
 {
     //Added to check for rotates when undoing and redoing actions
@@ -571,6 +613,7 @@ void DrawModel::rotateImage(double angle)
     {
         imageHistory->push_back(picForeGround);
     }
+
     QImage image  = QImage(width, height, QImage::Format_ARGB32);
     image.fill(Qt::transparent);
     QPainter p (&image);
@@ -578,17 +621,23 @@ void DrawModel::rotateImage(double angle)
     p.rotate(angle);
     p.translate(-width/2, -height/2);
     p.drawImage(0,0,picForeGround);
+/*
     QImage result = picBackGround;
     QPainter painter2(&result);
     painter2.drawImage(QPoint(0,0), image);
     picForeGround = image.copy();
     picture = result.copy();
     update();
+*/
+    picForeGround = image.copy();
+    updateCanvas(picForeGround);
+
 }
 
 void DrawModel::saveImage(QString fileName){
     picForeGround.save(fileName);
 }
+
 void DrawModel::getFrameToUpdate()
 {
     emit updateTimelineFrame(picForeGround.copy());//send foreground to mainwindow to replace itself on timeline vector
@@ -614,15 +663,43 @@ void DrawModel::addForegroundToTimeline(QImage foreground)
     emit addFrameToTimeline(foreground);
 }
 
+
+void DrawModel::openImage(QString fileName){
+    picForeGround = QImage(fileName);
+
+    width = picForeGround.width();
+    height = picForeGround.height();
+    scaleFactorX = 512/width;
+    scaleFactorY = 512/height;
+    picBackGround = QImage(width, height, QImage::Format_ARGB32);
+    drawGrid();
+    updateCanvas(picForeGround);
+}
+
+void DrawModel::mirrorHorz(){
+    QImage result = picForeGround.mirrored();
+    picForeGround = result;
+    updateCanvas(picForeGround);
+}
+
+
+void DrawModel::mirrorVert(){
+    QImage result = picForeGround.mirrored(true, false);
+    picForeGround = result;
+    updateCanvas(picForeGround);
+}
+
 void DrawModel::previewHasStopped(bool notPlaying)
 {
     playing = notPlaying;
 }
 
+
 void DrawModel::acceptTransparency(int newTransparency)
 {
     currentColor->setAlpha(newTransparency);
 }
+
 
 void DrawModel::acceptChangeOfFrame(QImage newFrame)
 {
@@ -643,7 +720,7 @@ void DrawModel::acceptChangeOfFrame(QImage newFrame)
 
 /*
 void DrawModel::resizeEvent(QResizeEvent *event)
->>>>>>> e1780be4bfcff70c0d506b452afb4dc77130b84d
+
 {
     if(redoStack->size() > 0){
         std::cout << "redo" << std::endl;
