@@ -281,14 +281,16 @@ void MainWindow::exportPicture(){
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                "",
                                tr("Images (*.png *.jpg)"));
-
-    emit exportImage(fileName);
+    if(fileName != NULL){
+        emit exportImage(fileName);
+    }
 }
 
 void MainWindow::importPicture(){
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Picture"), "", tr("Images (*.png *.jpg)"));
-
-    emit importImage(fileName);
+    if(fileName != NULL){
+        emit importImage(fileName);
+    }
 }
 
 void MainWindow::on_actionImport_triggered()
@@ -334,4 +336,9 @@ void MainWindow::on_frameSpinBox_valueChanged(int arg1)
 void MainWindow::on_saveFrameButton_clicked()
 {
     emit updateFrame();
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+
 }
