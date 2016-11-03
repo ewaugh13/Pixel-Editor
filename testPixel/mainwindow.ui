@@ -46,6 +46,9 @@
     <layout class="QVBoxLayout" name="toolsLayout">
      <item>
       <widget class="QPushButton" name="penButton">
+       <property name="cursor">
+        <cursorShape>ArrowCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Pen</string>
        </property>

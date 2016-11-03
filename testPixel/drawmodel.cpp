@@ -240,15 +240,6 @@ void DrawModel::drawAPoint(QPoint pos)
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawPoint(pos);
-            /*
-    QImage result = picBackGround.copy();
-    QPainter p(&result);
-    p.drawImage(QPoint(0,0),picForeGround);
-    picture = result.copy();
-    if(currentTool != "FillBucket")
-    {
-        update();
-    }*/
     updateCanvas(picForeGround);
 
     lastPoint = pos;
@@ -272,7 +263,7 @@ void DrawModel::drawGrid()
             }
             else
             {
-                color = new QColor(150, 150, 150, 255);
+                color = new QColor(120, 120, 120, 255);
             }
             QPainter painter(&picBackGround);
             painter.setBrush(*currentBrush);
@@ -303,15 +294,6 @@ void DrawModel::drawALine(QPoint lastPos, QPoint currentPos)
     painter.setPen(pen);
     painter.drawLine(lastPos, currentPos);
     lastPoint = currentPos;
-/*
-    QImage result = picBackGround;
-    QPainter p(&result);
-    p.drawImage(QPoint(0,0),picForeGround);
-    picture = result.copy();
-    update();
-    if(currentTool == "Eraser")
-    {
-*/
     updateCanvas(picForeGround);
     if(currentTool == "Eraser")
     {
@@ -336,15 +318,6 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         QPainter p (&newPicture);
         p.drawImage(0,0,picForeGround);
         drawGrid();
-/*
-        QImage result = picBackGround;
-        QPainter painter(&result);
-        painter.drawImage(QPoint(0,0),newPicture);
-        picForeGround = newPicture.copy();
-        picture = result.copy();
-        update();
-        */
-
         picForeGround = newPicture.copy();
         updateCanvas(picForeGround);
 
@@ -441,13 +414,7 @@ void DrawModel::renderShapes(QPoint start, QPoint finish)
         }
         painter.drawLine(start, start);
     }
-/*
-    QImage result = picBackGround;
-    QPainter painter2(&result);
-    painter2.drawImage(QPoint(0,0), realTimeImage);
-    picture = result.copy();
-    update();
-*/
+
    updateCanvas(realTimeImage);
 }
 
@@ -476,13 +443,7 @@ void DrawModel::createShapes(QPoint start, QPoint finish)
     {
         painter.drawEllipse(start.x(), start.y(), finish.x() - start.x(), finish.y() - start.y());
     }
-/*
-    QImage result = picBackGround;
-    QPainter painter2(&result);
-    painter2.drawImage(QPoint(0,0), picForeGround);
-    picture = result.copy();
-    update();
-*/
+
     updateCanvas(picForeGround);
 
 }
@@ -498,13 +459,7 @@ void DrawModel::undoSlot()
 
         std::cout << redoStack->size() << std::endl;
         imageHistory->pop_back();
-/*
-        QImage result = picBackGround;
-        QPainter painter2(&result);
-        painter2.drawImage(QPoint(0,0), picForeGround);
-        picture = result.copy();
-        update();
-*/
+
        updateCanvas(picForeGround);
 
     }
@@ -518,13 +473,7 @@ void DrawModel::redoSlot()
         imageHistory->push_back(picForeGround);
         picForeGround = (*redoStack)[redoStack->size() - 1];
         redoStack->pop_back();
-/*
-        QImage result = picBackGround;
-        QPainter painter2(&result);
-        painter2.drawImage(QPoint(0, 0), picForeGround);
-        picture = result.copy();
-        update();
-*/
+
         updateCanvas(picForeGround);
 
     }
@@ -534,6 +483,7 @@ void DrawModel::redoSlot()
 //http://www.williammalone.com/articles/html5-canvas-javascript-paint-bucket-tool/
 void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
 {
+
     while(pixelStack.size())
     {
         QPoint newPos;
@@ -621,14 +571,6 @@ void DrawModel::rotateImage(double angle)
     p.rotate(angle);
     p.translate(-width/2, -height/2);
     p.drawImage(0,0,picForeGround);
-/*
-    QImage result = picBackGround;
-    QPainter painter2(&result);
-    painter2.drawImage(QPoint(0,0), image);
-    picForeGround = image.copy();
-    picture = result.copy();
-    update();
-*/
     picForeGround = image.copy();
     updateCanvas(picForeGround);
 
