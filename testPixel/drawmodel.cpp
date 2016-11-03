@@ -534,8 +534,16 @@ void DrawModel::redoSlot()
 //http://www.williammalone.com/articles/html5-canvas-javascript-paint-bucket-tool/
 void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
 {
+    int t = 0;
+    QPainter painter(&picForeGround);
+    painter.setBrush(*currentBrush);
+    pen.setColor(*currentColor);
+    painter.setPen(pen);
+
     while(pixelStack.size())
     {
+        t++;
+        std::cout<<t<<std::endl;
         QPoint newPos;
         int x, y, row;
         bool reachLeft, reachRight;
@@ -562,7 +570,9 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
         {
 
             penWidth = 1;
-            drawAPoint(QPoint(x,y));
+            //drawAPoint(QPoint(x,y));
+
+            painter.drawPoint(QPoint(x,y));
             penWidth = originalPenWidth;
             if(x > 0)
             {
@@ -597,7 +607,8 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
            row += picForeGround.width();
         }
     }
-    update();
+    //update();
+    updateCanvas(picForeGround);
 }
 
 

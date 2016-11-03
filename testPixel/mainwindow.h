@@ -121,6 +121,8 @@ private slots:
     void on_verticalMirrorButton_clicked();
 
 
+    void on_actionSave_triggered();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;
