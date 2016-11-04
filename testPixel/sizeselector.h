@@ -32,8 +32,18 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_squareAspectCheckBox_clicked(bool checked);
+
+    void on_sixteenByNineRatioCheckBox_clicked(bool checked);
+
+    void on_fourByNineRatioCheckBox_clicked(bool checked);
+
 private:
     Ui::SizeSelector *ui;
+
+    bool squareRatio;
+    bool sixteenBy9Ratio;
+    bool fourByThreeRatio;
 };
 
 #endif // SIZESELECTOR_H
