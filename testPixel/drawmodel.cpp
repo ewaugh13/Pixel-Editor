@@ -615,15 +615,17 @@ void DrawModel::addForegroundToTimeline(QImage foreground)
 
 
 void DrawModel::openImage(QString fileName){
-    picForeGround = QImage(fileName);
-
-    width = picForeGround.width();
-    height = picForeGround.height();
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
-    picBackGround = QImage(width, height, QImage::Format_ARGB32);
-    drawGrid();
-    updateCanvas(picForeGround);
+    QImage result = QImage(fileName);
+    if(!result.isNull()){
+        width = picForeGround.width();
+        height = picForeGround.height();
+        scaleFactorX = 512/width;
+        scaleFactorY = 512/height;
+        picBackGround = QImage(width, height, QImage::Format_ARGB32);
+        picForeGround = QImage(fileName);
+        drawGrid();
+        updateCanvas(picForeGround);
+    }
 }
 
 void DrawModel::mirrorHorz(){
