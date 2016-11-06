@@ -68,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(this,&MainWindow::sendImageToPreview,&preview,&previewwindow::getImageVector);
 
+    QObject::connect(this,&MainWindow::fillTrans,ui->workspace,&DrawModel::imageClear);
+
 }
 
 MainWindow::~MainWindow()
@@ -77,11 +79,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::acceptWidthAndHeight(int width, int height)
 {
+
     spriteWidth = width;
     spriteHeight = height;
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight, resizeImage);
     resizeImage = false;
+    emit addCurrentFrame();
+
 }
 
 void MainWindow::on_penSizeSlider_valueChanged(int value)
@@ -298,7 +303,7 @@ void MainWindow::on_actionExport_triggered()
 void MainWindow::exportPicture(){
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                "",
-                               tr("Images (*.png *.jpg *.gif)"));
+                               tr("PNG images *.png;;JPEG images *.jpg;; GIF images *.gif"));
     if(fileName != NULL){
         QFileInfo f(fileName);
 
@@ -307,7 +312,7 @@ void MainWindow::exportPicture(){
 }
 
 void MainWindow::importPicture(){
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Picture"), "", tr("Images (*.png *.jpg)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Picture"), "", tr("PNG images *.png;;JPEG images *.jpg"));
     if(fileName != NULL){
         emit importImage(fileName);
     }
@@ -390,14 +395,25 @@ void MainWindow::on_copyButton_clicked()
 
 void MainWindow::on_pasteButton_clicked()
 {
+    std::cout<<timelineImages.size() <<std::endl;
     if(!(timelineImages.size() == 0))
     {
         //timelineImages[ui->frameSlider->value()] = copyImage;
         //previewImages[ui->frameSlider->value()] = copyImage;
-        bool paste = true;
+
 
         emit changeFrame(copyImage, true);
-
+        emit updateFrame();
     }
 
+}
+
+void MainWindow::on_cutButton_clicked()
+{
+    if(!(timelineImages.size() <= 0))
+    {
+        copyImage = timelineImages[ui->frameSlider->value()];
+        emit fillTrans();
+        emit updateFrame();
+    }
 }

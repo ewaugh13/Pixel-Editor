@@ -30,6 +30,8 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     drawing = false;
     this->setMouseTracking(true);
     playing = false;
+
+    getFrameToUpdate();
 }
 
 void DrawModel::paintEvent(QPaintEvent * paintEvent)
@@ -206,6 +208,7 @@ void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
     {
         createShapes(lastPoint, QPoint(x,y));
     }
+    getFrameToUpdate();
 }
 
 void DrawModel::updateCanvas(QImage drawing)
@@ -726,6 +729,12 @@ void DrawModel::acceptChangeOfFrame(QImage newFrame, bool paste)
 //    update();
     updateCanvas(picForeGround);
 
+}
+
+void DrawModel::imageClear(){
+    picForeGround.fill(Qt::transparent);
+
+    updateCanvas(picForeGround);
 }
 
 

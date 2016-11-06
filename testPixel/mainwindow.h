@@ -62,6 +62,8 @@ signals:
 
     void updateFrame();
 
+    void fillTrans();
+
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -134,6 +136,8 @@ private slots:
     void on_copyButton_clicked();
 
     void on_pasteButton_clicked();
+
+    void on_cutButton_clicked();
 
 private:
     Ui::MainWindow *ui;

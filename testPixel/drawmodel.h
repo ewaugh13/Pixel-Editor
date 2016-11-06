@@ -57,6 +57,7 @@ public slots:
 
     void getFrameToUpdate();
 
+    void imageClear();
 
 
 protected:
@@ -83,6 +84,7 @@ private:
     QColor* currentColor;
     std::string currentTool;
     QColor eraseColor;
+
 
     QImage picForeGround;
     QImage picBackGround;
@@ -116,6 +118,8 @@ private:
 
 
     void updateCanvas(QImage);
+
+
 };
 
 #endif // DRAWMODEL_H
