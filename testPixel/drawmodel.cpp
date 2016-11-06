@@ -594,9 +594,9 @@ void DrawModel::saveImage(QString fileName, bool isGif, std::vector<QImage> allF
             allFrames.push_back(picForeGround);
         }
         for(int i = 0; i < allFrames.size(); i++){
-            QImage result = allFrames[i].convertToFormat(QImage::Format_RGB32);
+            //QImage result = allFrames[i].convertToFormat(QImage::Format_RGB32);
 
-            uint8_t *argbPtr=reinterpret_cast<uint8_t*>(result.bits());
+            uint8_t *argbPtr=reinterpret_cast<uint8_t*>(allFrames[i].bits());
             saveGif.GifWriteFrame(&saveGif.storage, argbPtr,width,height,10);
         }
 
