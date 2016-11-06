@@ -142,6 +142,8 @@ private slots:
 
     void on_cutButton_clicked();
 
+    void on_deleteFrameButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;

@@ -184,8 +184,6 @@ void MainWindow::on_redoButton_clicked()
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addCurrentFrame();
-    std::cout<<previewImages.size()<<std::endl;
-
 }
 //adds frame to timeline of preview at current state
 void MainWindow::addFrameToTimeline(QImage frame)
@@ -368,10 +366,6 @@ void MainWindow::on_frameSpinBox_valueChanged(int arg1)
     emit changeFrame(timelineImages[arg1], false);
 }
 
-void MainWindow::on_saveFrameButton_clicked()
-{
-    emit updateFrame();
-}
 
 void MainWindow::on_actionSave_triggered()
 {
@@ -458,5 +452,43 @@ void MainWindow::on_cutButton_clicked()
         copyImage = timelineImages[ui->frameSlider->value()];
         emit fillTrans();
         emit updateFrame();
+
     }
+}
+
+void MainWindow::on_deleteFrameButton_clicked()
+{
+    if(timelineImages.size() == 1){
+        emit fillTrans();
+        emit updateFrame();
+    }
+    else{
+        int result = 0;
+
+        timelineImages.erase(timelineImages.begin() + ui->frameSpinBox->value());
+        previewImages.erase(previewImages.begin() + ui->frameSpinBox->value());
+
+        ui->frameSpinBox->setMaximum(timelineImages.size()-1);
+        ui->frameSlider->setMaximum(timelineImages.size()-1);
+        if(ui->frameSpinBox->value() != timelineImages.size() -1){
+            result = ui->frameSpinBox->value();
+        }
+        else if(ui->frameSpinBox->value() != 0){
+            result = ui->frameSpinBox->value() - 1;
+        }
+
+        ui->frameSpinBox->setValue(result);
+        ui->frameSlider->setValue(result);
+        emit changeFrame(timelineImages[result], false);
+    }
+
+
+    //emit updateFrame();
+}
+
+
+void MainWindow::on_saveFrameButton_clicked()
+{
+    //timelineImages.erase(timelineImages.begin() + currentFrame - 1);
+    //previewImages.erase(previewImages.begin() + currentFrame - 1);
 }
