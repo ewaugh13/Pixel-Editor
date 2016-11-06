@@ -344,33 +344,45 @@ void MainWindow::on_saveFrameButton_clicked()
 
 void MainWindow::on_actionSave_triggered()
 {
-    if(previewImages.size() == 0)
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               "",
+                               tr("Sprite Sheet Project (*.ssp)"));
+    if(fileName != NULL)
     {
-        emit addCurrentFrame();
+        if(previewImages.size() == 0)
+        {
+            emit addCurrentFrame();
+        }
+        emit callSaveSSP(timelineImages,fileName.toStdString());//HARDCODED TEST FILENAME!!
     }
-    emit callSaveSSP(timelineImages,"GixelTest");//HARDCODED TEST FILENAME!!!!!!!!!!!!
 }
 void MainWindow::on_actionOpen_triggered()
 {
-    std::vector<QImage> newFrames;
-    emit callLoadSSP("GixelTest.ssp", newFrames);//How will we handle different resolutions here?
 
-    timelineImages = newFrames;
-    previewImages = newFrames;
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Sprite Sheet Project (*.ssp)"));
 
-    std::cout <<timelineImages.size() <<std::endl;
-
-    ui->frameSlider->setValue(0);
-    ui->frameSpinBox->setValue(0);
-
-    ui->frameSpinBox->setMaximum(timelineImages.size()-1);
-    ui->frameSlider->setMaximum(timelineImages.size()-1);
-
-    for(int i = 0; i < timelineImages.size(); i++)
+    if(fileName != NULL)
     {
-        ui->frameSlider->setValue(i);
-        ui->frameSpinBox->setValue(i);
-        emit changeFrame(timelineImages[i]);
-        emit updateFrame();
+        std::vector<QImage> newFrames;
+        emit callLoadSSP(fileName.toStdString(), newFrames);//How will we handle different resolutions here?
+
+        timelineImages = newFrames;
+        previewImages = newFrames;
+
+        std::cout <<timelineImages.size() <<std::endl;
+
+        ui->frameSlider->setValue(0);
+        ui->frameSpinBox->setValue(0);
+
+        ui->frameSpinBox->setMaximum(timelineImages.size()-1);
+        ui->frameSlider->setMaximum(timelineImages.size()-1);
+
+        for(int i = 0; i < timelineImages.size(); i++)
+        {
+            ui->frameSlider->setValue(i);
+            ui->frameSpinBox->setValue(i);
+            emit changeFrame(timelineImages[i]);
+            emit updateFrame();
+        }
     }
 }
