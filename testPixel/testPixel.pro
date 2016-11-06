@@ -15,14 +15,22 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     drawmodel.cpp \
-    sizeselector.cpp
+    sizeselector.cpp \
+    previewwindow.cpp\
+    gifsave.cpp
+
 
 HEADERS  += mainwindow.h \
     drawmodel.h \
-    sizeselector.h
+    sizeselector.h \
+    previewwindow.h\
+    gif.h\
+    gifsave.h
+
 
 FORMS    += mainwindow.ui \
-    sizeselector.ui
+    sizeselector.ui \
+    previewwindow.ui
 
 RESOURCES += \
     resources.qrc
