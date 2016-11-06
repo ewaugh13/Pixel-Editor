@@ -215,6 +215,7 @@ void MainWindow::playPreview()
 //Starts playback of frame previews at the set fps
 void MainWindow::on_playButton_clicked()
 {
+    std::cout << previewImages.size() << std::endl;
     if(previewImages.size() > 0)
     {
         currentFrame = 0;
@@ -257,8 +258,9 @@ void MainWindow::on_fpsSlider_valueChanged(int value)
 //Update the current frame in the timeline vector
 void MainWindow::updateTimelineFrame(QImage frame)
 {
-    if(timelineImages.size() > 0){
-    timelineImages[ui->frameSlider->value()] = frame.copy();
+    if(timelineImages.size() > 0)
+    {
+        timelineImages[ui->frameSlider->value()] = frame.copy();
     }
 }
 //Update the current frame in the preview vector
@@ -267,7 +269,7 @@ void MainWindow::updatePreviewFrame(QImage frame)
 
     if(previewImages.size() > 0)
     {
-    previewImages[ui->frameSlider->value()] = frame.copy();
+        previewImages[ui->frameSlider->value()] = frame.copy();
     }
 
 }
@@ -324,13 +326,6 @@ void MainWindow::importPicture(){
         emit importImage(fileName);
     }
 }
-
-
-
-
-
-
-
 
 void MainWindow::on_actionImport_triggered()
 {

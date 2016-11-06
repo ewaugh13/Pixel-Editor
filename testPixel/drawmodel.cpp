@@ -30,8 +30,6 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     drawing = false;
     this->setMouseTracking(true);
     playing = false;
-
-    getFrameToUpdate();
 }
 
 void DrawModel::paintEvent(QPaintEvent * paintEvent)
@@ -342,8 +340,6 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         painter.drawImage(QPoint(0,0), newPicture);
         picture = newPicture.copy();
         drawGrid();
-
-        emit addFrameToPreviewTimeline(picture);
     }
 }
 
