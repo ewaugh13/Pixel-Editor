@@ -23,7 +23,8 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     drawmodel.h \
     sizeselector.h \
-    previewwindow.h
+    previewwindow.h \
+    gif.h\
     gifsave.h
 
 

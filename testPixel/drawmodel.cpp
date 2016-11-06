@@ -340,7 +340,7 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         picture = newPicture.copy();
         drawGrid();
 
-        emit addFrameToPreviewTimeline(picture);
+        //emit addFrameToPreviewTimeline(picture);
     }
 }
 
