@@ -62,6 +62,8 @@ signals:
 
     void updateFrame();
 
+    void callSaveSSP(std::vector<QImage>, std::string);
+    void callLoadSSP(std::string,std::vector<QImage>&);
     void fillTrans();
 
 
@@ -130,6 +132,7 @@ private slots:
 
 
     void on_actionSave_triggered();
+    void on_actionOpen_triggered();
 
     void on_maximizePreviewButton_clicked();
 

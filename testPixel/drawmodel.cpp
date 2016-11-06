@@ -32,6 +32,7 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     playing = false;
 
     //getFrameToUpdate();
+
 }
 
 void DrawModel::paintEvent(QPaintEvent * paintEvent)
@@ -343,7 +344,9 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         picture = newPicture.copy();
         drawGrid();
 
+
         //emit addFrameToPreviewTimeline(picture);
+
     }
 }
 
@@ -722,11 +725,41 @@ void DrawModel::acceptChangeOfFrame(QImage newFrame, bool paste)
     pen.setWidth(penWidth);
     pen.setColor(*currentColor);
     painter.setPen(pen);
-//    QImage result = picBackGround;
-//    QPainter painter2(&result);
-//    painter2.drawImage(QPoint(0,0), picForeGround);
-//    picture = result.copy();
-//    update();
+    updateCanvas(picForeGround);
+}
+//Creates the .spp file of the current project
+void DrawModel::saveSSP(std::vector<QImage> frames, std::string filename)
+{
+    std::ofstream output_data;
+
+    if(true) //add conditional for name
+    {
+        QColor pixelColor;
+
+        filename += ".ssp";//Creates file of FILENAME w .spp ext
+        output_data.open(filename);
+
+        output_data << height <<" " <<width <<"\n";
+        output_data << frames.size() <<"\n";
+
+        for(int i=0; i < frames.size(); i++)
+        {
+            for(int y = 0; y < frames[i].height(); y++)
+            {
+                for(int x = 0; x < frames[i].width(); x++)
+                {
+                    pixelColor = frames[i].pixelColor(x,y);
+                    output_data << pixelColor.red() <<" " <<pixelColor.green() <<" " <<pixelColor.blue() <<" " <<pixelColor.alpha() <<" ";
+                }
+                output_data <<"\n";
+            }
+        }
+    }
+    QImage result = picBackGround;
+    QPainter painter2(&result);
+    painter2.drawImage(QPoint(0,0), picForeGround);
+    picture = result.copy();
+    update();
     updateCanvas(picForeGround);
 
 }
@@ -736,29 +769,69 @@ void DrawModel::imageClear(){
 
     updateCanvas(picForeGround);
 }
-
-
-
-/*
-void DrawModel::resizeEvent(QResizeEvent *event)
-
+void DrawModel::loadSSP(std::string filename, std::vector<QImage> &newFrames)
 {
-    if(redoStack->size() > 0){
-        std::cout << "redo" << std::endl;
-        imageHistory->push_back(picForeGround);
-        picForeGround = (*redoStack)[redoStack->size() - 1];
-        std::cout << redoStack->size() << std::endl;
+    QColor pixelColor;
+    int newHeight;
+    int newWidth;
+    int frameCount;
 
-        //imageHistory->push_back(redoStack->back());
+    std::cout <<"In load method" <<std::endl;
+    std::ifstream in_data;
 
-        redoStack->pop_back();
-        QImage result = picBackGround;
-        QPainter painter2(&result);
-        painter2.drawImage(QPoint(0,0), picForeGround);
-        picture = result;
-        update();
+    in_data.open(filename);
+
+    while(!in_data)
+    {
+        in_data.close();
+        in_data.clear();
     }
+    in_data >> newHeight >> newWidth >> frameCount;
+    height = newHeight;
+    width = newWidth;
+    QImage currentFrame(newWidth,newHeight, QImage::Format_ARGB32);
+    currentFrame.fill(Qt::transparent);
+
+    std::cout<<height <<" " <<width <<" " <<frameCount <<std::endl;
+    scaleFactorX = 512/width;
+    scaleFactorY = 512/height;
+    picBackGround = QImage(width, height, QImage::Format_ARGB32);
+
+    int x = 0;
+    int y = 0;
+    while(!in_data.eof()&&y!=height)
+    {
+        int r,g,b,a;
+        in_data >> r >>g >>b >>a;
+        pixelColor = QColor(r,g,b,a);//make QColor based on that RGBA tuple that was read in
+
+        currentFrame.setPixelColor(x,y, pixelColor);
+        x++;
+        if(x >= width)
+        {
+            x = 0;
+            y++;
+            if(y == height)
+            {
+                y = 0;
+
+                newFrames.push_back(currentFrame);
+                currentFrame = QImage(newWidth, newHeight, QImage::Format_ARGB32);
+                currentFrame.fill(Qt::transparent);
+            }
+        }
+    }
+    in_data.close();
+    in_data.clear();
+
+    picForeGround = newFrames[0];
+
+    QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
+    newPicture.fill(qRgb(255,255,255));
+    QPainter painter(&newPicture);
+    painter.setBrush(*currentBrush);
+    painter.drawImage(QPoint(0,0), newPicture);
+    picture = newPicture.copy();
+    drawGrid();
+    update();
 }
-*/
-
-

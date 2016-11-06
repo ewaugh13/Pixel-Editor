@@ -25,6 +25,9 @@ MainWindow::MainWindow(QWidget *parent) :
     fpsPreview = 1000;  //one second
     previewPlaying = false;
 
+    ui->frameSlider->setMaximum(0);
+    ui->frameSpinBox->setMaximum(0);
+
     //connection between popup window and mainwindow
     QObject::connect(&size, &SizeSelector::setWidthAndHeight, this, &MainWindow::acceptWidthAndHeight);
     QObject::connect(this, &MainWindow::passWidthAndHeight, ui->workspace, &DrawModel::userGivenWidthAndHeight);
@@ -65,6 +68,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->workspace,&DrawModel::updateTimelineFrame,this,&MainWindow::updateTimelineFrame);
     //Gets the composite image to UPDATE the preview Vector
     QObject::connect(ui->workspace,&DrawModel::updatePreviewFrame,this,&MainWindow::updatePreviewFrame);
+    //Call the SaveSSP method in drawModel
+    QObject::connect(this, &MainWindow::callSaveSSP, ui->workspace, &DrawModel::saveSSP);
+    //Call the LoadSSP method in drawModel
+    QObject::connect(this, &MainWindow::callLoadSSP, ui->workspace, &DrawModel::loadSSP);
 
     QObject::connect(this,&MainWindow::sendImageToPreview,&preview,&previewwindow::getImageVector);
 
@@ -209,6 +216,7 @@ void MainWindow::playPreview()
 //Starts playback of frame previews at the set fps
 void MainWindow::on_playButton_clicked()
 {
+    std::cout << previewImages.size() << std::endl;
     if(previewImages.size() > 0)
     {
         currentFrame = 0;
@@ -251,8 +259,9 @@ void MainWindow::on_fpsSlider_valueChanged(int value)
 //Update the current frame in the timeline vector
 void MainWindow::updateTimelineFrame(QImage frame)
 {
-    if(timelineImages.size() > 0){
-    timelineImages[ui->frameSlider->value()] = frame.copy();
+    if(timelineImages.size() > 0)
+    {
+        timelineImages[ui->frameSlider->value()] = frame.copy();
     }
 }
 //Update the current frame in the preview vector
@@ -261,7 +270,7 @@ void MainWindow::updatePreviewFrame(QImage frame)
 
     if(previewImages.size() > 0)
     {
-    previewImages[ui->frameSlider->value()] = frame.copy();
+        previewImages[ui->frameSlider->value()] = frame.copy();
     }
 
 }
@@ -319,13 +328,6 @@ void MainWindow::importPicture(){
     }
 }
 
-
-
-
-
-
-
-
 void MainWindow::on_actionImport_triggered()
 {
     importPicture();
@@ -373,7 +375,47 @@ void MainWindow::on_saveFrameButton_clicked()
 
 void MainWindow::on_actionSave_triggered()
 {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               "",
+                               tr("Sprite Sheet Project (*.ssp)"));
+    if(fileName != NULL)
+    {
+        if(previewImages.size() == 0)
+        {
+            emit addCurrentFrame();
+        }
+        emit callSaveSSP(timelineImages,fileName.toStdString());//HARDCODED TEST FILENAME!!
+    }
+}
+void MainWindow::on_actionOpen_triggered()
+{
 
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Sprite Sheet Project (*.ssp)"));
+
+    if(fileName != NULL)
+    {
+        std::vector<QImage> newFrames;
+        emit callLoadSSP(fileName.toStdString(), newFrames);//How will we handle different resolutions here?
+
+        timelineImages = newFrames;
+        previewImages = newFrames;
+
+        std::cout <<timelineImages.size() <<std::endl;
+
+        ui->frameSlider->setValue(0);
+        ui->frameSpinBox->setValue(0);
+
+        ui->frameSpinBox->setMaximum(timelineImages.size()-1);
+        ui->frameSlider->setMaximum(timelineImages.size()-1);
+
+        for(int i = 0; i < timelineImages.size(); i++)
+        {
+            ui->frameSlider->setValue(i);
+            ui->frameSpinBox->setValue(i);
+            emit changeFrame(timelineImages[i],false);
+            emit updateFrame();
+        }
+    }
 }
 
 void MainWindow::on_maximizePreviewButton_clicked()
