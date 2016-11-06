@@ -11,6 +11,7 @@
 #include <QColor>
 #include <iostream>
 #include <string>
+#include "gifsave.h"
 
 
 class DrawModel : public QWidget
@@ -37,7 +38,7 @@ public slots:
     void redoSlot();
 
     void rotateImage(double);
-    void saveImage(QString);
+    void saveImage(QString, bool, std::vector<QImage>);
     void openImage(QString);
     void getFrameAndEmit();
 

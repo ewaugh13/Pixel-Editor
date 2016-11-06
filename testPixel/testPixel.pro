@@ -16,12 +16,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     drawmodel.cpp \
     sizeselector.cpp \
-    previewwindow.cpp
+    previewwindow.cpp\
+    gifsave.cpp
+
 
 HEADERS  += mainwindow.h \
     drawmodel.h \
     sizeselector.h \
     previewwindow.h
+    gifsave.h
+
 
 FORMS    += mainwindow.ui \
     sizeselector.ui \

@@ -298,9 +298,11 @@ void MainWindow::on_actionExport_triggered()
 void MainWindow::exportPicture(){
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                "",
-                               tr("Images (*.png *.jpg)"));
+                               tr("Images (*.png *.jpg *.gif)"));
     if(fileName != NULL){
-        emit exportImage(fileName);
+        QFileInfo f(fileName);
+
+        emit exportImage(fileName,f.suffix() == "gif", timelineImages);
     }
 }
 
