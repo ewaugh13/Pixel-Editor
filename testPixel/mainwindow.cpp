@@ -177,6 +177,7 @@ void MainWindow::on_redoButton_clicked()
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addCurrentFrame();
+    std::cout<<previewImages.size()<<std::endl;
 
 }
 //adds frame to timeline of preview at current state
