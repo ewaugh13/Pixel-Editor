@@ -77,6 +77,8 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight, resizeImage);
     resizeImage = false;
+    //ui->workspace->setMinimumHeight(512);
+    //ui->workspace->setBaseSize(512,512);
 }
 
 void MainWindow::on_penSizeSlider_valueChanged(int value)

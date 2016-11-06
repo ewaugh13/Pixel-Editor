@@ -5,8 +5,8 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     width = 8;
     height = 8;
     erasing = false;
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+    scaleFactorX = 512.0/width;
+    scaleFactorY = 512.0/height;
     currentColor = new QColor(255,255,255,255);
     currentBrush = new QBrush(*currentColor);
     penWidth = 1;
@@ -307,12 +307,11 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
 {
     width = passedWidth;
     height = passedHeight;
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+    scaleFactorX = 512.0/width;
+    scaleFactorY = 512.0/height;
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
     if(resizeImage)
     {
-
         QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
         newPicture.fill(Qt::transparent);
         QPainter p (&newPicture);
@@ -326,8 +325,8 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
     {
         width = passedWidth;
         height = passedHeight;
-        scaleFactorX = 512/width;
-        scaleFactorY = 512/height;
+        scaleFactorX = 512.0/width;
+        scaleFactorY = 512.0/height;
         picForeGround = QImage(width, height, QImage::Format_ARGB32);
 
         picForeGround.fill(Qt::transparent);
@@ -619,8 +618,8 @@ void DrawModel::openImage(QString fileName){
 
     width = picForeGround.width();
     height = picForeGround.height();
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+    scaleFactorX = 512.0/width;
+    scaleFactorY = 512.0/height;
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
     drawGrid();
     updateCanvas(picForeGround);

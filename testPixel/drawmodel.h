@@ -93,8 +93,8 @@ private:
     int width;
     int height;
 
-    int scaleFactorX;
-    int scaleFactorY;
+    double scaleFactorX;
+    double scaleFactorY;
 
     int penWidth;
 
