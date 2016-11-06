@@ -11,8 +11,9 @@
 #include <QColor>
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <ostream>
 #include "gifsave.h"
-
 
 class DrawModel : public QWidget
 {
@@ -55,8 +56,13 @@ public slots:
 
     void addForegroundToTimeline(QImage);
 
+    void saveSSP(std::vector<QImage> frames, std::string filename);
+
+    void loadSSP(std::string filename, std::vector<QImage> &frames);
+
     void getFrameToUpdate();
 
+    void imageClear();
 
 
 protected:
@@ -64,7 +70,6 @@ protected:
     void mousePressEvent(QMouseEvent*)Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent*)Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent*)Q_DECL_OVERRIDE;
-    //void resizeEvent(QResizeEvent*)Q_DECL_OVERRIDE;
     void drawARect(QPoint, QPoint);
     void drawACircle(QPoint, QPoint);
 
@@ -83,6 +88,7 @@ private:
     QColor* currentColor;
     std::string currentTool;
     QColor eraseColor;
+
 
     QImage picForeGround;
     QImage picBackGround;
@@ -109,12 +115,6 @@ private:
     void renderShapes(QPoint, QPoint); //shows line
     void createShapes(QPoint, QPoint); //actually draws line
     void boundaryFill(QPoint, QColor targetColor);
-    //enum Tools{Pen, Eraser, Line, Circle, FillBucket, Ellipse, Rectangle};
-
-    //Tools ourTool;
-
-
-
     void updateCanvas(QImage);
 };
 
