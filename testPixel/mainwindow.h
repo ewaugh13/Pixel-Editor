@@ -7,6 +7,7 @@
 #include <QtCore>
 #include "drawmodel.h"
 #include "sizeselector.h"
+#include "previewwindow.h"
 #include <string>
 #include <QColorDialog>
 #include <QFileDialog>
@@ -48,13 +49,17 @@ signals:
     void importImage(QString);
     void addCurrentFrame();
     void playPreviewWindow();
+    void previewStopped(bool);
+
+    void sendImageToPreview(std::vector<QImage>);
 
     void vertMirror();
     void horzMirror();
 
-    void previewStopped(bool);
     void changeTransparency(int);
-    void changeFrame(QImage);
+    void changeFrame(QImage, bool);
+
+
     void updateFrame();
 
 
@@ -102,6 +107,7 @@ private slots:
     void on_rotateCounterClockwiseButton_clicked();
 
 
+
     void on_actionExport_triggered();
 
     void on_actionImport_triggered();
@@ -123,11 +129,18 @@ private slots:
 
     void on_actionSave_triggered();
 
+    void on_maximizePreviewButton_clicked();
+
+    void on_copyButton_clicked();
+
+    void on_pasteButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget* central;
     QGridLayout* mainSpace;
     SizeSelector size;
+    previewwindow preview;
     QColorDialog* colorPicker;
     std::vector<QImage> timelineImages;
     std::vector<QImage> previewImages;
@@ -136,6 +149,7 @@ private:
     int fpsPreview;
     QTimer* playTimer;
     bool previewPlaying;
+    QImage copyImage;
 
     void exportPicture();
     void saveSSP();

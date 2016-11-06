@@ -6,6 +6,9 @@ SizeSelector::SizeSelector(QWidget *parent) :
     ui(new Ui::SizeSelector)
 {
     ui->setupUi(this);
+    squareRatio =false;
+    sixteenBy9Ratio = false;
+    fourByThreeRatio = false;
 }
 
 SizeSelector::~SizeSelector()
@@ -35,7 +38,7 @@ void SizeSelector::on_widthSpinBox_valueChanged(int arg1)
     }
 }
 
-void SizeSelector::on_widthSlider_sliderMoved(int position)
+void SizeSelector::on_widthSlider_valueChanged(int position)
 {
     ui->widthSpinBox->setValue(position);
     if(squareRatio)
@@ -79,7 +82,7 @@ void SizeSelector::on_heightSpinBox_valueChanged(int arg1)
     }
 }
 
-void SizeSelector::on_heightSlider_sliderMoved(int position)
+void SizeSelector::on_heightSlider_valueChanged(int position)
 {
     ui->heightSpinBox->setValue(position);
     if(squareRatio)
@@ -100,6 +103,7 @@ void SizeSelector::on_heightSlider_sliderMoved(int position)
         ui->widthSpinBox->setValue(newWidth);
     }
 }
+
 
 void SizeSelector::on_buttonBox_accepted()
 {
@@ -156,3 +160,6 @@ void SizeSelector::on_fourByNineRatioCheckBox_clicked(bool checked) //mistakes w
         ui->heightSlider->setValue(newHeight);
     }
 }
+
+
+

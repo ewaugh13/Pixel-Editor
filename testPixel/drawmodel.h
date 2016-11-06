@@ -41,15 +41,16 @@ public slots:
     void openImage(QString);
     void getFrameAndEmit();
 
+    void previewHasStopped(bool);
+
 
     void mirrorVert();
     void mirrorHorz();
 
-    void previewHasStopped(bool);
 
     void acceptTransparency(int);
 
-    void acceptChangeOfFrame(QImage);
+    void acceptChangeOfFrame(QImage, bool);
 
     void addForegroundToTimeline(QImage);
 

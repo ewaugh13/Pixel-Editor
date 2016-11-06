@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->colorPreviewLabel->setAutoFillBackground(true);
     ui->colorPreviewLabel->setPalette(palette);
 
+
     playTimer = new QTimer(this);
     fpsPreview = 1000;  //one second
     previewPlaying = false;
@@ -48,12 +49,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->workspace, &DrawModel::addFrameToTimeline, this, &MainWindow::addFrameToTimeline);
     QObject::connect(this, &MainWindow::playPreviewWindow, this, &MainWindow::playPreview);
 
+
     QObject::connect(this, &MainWindow::previewStopped, ui->workspace, &DrawModel::previewHasStopped);
 
     //send signal for new transparency of pixel color
     QObject::connect(this, &MainWindow::changeTransparency, ui->workspace, &DrawModel::acceptTransparency);
     //change workspace image
     QObject::connect(this, &MainWindow::changeFrame, ui->workspace, &DrawModel::acceptChangeOfFrame);
+
     //Add current working frame to the previewVector
     QObject::connect(ui->workspace,&DrawModel::addFrameToPreviewTimeline,this,&MainWindow::addFrameToPreviewTimeline);
     //Retrieve the current frame from DrawModel and give to MainWindow so it can update itself in the timelineVector and previewVector
@@ -62,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->workspace,&DrawModel::updateTimelineFrame,this,&MainWindow::updateTimelineFrame);
     //Gets the composite image to UPDATE the preview Vector
     QObject::connect(ui->workspace,&DrawModel::updatePreviewFrame,this,&MainWindow::updatePreviewFrame);
+
+    QObject::connect(this,&MainWindow::sendImageToPreview,&preview,&previewwindow::getImageVector);
 
 }
 
@@ -167,6 +172,7 @@ void MainWindow::on_redoButton_clicked()
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addCurrentFrame();
+
 }
 //adds frame to timeline of preview at current state
 void MainWindow::addFrameToTimeline(QImage frame)
@@ -239,13 +245,22 @@ void MainWindow::on_fpsSlider_valueChanged(int value)
 //Update the current frame in the timeline vector
 void MainWindow::updateTimelineFrame(QImage frame)
 {
+    if(timelineImages.size() > 0){
     timelineImages[ui->frameSlider->value()] = frame.copy();
+    }
 }
 //Update the current frame in the preview vector
 void MainWindow::updatePreviewFrame(QImage frame)
 {
+
+    if(previewImages.size() > 0)
+    {
     previewImages[ui->frameSlider->value()] = frame.copy();
+    }
+
 }
+
+
 
 void MainWindow::on_exportButton_clicked()
 {
@@ -255,11 +270,14 @@ void MainWindow::on_exportButton_clicked()
 
 void MainWindow::on_resizeButton_clicked()
 {
+
     size.show();
     size.raise();
     size.activateWindow();
     resizeImage = true;
+
 }
+
 
 void MainWindow::on_rotateClockwiseButton_clicked()
 {
@@ -293,6 +311,13 @@ void MainWindow::importPicture(){
     }
 }
 
+
+
+
+
+
+
+
 void MainWindow::on_actionImport_triggered()
 {
     importPicture();
@@ -324,13 +349,13 @@ void MainWindow::on_verticalMirrorButton_clicked()
 void MainWindow::on_frameSlider_valueChanged(int value)
 {
     ui->frameSpinBox->setValue(value);
-    emit changeFrame(timelineImages[value]);
+    emit changeFrame(timelineImages[value], false);
 }
 
 void MainWindow::on_frameSpinBox_valueChanged(int arg1)
 {
     ui->frameSlider->setValue(arg1);
-    emit changeFrame(timelineImages[arg1]);
+    emit changeFrame(timelineImages[arg1], false);
 }
 
 void MainWindow::on_saveFrameButton_clicked()
@@ -340,5 +365,37 @@ void MainWindow::on_saveFrameButton_clicked()
 
 void MainWindow::on_actionSave_triggered()
 {
+
+}
+
+void MainWindow::on_maximizePreviewButton_clicked()
+{
+    preview.show();
+    //preview.raise();
+    //preview.activateWindow();
+    emit sendImageToPreview(previewImages);
+
+
+}
+
+void MainWindow::on_copyButton_clicked()
+{
+    if(!(timelineImages.size() == 0))
+    {
+        copyImage = timelineImages[ui->frameSlider->value()];
+    }
+}
+
+void MainWindow::on_pasteButton_clicked()
+{
+    if(!(timelineImages.size() == 0))
+    {
+        //timelineImages[ui->frameSlider->value()] = copyImage;
+        //previewImages[ui->frameSlider->value()] = copyImage;
+        bool paste = true;
+
+        emit changeFrame(copyImage, true);
+
+    }
 
 }

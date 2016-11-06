@@ -129,7 +129,7 @@ void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
 void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
 {
 
-    if (imageHistory->size()>=3)
+    if (imageHistory->size()>=50)
     {
         imageHistory->erase(imageHistory->begin());
         imageHistory->push_back(picForeGround);
@@ -240,6 +240,7 @@ void DrawModel::drawAPoint(QPoint pos)
     pen.setWidth(penWidth);
     painter.setPen(pen);
     painter.drawPoint(pos);
+
     updateCanvas(picForeGround);
 
     lastPoint = pos;
@@ -338,6 +339,8 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         painter.drawImage(QPoint(0,0), newPicture);
         picture = newPicture.copy();
         drawGrid();
+
+        emit addFrameToPreviewTimeline(picture);
     }
 }
 
@@ -555,6 +558,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
            row += picForeGround.width();
         }
     }
+
     updateCanvas(picForeGround);
 }
 
@@ -562,7 +566,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
 void DrawModel::rotateImage(double angle)
 {
     //Added to check for rotates when undoing and redoing actions
-    if (imageHistory->size()>=3)
+    if (imageHistory->size()>=50)
     {
         imageHistory->erase(imageHistory->begin());
         imageHistory->push_back(picForeGround);
@@ -571,6 +575,7 @@ void DrawModel::rotateImage(double angle)
     {
         imageHistory->push_back(picForeGround);
     }
+
 
     QImage image  = QImage(width, height, QImage::Format_ARGB32);
     image.fill(Qt::transparent);
@@ -614,7 +619,8 @@ void DrawModel::addForegroundToTimeline(QImage foreground)
 }
 
 
-void DrawModel::openImage(QString fileName){
+void DrawModel::openImage(QString fileName)
+{
     QImage result = QImage(fileName);
     if(!result.isNull()){
         width = picForeGround.width();
@@ -628,17 +634,41 @@ void DrawModel::openImage(QString fileName){
     }
 }
 
-void DrawModel::mirrorHorz(){
+void DrawModel::mirrorHorz()
+{
     QImage result = picForeGround.mirrored();
     picForeGround = result;
     updateCanvas(picForeGround);
+    if (imageHistory->size()>=50)
+    {
+        imageHistory->erase(imageHistory->begin());
+        imageHistory->push_back(picForeGround);
+    }
+    else
+    {
+        imageHistory->push_back(picForeGround);
+    }
+    //if a distinct change occurs cannot redo because this is new history
+    redoStack->clear();
 }
 
 
-void DrawModel::mirrorVert(){
+void DrawModel::mirrorVert()
+{
     QImage result = picForeGround.mirrored(true, false);
     picForeGround = result;
     updateCanvas(picForeGround);
+    if (imageHistory->size()>=50)
+    {
+        imageHistory->erase(imageHistory->begin());
+        imageHistory->push_back(picForeGround);
+    }
+    else
+    {
+        imageHistory->push_back(picForeGround);
+    }
+    //if a distinct change occurs cannot redo because this is new history
+    redoStack->clear();
 }
 
 void DrawModel::previewHasStopped(bool notPlaying)
@@ -653,22 +683,33 @@ void DrawModel::acceptTransparency(int newTransparency)
 }
 
 
-void DrawModel::acceptChangeOfFrame(QImage newFrame)
+void DrawModel::acceptChangeOfFrame(QImage newFrame, bool paste)
 {
+    if(!paste)
+    {
+        imageHistory->clear();
+        redoStack->clear();
+    }
+    else
+    {
+        imageHistory->push_back(picForeGround);
+    }
     picForeGround = newFrame.copy();
     QPainter painter(&picForeGround);
     painter.setBrush(Qt::transparent);
     pen.setWidth(penWidth);
     pen.setColor(*currentColor);
     painter.setPen(pen);
-    QImage result = picBackGround;
-    QPainter painter2(&result);
-    painter2.drawImage(QPoint(0,0), picForeGround);
-    picture = result.copy();
-    update();
-
+//    QImage result = picBackGround;
+//    QPainter painter2(&result);
+//    painter2.drawImage(QPoint(0,0), picForeGround);
+//    picture = result.copy();
+//    update();
+    updateCanvas(picForeGround);
 
 }
+
+
 
 /*
 void DrawModel::resizeEvent(QResizeEvent *event)
