@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     drawmodel.cpp \
-    sizeselector.cpp
+    sizeselector.cpp \
+    gifsave.cpp
 
 HEADERS  += mainwindow.h \
     drawmodel.h \
-    sizeselector.h
+    sizeselector.h \
+    gifsave.h
 
 FORMS    += mainwindow.ui \
     sizeselector.ui
