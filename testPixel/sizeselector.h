@@ -22,11 +22,11 @@ signals:
 private slots:
     void on_widthSpinBox_valueChanged(int arg1);
 
-    void on_widthSlider_sliderMoved(int position);
+    //void on_widthSlider_sliderMoved(int position);
 
     void on_heightSpinBox_valueChanged(int arg1);
 
-    void on_heightSlider_sliderMoved(int position);
+    //void on_heightSlider_sliderMoved(int position);
 
     void on_buttonBox_accepted();
 
@@ -37,6 +37,10 @@ private slots:
     void on_sixteenByNineRatioCheckBox_clicked(bool checked);
 
     void on_fourByNineRatioCheckBox_clicked(bool checked);
+
+    void on_widthSlider_valueChanged(int value);
+
+    void on_heightSlider_valueChanged(int value);
 
 private:
     Ui::SizeSelector *ui;
