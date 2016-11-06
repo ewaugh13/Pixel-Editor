@@ -57,6 +57,8 @@ signals:
     void changeFrame(QImage);
     void updateFrame();
 
+    void callSaveSSP(std::vector<QImage>, std::string);
+    void callLoadSSP(std::string,std::vector<QImage>&);
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -122,6 +124,7 @@ private slots:
 
 
     void on_actionSave_triggered();
+    void on_actionOpen_triggered();
 
 private:
     Ui::MainWindow *ui;

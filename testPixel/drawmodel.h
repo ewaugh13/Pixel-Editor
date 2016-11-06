@@ -11,6 +11,8 @@
 #include <QColor>
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <ostream>
 
 
 class DrawModel : public QWidget
@@ -52,6 +54,10 @@ public slots:
     void acceptChangeOfFrame(QImage);
 
     void addForegroundToTimeline(QImage);
+
+    void saveSSP(std::vector<QImage> frames, std::string filename);
+
+    void loadSSP(std::string filename, std::vector<QImage> &frames);
 
     void getFrameToUpdate();
 
