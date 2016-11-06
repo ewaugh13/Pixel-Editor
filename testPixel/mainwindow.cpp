@@ -24,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent) :
     fpsPreview = 1000;  //one second
     previewPlaying = false;
 
+    ui->frameSlider->setMaximum(0);
+    ui->frameSpinBox->setMaximum(0);
+
     //connection between popup window and mainwindow
     QObject::connect(&size, &SizeSelector::setWidthAndHeight, this, &MainWindow::acceptWidthAndHeight);
     QObject::connect(this, &MainWindow::passWidthAndHeight, ui->workspace, &DrawModel::userGivenWidthAndHeight);
