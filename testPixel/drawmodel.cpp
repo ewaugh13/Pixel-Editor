@@ -171,11 +171,24 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     else if(currentTool == "FillBucket")
     {
         QColor targetColor = getPixelColor(QPoint(x,y));
-        if(targetColor != *currentColor)//Only begins boundaryFill if the pixel clicked on is NOT the same as the currentColor (prevents refilling)
+        if(targetColor != *currentColor && targetColor.alpha() < 255)//Only begins boundaryFill if the pixel clicked on is NOT the same as the currentColor (prevents refilling)
         {
-            pixelStack.clear();
-            pixelStack.push_back(QPoint(x,y));
-            boundaryFill(QPoint(x,y),targetColor);
+            if(targetColor.alpha() + currentColor->alpha() < 255)
+            {
+                pixelStack.clear();
+                pixelStack.push_back(QPoint(x,y));
+                boundaryFill(QPoint(x,y),targetColor);
+            }
+            else
+            {
+                int oldAlpha = currentColor->alpha();
+                currentColor->setAlpha(255);
+                pixelStack.clear();
+                pixelStack.push_back(QPoint(x,y));
+                boundaryFill(QPoint(x,y),targetColor);
+                currentColor->setAlpha(oldAlpha);
+            }
+
         }
 
     }
@@ -361,7 +374,8 @@ void DrawModel::changePenColor(QColor newColor)
 QColor DrawModel::getPixelColor(QPoint pos)
 {
     QColor theColor;
-    theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
+    theColor = picForeGround.pixelColor(pos);
+    //theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
     if(currentTool == "Eyedropper" && theColor == Qt::transparent)
     {
         theColor = *currentColor;
@@ -507,7 +521,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
 
         row = y * picForeGround.width() + x;
 
-        while(y-- >= -1 && (getPixelColor(QPoint(x,y)) == targetColor))
+        while(y-- >= -1 && (getPixelColor(QPoint(x,y)) == targetColor) && (getPixelColor(QPoint(x,y)).alpha() == targetColor.alpha()))
         {
             row -= picForeGround.width();
         }
@@ -516,7 +530,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
         reachLeft = false;
         reachRight = false;
 
-        while(y++ < picForeGround.height() - 1  && (getPixelColor(QPoint(x,y)) == targetColor))
+        while(y++ < picForeGround.height() - 1  && (getPixelColor(QPoint(x,y)) == targetColor) && (getPixelColor(QPoint(x,y)).alpha() == targetColor.alpha()))
         {
 
             penWidth = 1;
@@ -526,7 +540,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
             penWidth = originalPenWidth;
             if(x > 0)
             {
-                if(getPixelColor(QPoint(x-1,y)) == targetColor)
+                if((getPixelColor(QPoint(x-1,y)) == targetColor) && (getPixelColor(QPoint(x-1,y)).alpha() == targetColor.alpha()))
                 {
                     if(!reachLeft)
                     {
@@ -541,7 +555,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
             }
             if(x < picForeGround.width() - 1)
             {
-                if(getPixelColor(QPoint(x+1,y)) == targetColor)
+                if( (getPixelColor(QPoint(x+1,y)) == targetColor) && (getPixelColor(QPoint(x+1,y)).alpha() == targetColor.alpha()))
                 {
                     if(!reachRight)
                     {
