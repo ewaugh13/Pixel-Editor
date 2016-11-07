@@ -40,6 +40,10 @@ private:
     double width;
     double height;
 
+    bool upgradeSize;
+
+    double scaleFactor;
+
 };
 
 #endif // PREVIEWWINDOW_H
