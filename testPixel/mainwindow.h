@@ -66,6 +66,8 @@ signals:
     void callLoadSSP(std::string,std::vector<QImage>&);
     void fillTrans();
 
+    void adjustBoardSize(double,double);
+
 
 private slots:
     void on_penSizeSlider_valueChanged(int value);
@@ -162,6 +164,9 @@ private:
     void saveSSP();
     void openSSP();
     void importPicture();
+
+protected:
+    void resizeEvent(QResizeEvent* event);
 
 };
 

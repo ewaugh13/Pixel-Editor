@@ -64,6 +64,8 @@ public slots:
 
     void imageClear();
 
+    void adjustBoardSize(double,double);
+
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -116,6 +118,9 @@ private:
     void createShapes(QPoint, QPoint); //actually draws line
     void boundaryFill(QPoint, QColor targetColor);
     void updateCanvas(QImage);
+
+    double widgetWidth;
+    double widgetHeight;
 };
 
 #endif // DRAWMODEL_H

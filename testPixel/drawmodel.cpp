@@ -2,11 +2,13 @@
 
 DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
 {
-    width = 8;
-    height = 8;
+    width = 16;
+    height = 16;
+    widgetWidth = 815.0;
+    widgetHeight = 815.0;
     erasing = false;
-    scaleFactorX = 512.0/width;
-    scaleFactorY = 512.0/height;
+    scaleFactorX = widgetWidth/width;
+    scaleFactorY = widgetHeight/height;
     currentColor = new QColor(255,255,255,255);
     currentBrush = new QBrush(*currentColor);
     penWidth = 1;
@@ -31,7 +33,6 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     this->setMouseTracking(true);
     playing = false;
 
-    //getFrameToUpdate();
 
 }
 
@@ -312,8 +313,8 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
 {
     width = passedWidth;
     height = passedHeight;
-    scaleFactorX = 512.0/width;
-    scaleFactorY = 512.0/height;
+    scaleFactorX = widgetWidth/width;
+    scaleFactorY = widgetHeight/height;
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
     if(resizeImage)
     {
@@ -330,8 +331,8 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
     {
         width = passedWidth;
         height = passedHeight;
-        scaleFactorX = 512.0/width;
-        scaleFactorY = 512.0/height;
+        scaleFactorX = widgetWidth/width;
+        scaleFactorY = widgetHeight/height;
         picForeGround = QImage(width, height, QImage::Format_ARGB32);
 
         picForeGround.fill(Qt::transparent);
@@ -830,4 +831,11 @@ void DrawModel::loadSSP(std::string filename, std::vector<QImage> &newFrames)
     picture = newPicture.copy();
     drawGrid();
     update();
+}
+
+void DrawModel::adjustBoardSize(double newWidth, double newHeight)
+{
+    widgetWidth = newWidth;
+    widgetHeight = newHeight;
+    userGivenWidthAndHeight(width,height,true);
 }

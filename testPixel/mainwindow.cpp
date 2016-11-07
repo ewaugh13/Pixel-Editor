@@ -77,6 +77,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(this,&MainWindow::fillTrans,ui->workspace,&DrawModel::imageClear);
 
+    QObject::connect(this, &MainWindow::adjustBoardSize, ui->workspace, &DrawModel::adjustBoardSize);
+
 }
 
 MainWindow::~MainWindow()
@@ -92,9 +94,7 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight, resizeImage);
     resizeImage = false;
-
     emit addCurrentFrame();
-
 }
 
 void MainWindow::on_penSizeSlider_valueChanged(int value)
@@ -217,7 +217,6 @@ void MainWindow::playPreview()
 //Starts playback of frame previews at the set fps
 void MainWindow::on_playButton_clicked()
 {
-    std::cout << previewImages.size() << std::endl;
     if(previewImages.size() > 0)
     {
         currentFrame = 0;
@@ -461,3 +460,16 @@ void MainWindow::on_cutButton_clicked()
         emit updateFrame();
     }
 }
+
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+   QMainWindow::resizeEvent(event);
+   ui->centralWidget->width()  * .71303587;
+   ui->centralWidget->height() * .86426299;
+
+   emit adjustBoardSize(ui->centralWidget->width()  * .71303587, ui->centralWidget->height() * .86426299);
+}
+   //ui->workspace->setGeometry(250,250, 200, 200);
+   //ui->workspace->setGeometry(ui->centralWidget->width()/2 + 140,9, ui->centralWidget->width() * .62, ui->centralWidget->height() * .81);
+
