@@ -48,6 +48,9 @@ private:
     bool squareRatio;
     bool sixteenBy9Ratio;
     bool fourByThreeRatio;
+
+    int previousHeight;
+    int previousWidth;
 };
 
 #endif // SIZESELECTOR_H
