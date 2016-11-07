@@ -662,9 +662,14 @@ void DrawModel::addForegroundToTimeline(QImage foreground)
 void DrawModel::openImage(QString fileName)
 {
     QImage result = QImage(fileName);
-    if(!result.isNull()){
+    if(!result.isNull())
+    {
+        picForeGround = QImage(fileName);
         width = picForeGround.width();
         height = picForeGround.height();
+        picBackGround = QImage(width, height, QImage::Format_ARGB32);
+        scaleFactorX = widgetWidth/width;
+        scaleFactorY = widgetHeight/height;
         /*
         if(height > width)
         {
@@ -675,8 +680,6 @@ void DrawModel::openImage(QString fileName)
             scaleFactor = widgetWidth /width;
         }
         */
-        picBackGround = QImage(width, height, QImage::Format_ARGB32);
-        picForeGround = QImage(fileName);
         drawGrid();
         updateCanvas(picForeGround);
     }
