@@ -24,8 +24,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    int spriteWidth;
-    int spriteHeight;
+
 public slots:
     void acceptWidthAndHeight(int,int);
     void setColorPreviewWindow(QColor);
@@ -124,8 +123,6 @@ private slots:
 
     void on_frameSpinBox_valueChanged(int arg1);
 
-    void on_saveFrameButton_clicked();
-
     void on_horizontalMirrorButton_clicked();
 
     void on_verticalMirrorButton_clicked();
@@ -145,6 +142,8 @@ private slots:
     void on_deleteFrameButton_clicked();
 
 private:
+    double spriteWidth;
+    double spriteHeight;
     Ui::MainWindow *ui;
     QWidget* central;
     QGridLayout* mainSpace;

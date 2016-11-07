@@ -101,8 +101,8 @@ private:
     int width;
     int height;
 
-    int scaleFactorX;
-    int scaleFactorY;
+    double scaleFactor;
+
 
     int penWidth;
 
@@ -111,7 +111,7 @@ private:
 
     bool playing;
 
-    //used for line tool
+    //used for line/shapes tool
     void renderShapes(QPoint, QPoint); //shows line
     void createShapes(QPoint, QPoint); //actually draws line
     void boundaryFill(QPoint, QColor targetColor);

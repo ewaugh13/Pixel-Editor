@@ -37,8 +37,8 @@ private:
     QTimer* playTimer;
     bool previewPlaying;
 
-    int width;
-    int height;
+    double width;
+    double height;
 
 };
 

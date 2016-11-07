@@ -5,17 +5,17 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     width = 8;
     height = 8;
     erasing = false;
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+    scaleFactor = 512.0/width;
+
     currentColor = new QColor(255,255,255,255);
     currentBrush = new QBrush(*currentColor);
     penWidth = 1;
-    QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
-    newPicture.fill(qRgb(12,155,134));
-    QPainter painter(&newPicture);
-    painter.setBrush(*currentBrush);
-    painter.drawImage(QPoint(0,0), newPicture);
-    picture = newPicture.copy();
+//    QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
+//    newPicture.fill(qRgb(12,155,134));
+//    QPainter painter(&newPicture);
+//    painter.setBrush(*currentBrush);
+//    painter.drawImage(QPoint(0,0), newPicture);
+//    picture = newPicture.copy();
 
     picForeGround = QImage(width, height, QImage::Format_ARGB32);
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
@@ -40,7 +40,7 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
     QPainter painter(this);
     painter.setBrush(*currentBrush);
     QRect rectangle = paintEvent->rect();
-    painter.scale(scaleFactorX, scaleFactorY);
+    painter.scale(scaleFactor, scaleFactor);
     painter.drawImage(rectangle, picture, rectangle);
     if(!playing)
     {
@@ -52,8 +52,8 @@ void DrawModel::paintEvent(QPaintEvent * paintEvent)
 void DrawModel::mouseMoveEvent(QMouseEvent* mouseEvent)
 {
     QPoint point(mouseEvent->pos());
-    int x = point.x()/scaleFactorX;
-    int y = point.y()/scaleFactorY;
+    int x = point.x()/scaleFactor;
+    int y = point.y()/scaleFactor;
 
     if(currentTool == "Pen")
     {
@@ -146,8 +146,8 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
 
     drawing = true;
     QPoint point(mouseEvent->pos());
-    int x = point.x()/scaleFactorX;
-    int y = point.y()/scaleFactorY;
+    int x = point.x()/scaleFactor;
+    int y = point.y()/scaleFactor;
     lastPoint = QPoint(x,y);
     if(currentTool == "Pen")
     {
@@ -194,8 +194,8 @@ void DrawModel::mouseReleaseEvent(QMouseEvent* mouseEvent)
 {
     drawing = false;
     QPoint point(mouseEvent->pos());
-    int x = point.x()/scaleFactorX;
-    int y = point.y()/scaleFactorY;
+    int x = point.x()/scaleFactor;
+    int y = point.y()/scaleFactor;
     if(currentTool == "Line")
     {
         createShapes(lastPoint, QPoint(x,y));
@@ -312,8 +312,15 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
 {
     width = passedWidth;
     height = passedHeight;
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+
+    if(height > width)
+    {
+        scaleFactor = 512.0 /height;
+    }
+    else
+    {
+        scaleFactor = 512.0 /width;
+    }
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
     if(resizeImage)
     {
@@ -325,16 +332,12 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         drawGrid();
         picForeGround = newPicture.copy();
         updateCanvas(picForeGround);
+        getFrameToUpdate();
 
     }
     else
     {
-        width = passedWidth;
-        height = passedHeight;
-        scaleFactorX = 512/width;
-        scaleFactorY = 512/height;
         picForeGround = QImage(width, height, QImage::Format_ARGB32);
-
         picForeGround.fill(Qt::transparent);
         QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
         newPicture.fill(qRgb(255,255,255));
@@ -622,21 +625,15 @@ void DrawModel::getFrameToUpdate()
 {
     emit updateTimelineFrame(picForeGround.copy());//send foreground to mainwindow to replace itself on timeline vector
 
-    QImage result = picBackGround.copy(); //then composite the foreground w the background and update it on the preview vector
-    QPainter p(&result);
-    p.drawImage(QPoint(0,0),picForeGround);
-    emit updatePreviewFrame(result);
+    emit updatePreviewFrame(picture);
 }
 
 void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture to timeline vector
 {
     addForegroundToTimeline(picForeGround.copy());//send just the foreground to the timeline vector
 
-    QImage result = picBackGround.copy(); //then composite the foreground w the background and send it to the preview vector
-    QPainter p(&result);
-    p.drawImage(QPoint(0,0),picForeGround);
-    //playing = true;
-    emit addFrameToPreviewTimeline(result);
+
+    emit addFrameToPreviewTimeline(picture);
 }
 void DrawModel::addForegroundToTimeline(QImage foreground)
 {
@@ -650,8 +647,14 @@ void DrawModel::openImage(QString fileName)
     if(!result.isNull()){
         width = picForeGround.width();
         height = picForeGround.height();
-        scaleFactorX = 512/width;
-        scaleFactorY = 512/height;
+        if(height > width)
+        {
+            scaleFactor = 512.0 /height;
+        }
+        else
+        {
+            scaleFactor = 512.0 /width;
+        }
         picBackGround = QImage(width, height, QImage::Format_ARGB32);
         picForeGround = QImage(fileName);
         drawGrid();
@@ -793,8 +796,14 @@ void DrawModel::loadSSP(std::string filename, std::vector<QImage> &newFrames)
     currentFrame.fill(Qt::transparent);
 
     std::cout<<height <<" " <<width <<" " <<frameCount <<std::endl;
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+    if(height > width)
+    {
+        scaleFactor = 512.0 /height;
+    }
+    else
+    {
+        scaleFactor = 512.0 /width;
+    }
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
 
     int x = 0;

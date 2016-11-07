@@ -4,17 +4,19 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
+{       resizeImage = false;
     ui->setupUi(this);
 
-    //central = new QWidget(this->centralWidget());
+    /*
+     * This set of code is used to call
+     */
     size.show();
     size.raise();
     size.activateWindow();
 
     spriteWidth = 16;
     spriteHeight = 16;
-    resizeImage = false;
+
     QPalette palette;
     palette.setColor(QPalette::Window,QColor(255,255,255,255));
     ui->colorPreviewLabel->setAutoFillBackground(true);
@@ -91,8 +93,13 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     spriteHeight = height;
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight, resizeImage);
+    if(!resizeImage)
+    {
+        std::cout<<"Test2"<<std::endl;
+        emit addCurrentFrame();
+    }
     resizeImage = false;
-    emit addCurrentFrame();
+
 
 }
 
@@ -166,7 +173,14 @@ void MainWindow::setColorPreviewWindow(QColor newColor)
 //slot that takes image given from draw model
 void MainWindow::receivePreviewImage(QImage preview)
 {
-    ui->previewLabel->setPixmap(QPixmap::fromImage(preview.scaled(128,128)));
+    if(spriteHeight > spriteWidth)
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(preview.scaled(128.0 * (spriteWidth/spriteHeight),128.0)));
+    }
+    else
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(preview.scaled(128.0 ,128.0* (spriteHeight/spriteWidth))));
+    }
 
 }
 //undo last distinct change made to canvas, up to three
@@ -196,25 +210,43 @@ void MainWindow::addFrameToTimeline(QImage frame)
 }
 void MainWindow::addFrameToPreviewTimeline(QImage frame)
 {
+    std::cout<<"Test3"<<std::endl;
     previewImages.push_back(frame);
-    ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128,128)));
+    if(spriteHeight > spriteWidth)
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128.0 * (spriteWidth/spriteHeight),128.0)));
+    }
+    else
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128.0 ,128.0* (spriteHeight/spriteWidth))));
+    }
 }
 
 //Start preview of frames of current working sprite
 void MainWindow::playPreview()
 {
-    if(currentFrame == previewImages.size())
+
+    if(currentFrame >= previewImages.size())
     {
         currentFrame = 0;
     }
-    ui->previewLabel->setPixmap(QPixmap::fromImage(previewImages[currentFrame].scaled(128,128)));
+
+    if(spriteHeight > spriteWidth)
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(previewImages[currentFrame].scaled(128.0 * (spriteWidth/spriteHeight),128.0)));
+    }
+    else
+    {
+        std::cout<<"Test9"<<std::endl;
+        ui->previewLabel->setPixmap(QPixmap::fromImage(previewImages[currentFrame].scaled(128.0 ,128.0* (spriteHeight/spriteWidth))));
+    }
     currentFrame++;
 
 }
 //Starts playback of frame previews at the set fps
 void MainWindow::on_playButton_clicked()
 {
-    std::cout << previewImages.size() << std::endl;
+    //std::cout << previewImages.size() << std::endl;
     if(previewImages.size() > 0)
     {
         currentFrame = 0;
@@ -231,7 +263,7 @@ void MainWindow::on_stopButton_clicked()
     playTimer->stop();
     currentFrame = previewImages.size() - 1;
     previewPlaying = false;
-    //ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
+    //ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128.0,128.0)));
     emit previewStopped(false); //returns preview to active image preview
 }
 //Changes Fps of preview playback and restarts preview
@@ -265,10 +297,12 @@ void MainWindow::updateTimelineFrame(QImage frame)
 //Update the current frame in the preview vector
 void MainWindow::updatePreviewFrame(QImage frame)
 {
-
+    //std::cout<<"Test"<<endl;
     if(previewImages.size() > 0)
     {
+        std::cout<<"Test4"<<std::endl;
         previewImages[ui->frameSlider->value()] = frame.copy();
+
     }
 
 }
@@ -414,6 +448,7 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_maximizePreviewButton_clicked()
 {
+    std::cout<<previewImages.size()<<std::endl;
     preview.show();
     //preview.raise();
     //preview.activateWindow();
@@ -484,11 +519,4 @@ void MainWindow::on_deleteFrameButton_clicked()
 
 
     //emit updateFrame();
-}
-
-
-void MainWindow::on_saveFrameButton_clicked()
-{
-    //timelineImages.erase(timelineImages.begin() + currentFrame - 1);
-    //previewImages.erase(previewImages.begin() + currentFrame - 1);
 }
