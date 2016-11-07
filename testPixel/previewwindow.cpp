@@ -11,7 +11,7 @@ previewwindow::previewwindow(QWidget *parent) :
     previewPlaying = false;
     width = 0;
     height = 0;
-
+    upgradeSize = false;
     ui->setupUi(this);
     QObject::connect(this, &previewwindow::playPreviewWindow, this, &previewwindow::playPreview);
     QObject::connect(playTimer, &QTimer::timeout, this, &previewwindow::playPreview);
@@ -25,28 +25,40 @@ previewwindow::~previewwindow()
 
 void previewwindow::getImageVector(std::vector<QImage> vec)
 {
-    for(int i = 0; i < vec.size(); i ++)
-    {
-        if(vec[i].height() > height)
-        {
-            height = vec[i].height();
-        }
-        if(vec[i].width() > width)
-        {
-            width = vec[i].width();
-        }
-        imageVector.push_back(vec[i]);
+//    for(int i = 0; i < vec.size(); i ++)
+//    {
+//        if(vec[i].height() > height)
+//        {
+//            height = vec[i].height();
+//        }
+//        if(vec[i].width() > width)
+//        {
+//            width = vec[i].width();
+//        }
+//        //imageVector.push_back(vec[i]);
 
-    }
+//    }
+
+    imageVector = vec;
 }
 
 void previewwindow::playPreview()
 {
-    if(currentFrame == imageVector.size())
+    if(currentFrame >= imageVector.size())
     {
         currentFrame = 0;
     }
-    ui->label->setPixmap(QPixmap::fromImage(imageVector[currentFrame].scaled(width,height)));
+
+    if(upgradeSize)
+    {
+        width = 512.0;
+        height = 512.0;
+    }
+    else{
+        width = imageVector[currentFrame].width();
+        height = imageVector[currentFrame].height();
+    }
+    ui->label->setPixmap(QPixmap::fromImage(imageVector[currentFrame].scaled(width,height,Qt::KeepAspectRatio)));
     ui->label->setGeometry(306 - width/2,306 - height/2,width,height);
     currentFrame++;
 
@@ -80,36 +92,37 @@ void previewwindow::on_spinBox_valueChanged(int value)
 
 void previewwindow::on_sizeCheckBox_toggled(bool checked)
 {
-    if(checked == true)
+//    if(checked == true)
+//    {
+//        width = 512;
+//        height = 512;
+//        if(previewPlaying)
+//        {
+//            emit on_playButton_clicked();
+//        }
+//    }
+//    if(checked == false)
+//    {
+//        height = 0;
+//        width = 0;
+//        for(int i = 0; i < imageVector.size(); i ++)
+//        {
+//            if(imageVector[i].height() > height)
+//            {
+//                height = imageVector[i].height();
+//            }
+//            if(imageVector[i].width() > width)
+//            {
+//                width = imageVector[i].width();
+//            }
+
+
+//        }
+    upgradeSize = checked;
+    if(previewPlaying)
     {
-        width = 512;
-        height = 512;
-        if(previewPlaying)
-        {
-            emit on_playButton_clicked();
-        }
+        emit on_playButton_clicked();
     }
-    if(checked == false)
-    {
-        height = 0;
-        width = 0;
-        for(int i = 0; i < imageVector.size(); i ++)
-        {
-            if(imageVector[i].height() > height)
-            {
-                height = imageVector[i].height();
-            }
-            if(imageVector[i].width() > width)
-            {
-                width = imageVector[i].width();
-            }
 
 
-        }
-        if(previewPlaying)
-        {
-            emit on_playButton_clicked();
-        }
-
-    }
 }

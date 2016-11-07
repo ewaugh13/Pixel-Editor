@@ -9,15 +9,11 @@ DrawModel::DrawModel(QWidget *parent) : QWidget(parent)
     erasing = false;
     scaleFactorX = widgetWidth/width;
     scaleFactorY = widgetHeight/height;
+    scaleFactor = widgetWidth/width;
+
     currentColor = new QColor(255,255,255,255);
     currentBrush = new QBrush(*currentColor);
     penWidth = 1;
-    QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
-    newPicture.fill(qRgb(12,155,134));
-    QPainter painter(&newPicture);
-    painter.setBrush(*currentBrush);
-    painter.drawImage(QPoint(0,0), newPicture);
-    picture = newPicture.copy();
 
     picForeGround = QImage(width, height, QImage::Format_ARGB32);
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
@@ -175,13 +171,28 @@ void DrawModel::mousePressEvent(QMouseEvent* mouseEvent)
     else if(currentTool == "FillBucket")
     {
         QColor targetColor = getPixelColor(QPoint(x,y));
-        if(targetColor != *currentColor)//Only begins boundaryFill if the pixel clicked on is NOT the same as the currentColor (prevents refilling)
+
+        if(targetColor.rgb() != currentColor->rgb())
         {
+            int alpha = currentColor->alpha();
+            if(targetColor.alpha() == 255 && currentColor->alpha() <255)
+            {
+                currentColor->setAlpha(255);
+            }
             pixelStack.clear();
             pixelStack.push_back(QPoint(x,y));
             boundaryFill(QPoint(x,y),targetColor);
+            currentColor->setAlpha(alpha);
         }
-
+        else if(targetColor.rgb() == currentColor->rgb())
+        {
+            if(targetColor.alpha()+currentColor->alpha() <= 255)
+            {
+                pixelStack.clear();
+                pixelStack.push_back(QPoint(x,y));
+                boundaryFill(QPoint(x,y),targetColor);
+            }
+        }
     }
     else if(currentTool == "Eyedropper")
     {
@@ -315,6 +326,16 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
     height = passedHeight;
     scaleFactorX = widgetWidth/width;
     scaleFactorY = widgetHeight/height;
+    /*
+    if(height > width)
+    {
+        scaleFactor = widgetHeight /height;
+    }
+    else
+    {
+        scaleFactor = widgetWidth /width;
+    }
+    */
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
     if(resizeImage)
     {
@@ -325,6 +346,7 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         drawGrid();
         picForeGround = newPicture.copy();
         updateCanvas(picForeGround);
+        getFrameToUpdate();
 
     }
     else
@@ -334,7 +356,6 @@ void DrawModel::userGivenWidthAndHeight(int passedWidth, int passedHeight, bool 
         scaleFactorX = widgetWidth/width;
         scaleFactorY = widgetHeight/height;
         picForeGround = QImage(width, height, QImage::Format_ARGB32);
-
         picForeGround.fill(Qt::transparent);
         QImage newPicture =  QImage(width, height, QImage::Format_ARGB32);
         newPicture.fill(qRgb(255,255,255));
@@ -364,7 +385,8 @@ void DrawModel::changePenColor(QColor newColor)
 QColor DrawModel::getPixelColor(QPoint pos)
 {
     QColor theColor;
-    theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
+    theColor = picForeGround.pixelColor(pos);
+    //theColor.setRgba(picForeGround.pixel(pos.x(),pos.y()));
     if(currentTool == "Eyedropper" && theColor == Qt::transparent)
     {
         theColor = *currentColor;
@@ -510,7 +532,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
 
         row = y * picForeGround.width() + x;
 
-        while(y-- >= -1 && (getPixelColor(QPoint(x,y)) == targetColor))
+        while(y-- >= -1 && (getPixelColor(QPoint(x,y)) == targetColor))//&& (getPixelColor(QPoint(x,y)).alpha() == targetColor.alpha()))
         {
             row -= picForeGround.width();
         }
@@ -519,7 +541,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
         reachLeft = false;
         reachRight = false;
 
-        while(y++ < picForeGround.height() - 1  && (getPixelColor(QPoint(x,y)) == targetColor))
+        while(y++ < picForeGround.height() - 1  && (getPixelColor(QPoint(x,y)) == targetColor))// && (getPixelColor(QPoint(x,y)).alpha() == targetColor.alpha()))
         {
 
             penWidth = 1;
@@ -529,7 +551,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
             penWidth = originalPenWidth;
             if(x > 0)
             {
-                if(getPixelColor(QPoint(x-1,y)) == targetColor)
+                if((getPixelColor(QPoint(x-1,y)) == targetColor))// && (getPixelColor(QPoint(x-1,y)).alpha() == targetColor.alpha()))
                 {
                     if(!reachLeft)
                     {
@@ -544,7 +566,7 @@ void DrawModel::boundaryFill(QPoint pos, QColor targetColor)
             }
             if(x < picForeGround.width() - 1)
             {
-                if(getPixelColor(QPoint(x+1,y)) == targetColor)
+                if( (getPixelColor(QPoint(x+1,y)) == targetColor))// && (getPixelColor(QPoint(x+1,y)).alpha() == targetColor.alpha()))
                 {
                     if(!reachRight)
                     {
@@ -591,13 +613,12 @@ void DrawModel::rotateImage(double angle)
 
 }
 
-void DrawModel::saveImage(QString fileName, bool isGif, std::vector<QImage> allFrames){
-    if(isGif)
-    {
+void DrawModel::saveImage(QString fileName, bool isGif, std::vector<QImage> allFrames, int previewRate){
+    if(isGif){
         GifSave saveGif = GifSave();
         QByteArray ba = fileName.toLatin1();
 
-        saveGif.GifBegin(&saveGif.storage, ba.data(),width,height,10);
+        saveGif.GifBegin(&saveGif.storage, ba.data(),width,height,previewRate);
         if(allFrames.size() <=0){
             allFrames.push_back(picForeGround);
         }
@@ -621,21 +642,15 @@ void DrawModel::getFrameToUpdate()
 {
     emit updateTimelineFrame(picForeGround.copy());//send foreground to mainwindow to replace itself on timeline vector
 
-    QImage result = picBackGround.copy(); //then composite the foreground w the background and update it on the preview vector
-    QPainter p(&result);
-    p.drawImage(QPoint(0,0),picForeGround);
-    emit updatePreviewFrame(result);
+    emit updatePreviewFrame(picture);
 }
 
 void DrawModel::getFrameAndEmit()//emits signal to mainwindow that adds picture to timeline vector
 {
     addForegroundToTimeline(picForeGround.copy());//send just the foreground to the timeline vector
 
-    QImage result = picBackGround.copy(); //then composite the foreground w the background and send it to the preview vector
-    QPainter p(&result);
-    p.drawImage(QPoint(0,0),picForeGround);
-    //playing = true;
-    emit addFrameToPreviewTimeline(result);
+
+    emit addFrameToPreviewTimeline(picture);
 }
 void DrawModel::addForegroundToTimeline(QImage foreground)
 {
@@ -650,8 +665,16 @@ void DrawModel::openImage(QString fileName)
     if(!result.isNull()){
         width = picForeGround.width();
         height = picForeGround.height();
-        scaleFactorX = 512/width;
-        scaleFactorY = 512/height;
+        /*
+        if(height > width)
+        {
+            scaleFactor = widgetHeight /height;
+        }
+        else
+        {
+            scaleFactor = widgetWidth /width;
+        }
+        */
         picBackGround = QImage(width, height, QImage::Format_ARGB32);
         picForeGround = QImage(fileName);
         drawGrid();
@@ -846,8 +869,16 @@ void DrawModel::loadSSP(std::string filename, std::vector<QImage> &newFrames)
     currentFrame.fill(Qt::transparent);
 
     std::cout<<height <<" " <<width <<" " <<frameCount <<std::endl;
-    scaleFactorX = 512/width;
-    scaleFactorY = 512/height;
+    /*
+    if(height > width)
+    {
+        scaleFactor = widgetHeight /height;
+    }
+    else
+    {
+        scaleFactor = widgetWidth /width;
+    }
+    */
     picBackGround = QImage(width, height, QImage::Format_ARGB32);
 
     int x = 0;

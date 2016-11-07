@@ -9,6 +9,7 @@ SizeSelector::SizeSelector(QWidget *parent) :
     squareRatio =false;
     sixteenBy9Ratio = false;
     fourByThreeRatio = false;
+    previousHeight, previousWidth = 16;
 }
 
 SizeSelector::~SizeSelector()
@@ -107,13 +108,16 @@ void SizeSelector::on_heightSlider_valueChanged(int position)
 
 void SizeSelector::on_buttonBox_accepted()
 {
+    previousWidth = ui->widthSpinBox->value();
+    previousHeight = ui->heightSpinBox->value();
+
     emit setWidthAndHeight(ui->widthSpinBox->value(), ui->heightSpinBox->value());
     this->close();
 }
 
 void SizeSelector::on_buttonBox_rejected()
 {
-    emit setWidthAndHeight(16, 16);
+    emit setWidthAndHeight(previousWidth, previousHeight);
     this->close();
 }
 

@@ -4,17 +4,19 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
+{       resizeImage = false;
     ui->setupUi(this);
 
-    //central = new QWidget(this->centralWidget());
+    /*
+     * This set of code is used to call
+     */
     size.show();
     size.raise();
     size.activateWindow();
 
     spriteWidth = 16;
     spriteHeight = 16;
-    resizeImage = false;
+
     QPalette palette;
     palette.setColor(QPalette::Window,QColor(255,255,255,255));
     ui->colorPreviewLabel->setAutoFillBackground(true);
@@ -93,8 +95,12 @@ void MainWindow::acceptWidthAndHeight(int width, int height)
     spriteHeight = height;
     this->show();
     emit passWidthAndHeight(spriteWidth, spriteHeight, resizeImage);
+    if(!resizeImage)
+    {
+
+        emit addCurrentFrame();
+    }
     resizeImage = false;
-    emit addCurrentFrame();
 }
 
 void MainWindow::on_penSizeSlider_valueChanged(int value)
@@ -167,7 +173,14 @@ void MainWindow::setColorPreviewWindow(QColor newColor)
 //slot that takes image given from draw model
 void MainWindow::receivePreviewImage(QImage preview)
 {
-    ui->previewLabel->setPixmap(QPixmap::fromImage(preview.scaled(128,128)));
+    if(spriteHeight > spriteWidth)
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(preview.scaled(128.0 * (spriteWidth/spriteHeight),128.0)));
+    }
+    else
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(preview.scaled(128.0 ,128.0* (spriteHeight/spriteWidth))));
+    }
 
 }
 //undo last distinct change made to canvas, up to three
@@ -185,8 +198,6 @@ void MainWindow::on_redoButton_clicked()
 void MainWindow::on_addFrameButton_clicked()
 {
     emit addCurrentFrame();
-    std::cout<<previewImages.size()<<std::endl;
-
 }
 //adds frame to timeline of preview at current state
 void MainWindow::addFrameToTimeline(QImage frame)
@@ -199,18 +210,36 @@ void MainWindow::addFrameToTimeline(QImage frame)
 }
 void MainWindow::addFrameToPreviewTimeline(QImage frame)
 {
+    std::cout<<"Test3"<<std::endl;
     previewImages.push_back(frame);
-    ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128,128)));
+    if(spriteHeight > spriteWidth)
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128.0 * (spriteWidth/spriteHeight),128.0)));
+    }
+    else
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(frame.scaled(128.0 ,128.0* (spriteHeight/spriteWidth))));
+    }
 }
 
 //Start preview of frames of current working sprite
 void MainWindow::playPreview()
 {
-    if(currentFrame == previewImages.size())
+
+    if(currentFrame >= previewImages.size())
     {
         currentFrame = 0;
     }
-    ui->previewLabel->setPixmap(QPixmap::fromImage(previewImages[currentFrame].scaled(128,128)));
+
+    if(spriteHeight > spriteWidth)
+    {
+        ui->previewLabel->setPixmap(QPixmap::fromImage(previewImages[currentFrame].scaled(128.0 * (spriteWidth/spriteHeight),128.0)));
+    }
+    else
+    {
+        std::cout<<"Test9"<<std::endl;
+        ui->previewLabel->setPixmap(QPixmap::fromImage(previewImages[currentFrame].scaled(128.0 ,128.0* (spriteHeight/spriteWidth))));
+    }
     currentFrame++;
 
 }
@@ -233,7 +262,7 @@ void MainWindow::on_stopButton_clicked()
     playTimer->stop();
     currentFrame = previewImages.size() - 1;
     previewPlaying = false;
-    //ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128,128)));
+    //ui->previewLabel->setPixmap(QPixmap::fromImage(timelineImages[currentFrame].scaled(128.0,128.0)));
     emit previewStopped(false); //returns preview to active image preview
 }
 //Changes Fps of preview playback and restarts preview
@@ -267,10 +296,12 @@ void MainWindow::updateTimelineFrame(QImage frame)
 //Update the current frame in the preview vector
 void MainWindow::updatePreviewFrame(QImage frame)
 {
-
+    //std::cout<<"Test"<<endl;
     if(previewImages.size() > 0)
     {
+        std::cout<<"Test4"<<std::endl;
         previewImages[ui->frameSlider->value()] = frame.copy();
+
     }
 
 }
@@ -317,7 +348,7 @@ void MainWindow::exportPicture(){
     if(fileName != NULL){
         QFileInfo f(fileName);
 
-        emit exportImage(fileName,f.suffix() == "gif", timelineImages);
+        emit exportImage(fileName,f.suffix() == "gif", timelineImages, fpsPreview);
     }
 }
 
@@ -368,10 +399,6 @@ void MainWindow::on_frameSpinBox_valueChanged(int arg1)
     emit changeFrame(timelineImages[arg1], false);
 }
 
-void MainWindow::on_saveFrameButton_clicked()
-{
-    emit updateFrame();
-}
 
 void MainWindow::on_actionSave_triggered()
 {
@@ -422,9 +449,9 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_maximizePreviewButton_clicked()
 {
+    std::cout<<previewImages.size()<<std::endl;
     preview.show();
-    //preview.raise();
-    //preview.activateWindow();
+
     emit sendImageToPreview(previewImages);
 
 
@@ -443,10 +470,6 @@ void MainWindow::on_pasteButton_clicked()
     std::cout<<timelineImages.size() <<std::endl;
     if(!(timelineImages.size() == 0))
     {
-        //timelineImages[ui->frameSlider->value()] = copyImage;
-        //previewImages[ui->frameSlider->value()] = copyImage;
-
-
         emit changeFrame(copyImage, true);
         emit updateFrame();
     }
@@ -460,16 +483,45 @@ void MainWindow::on_cutButton_clicked()
         copyImage = timelineImages[ui->frameSlider->value()];
         emit fillTrans();
         emit updateFrame();
+
     }
+}
+
+void MainWindow::on_deleteFrameButton_clicked()
+{
+    if(timelineImages.size() == 1){
+        emit fillTrans();
+        emit updateFrame();
+    }
+    else
+    {
+        int result = 0;
+
+        timelineImages.erase(timelineImages.begin() + ui->frameSpinBox->value());
+        previewImages.erase(previewImages.begin() + ui->frameSpinBox->value());
+
+        ui->frameSpinBox->setMaximum(timelineImages.size()-1);
+        ui->frameSlider->setMaximum(timelineImages.size()-1);
+        if(ui->frameSpinBox->value() != timelineImages.size() -1){
+            result = ui->frameSpinBox->value();
+        }
+        else if(ui->frameSpinBox->value() != 0){
+            result = ui->frameSpinBox->value() - 1;
+        }
+
+        ui->frameSpinBox->setValue(result);
+        ui->frameSlider->setValue(result);
+        emit changeFrame(timelineImages[result], false);
+    }
+
 }
 
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
    QMainWindow::resizeEvent(event);
-
+   //RESIZE NOT PERFECT RIGHT NOW
+   //fix scaling window and the stretching of rectangles
    emit adjustBoardSize(ui->centralWidget->width()  * .71303587, ui->centralWidget->height() * .86426299);
 }
-   //ui->workspace->setGeometry(250,250, 200, 200);
-   //ui->workspace->setGeometry(ui->centralWidget->width()/2 + 140,9, ui->centralWidget->width() * .62, ui->centralWidget->height() * .81);
-
+//

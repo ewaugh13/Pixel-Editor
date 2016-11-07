@@ -39,7 +39,7 @@ public slots:
     void redoSlot();
 
     void rotateImage(double);
-    void saveImage(QString, bool, std::vector<QImage>);
+    void saveImage(QString, bool, std::vector<QImage>, int);
     void openImage(QString);
     void getFrameAndEmit();
 
@@ -105,6 +105,8 @@ private:
 
     double scaleFactorX;
     double scaleFactorY;
+    double scaleFactor;
+
 
     int penWidth;
 
@@ -113,7 +115,7 @@ private:
 
     bool playing;
 
-    //used for line tool
+    //used for line/shapes tool
     void renderShapes(QPoint, QPoint); //shows line
     void createShapes(QPoint, QPoint); //actually draws line
     void boundaryFill(QPoint, QColor targetColor);
