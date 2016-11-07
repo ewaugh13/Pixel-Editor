@@ -44,7 +44,7 @@ signals:
     void undoSignal();
     void redoSignal();
     void rotateCanvas(double);
-    void exportImage(QString, bool, std::vector<QImage>);
+    void exportImage(QString, bool, std::vector<QImage>, int);
     void importImage(QString);
     void addCurrentFrame();
     void playPreviewWindow();

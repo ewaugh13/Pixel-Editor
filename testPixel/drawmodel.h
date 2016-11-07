@@ -39,7 +39,7 @@ public slots:
     void redoSlot();
 
     void rotateImage(double);
-    void saveImage(QString, bool, std::vector<QImage>);
+    void saveImage(QString, bool, std::vector<QImage>, int);
     void openImage(QString);
     void getFrameAndEmit();
 

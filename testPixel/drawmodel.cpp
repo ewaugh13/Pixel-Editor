@@ -598,12 +598,12 @@ void DrawModel::rotateImage(double angle)
 
 }
 
-void DrawModel::saveImage(QString fileName, bool isGif, std::vector<QImage> allFrames){
+void DrawModel::saveImage(QString fileName, bool isGif, std::vector<QImage> allFrames, int previewRate){
     if(isGif){
         GifSave saveGif = GifSave();
         QByteArray ba = fileName.toLatin1();
 
-        saveGif.GifBegin(&saveGif.storage, ba.data(),width,height,10);
+        saveGif.GifBegin(&saveGif.storage, ba.data(),width,height,previewRate);
         if(allFrames.size() <=0){
             allFrames.push_back(picForeGround);
         }

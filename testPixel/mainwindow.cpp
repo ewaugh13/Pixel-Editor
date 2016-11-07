@@ -349,7 +349,7 @@ void MainWindow::exportPicture(){
     if(fileName != NULL){
         QFileInfo f(fileName);
 
-        emit exportImage(fileName,f.suffix() == "gif", timelineImages);
+        emit exportImage(fileName,f.suffix() == "gif", timelineImages, fpsPreview);
     }
 }
 
