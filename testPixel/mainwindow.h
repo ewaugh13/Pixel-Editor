@@ -62,7 +62,7 @@ signals:
 
     void updateFrame();
 
-    void callSaveSSP(std::vector<QImage>, std::string);
+    void callSaveSSP(std::vector<QImage>, std::string, bool);
     void callLoadSSP(std::string,std::vector<QImage>&);
     void fillTrans();
 

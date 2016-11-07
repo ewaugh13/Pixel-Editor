@@ -592,7 +592,8 @@ void DrawModel::rotateImage(double angle)
 }
 
 void DrawModel::saveImage(QString fileName, bool isGif, std::vector<QImage> allFrames){
-    if(isGif){
+    if(isGif)
+    {
         GifSave saveGif = GifSave();
         QByteArray ba = fileName.toLatin1();
 
@@ -609,7 +610,9 @@ void DrawModel::saveImage(QString fileName, bool isGif, std::vector<QImage> allF
 
         saveGif.GifEnd(&saveGif.storage);
     }
-    else{
+    else
+    {
+
         picForeGround.save(fileName);
     }
 }
@@ -725,15 +728,68 @@ void DrawModel::acceptChangeOfFrame(QImage newFrame, bool paste)
     updateCanvas(picForeGround);
 }
 //Creates the .spp file of the current project
-void DrawModel::saveSSP(std::vector<QImage> frames, std::string filename)
+void DrawModel::saveSSP(std::vector<QImage> frames, std::string filename, bool isSheet)
 {
     std::ofstream output_data;
 
-    if(true) //add conditional for name
+    if(isSheet) //add conditional for name
+    {
+        int maxWidth = 1024;
+        int biggestImageWidth =0;
+        int biggestImageHeight = 0;
+        int numRows = 1;
+        for(int i = 0; i < frames.size(); i++)
+        {
+            if(frames[i].width() > biggestImageWidth)
+            {
+                biggestImageWidth = frames[i].width();
+            }
+
+            if(frames[i].height() > biggestImageHeight)
+            {
+                biggestImageHeight = frames[i].height();
+            }
+
+        }
+        //max number of images in a row
+        int amountInRow = maxWidth / biggestImageWidth;
+
+        //If number of rows is divisible by amount of images in a row then add an additional row for the remainder image
+        numRows = frames.size() % amountInRow != 0 ? (frames.size() / amountInRow) + 1 : (frames.size() / amountInRow);
+
+        if(frames.size()  < amountInRow)
+        {
+            amountInRow = frames.size();
+        }
+
+        int imageWidth = amountInRow*biggestImageWidth;
+
+        int imageHeight = numRows * biggestImageHeight;
+        QImage compositeImage(imageWidth,imageHeight, QImage::Format_ARGB32);
+        compositeImage.fill(Qt::transparent);
+
+        QPainter painter(&compositeImage);
+        //painter.setCompositionMode(QPainter::CompositionMode_Clear);
+
+
+        int count = 0;
+        for(int y = 0; y < imageHeight && count < frames.size(); y += biggestImageHeight)
+        {
+            for (int x = 0; x < imageWidth && count < frames.size(); x += biggestImageWidth)
+            {
+                painter.drawImage(x,y,frames[count]);
+                count++;
+                std::cout << count << std::endl;
+            }
+        }
+        QString fileName = QString::fromStdString(filename);
+        compositeImage.save(fileName);
+    }
+    else
     {
         QColor pixelColor;
 
-        filename += ".ssp";//Creates file of FILENAME w .spp ext
+        //filename += ".ssp";//Creates file of FILENAME w .spp ext
         output_data.open(filename);
 
         output_data << height <<" " <<width <<"\n";

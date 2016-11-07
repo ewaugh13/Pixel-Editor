@@ -377,16 +377,18 @@ void MainWindow::on_actionSave_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                "",
-                               tr("Sprite Sheet Project (*.ssp)"));
+                               tr("Sprite Sheet Project (*.ssp);; PNG Sprite Sheet *.png"));
     if(fileName != NULL)
     {
+        QFileInfo fileInfo(fileName);
         if(previewImages.size() == 0)
         {
             emit addCurrentFrame();
         }
-        emit callSaveSSP(timelineImages,fileName.toStdString());//HARDCODED TEST FILENAME!!
+        emit callSaveSSP(timelineImages,fileName.toStdString(), fileInfo.suffix() == "png");
     }
 }
+
 void MainWindow::on_actionOpen_triggered()
 {
 
@@ -465,8 +467,6 @@ void MainWindow::on_cutButton_clicked()
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
    QMainWindow::resizeEvent(event);
-   ui->centralWidget->width()  * .71303587;
-   ui->centralWidget->height() * .86426299;
 
    emit adjustBoardSize(ui->centralWidget->width()  * .71303587, ui->centralWidget->height() * .86426299);
 }

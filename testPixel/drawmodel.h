@@ -56,7 +56,7 @@ public slots:
 
     void addForegroundToTimeline(QImage);
 
-    void saveSSP(std::vector<QImage> frames, std::string filename);
+    void saveSSP(std::vector<QImage> frames, std::string filename, bool);
 
     void loadSSP(std::string filename, std::vector<QImage> &frames);
 
