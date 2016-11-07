@@ -9,7 +9,8 @@ SizeSelector::SizeSelector(QWidget *parent) :
     squareRatio =false;
     sixteenBy9Ratio = false;
     fourByThreeRatio = false;
-    previousHeight, previousWidth = 16;
+    previousHeight = 16;
+    previousWidth = 16;
 }
 
 SizeSelector::~SizeSelector()

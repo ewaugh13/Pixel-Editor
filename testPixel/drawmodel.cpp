@@ -488,6 +488,7 @@ void DrawModel::undoSlot()
         imageHistory->pop_back();
 
        updateCanvas(picForeGround);
+       getFrameToUpdate();
 
     }
 
@@ -502,6 +503,7 @@ void DrawModel::redoSlot()
         redoStack->pop_back();
 
         updateCanvas(picForeGround);
+        getFrameToUpdate();
 
     }
 }
@@ -610,6 +612,7 @@ void DrawModel::rotateImage(double angle)
     p.drawImage(0,0,picForeGround);
     picForeGround = image.copy();
     updateCanvas(picForeGround);
+    getFrameToUpdate();
 
 }
 
@@ -701,6 +704,7 @@ void DrawModel::mirrorHorz()
     }
     //if a distinct change occurs cannot redo because this is new history
     redoStack->clear();
+    getFrameToUpdate();
 }
 
 
@@ -720,6 +724,7 @@ void DrawModel::mirrorVert()
     }
     //if a distinct change occurs cannot redo because this is new history
     redoStack->clear();
+    getFrameToUpdate();
 }
 
 void DrawModel::previewHasStopped(bool notPlaying)
