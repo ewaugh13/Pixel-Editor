@@ -487,7 +487,16 @@ void MainWindow::on_cutButton_clicked()
     }
 }
 
-void MainWindow::on_deleteFrameButton_clicked()
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+   QMainWindow::resizeEvent(event);
+   //RESIZE NOT PERFECT RIGHT NOW
+   //fix scaling window and the stretching of rectangles
+   emit adjustBoardSize(ui->centralWidget->width()  * .71303587, ui->centralWidget->height() * .86426299);
+}
+//
+
+void MainWindow::on_deleteButton_clicked()
 {
     if(timelineImages.size() == 1){
         emit fillTrans();
@@ -513,15 +522,4 @@ void MainWindow::on_deleteFrameButton_clicked()
         ui->frameSlider->setValue(result);
         emit changeFrame(timelineImages[result], false);
     }
-
 }
-
-
-void MainWindow::resizeEvent(QResizeEvent* event)
-{
-   QMainWindow::resizeEvent(event);
-   //RESIZE NOT PERFECT RIGHT NOW
-   //fix scaling window and the stretching of rectangles
-   emit adjustBoardSize(ui->centralWidget->width()  * .71303587, ui->centralWidget->height() * .86426299);
-}
-//

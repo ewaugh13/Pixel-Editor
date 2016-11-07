@@ -380,13 +380,6 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="playButton">
-        <property name="text">
-         <string>Play Preview</string>
-        </property>
-       </widget>
-      </item>
       <item row="6" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
@@ -411,6 +404,13 @@
         </item>
        </layout>
       </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="playButton">
+        <property name="text">
+         <string>Play Preview</string>
+        </property>
+       </widget>
+      </item>
       <item row="4" column="0">
        <widget class="QPushButton" name="stopButton">
         <property name="text">
@@ -419,9 +419,9 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QPushButton" name="saveFrameButton">
+       <widget class="QPushButton" name="deleteButton">
         <property name="text">
-         <string>Update Frame</string>
+         <string>Delete Frame</string>
         </property>
        </widget>
       </item>

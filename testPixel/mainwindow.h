@@ -141,7 +141,7 @@ private slots:
 
     void on_cutButton_clicked();
 
-    void on_deleteFrameButton_clicked();
+    void on_deleteButton_clicked();
 
 private:
     double spriteWidth;
