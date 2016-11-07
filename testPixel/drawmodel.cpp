@@ -869,6 +869,8 @@ void DrawModel::loadSSP(std::string filename, std::vector<QImage> &newFrames)
     currentFrame.fill(Qt::transparent);
 
     std::cout<<height <<" " <<width <<" " <<frameCount <<std::endl;
+    scaleFactorX = widgetWidth/width;
+    scaleFactorY = widgetHeight/height;
     /*
     if(height > width)
     {
